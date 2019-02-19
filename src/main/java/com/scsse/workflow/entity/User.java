@@ -58,5 +58,7 @@ public class User {
     private Set<Recruit> applyRecruits;
 
 
+    @ManyToMany(mappedBy = "members")
+    private Set<Recruit> successRecruits;
 
 }

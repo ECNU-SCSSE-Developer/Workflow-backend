@@ -48,6 +48,13 @@ public class Recruit {
     private Set<Tag> tags;
 
 
+    @ManyToMany
+    @JoinTable(name="recruit_member",
+            joinColumns = @JoinColumn(name = "recruit_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id"))
+    private Set<User> members;
+
+
     @ManyToMany(mappedBy = "applyRecruits")
     private Set<User> applicants;
 
