@@ -35,7 +35,7 @@ public class Activity {
     private Date activitySignUpDeadline;
 
     @ManyToMany
-    @JoinTable(name = "Activity_Tag",
+    @JoinTable(name = "activity_tag",
             joinColumns = @JoinColumn(name = "activity_id"),
             inverseJoinColumns = @JoinColumn(name = "tag_id"))
     public Set<Tag> tags;

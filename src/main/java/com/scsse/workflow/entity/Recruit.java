@@ -42,10 +42,19 @@ public class Recruit {
     private Activity activity;
 
     @ManyToMany
-    @JoinTable(name = "Recruit_Tag",
+    @JoinTable(name = "recruit_tag",
             joinColumns = @JoinColumn(name = "recruit_id"),
             inverseJoinColumns = @JoinColumn(name = "tag_id"))
     private Set<Tag> tags;
+
+
+    @ManyToMany(mappedBy = "applyRecruits")
+    private Set<User> applicants;
+
+
+    @ManyToMany(mappedBy = "followRecruits")
+    private Set<User> followers;
+
 
 
 }

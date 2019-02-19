@@ -12,5 +12,5 @@ spring:
       hibernate:
         hbm2ddl:
           auto: update
-    #show-sql: true #能在控制台看到jpa的sql语句
+    show-sql: true
 

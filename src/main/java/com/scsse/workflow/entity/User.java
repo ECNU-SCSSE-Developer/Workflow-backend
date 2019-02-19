@@ -39,10 +39,24 @@ public class User {
     private String userResume;
 
     @ManyToMany
-    @JoinTable(name = "User_Tag",
+    @JoinTable(name = "user_tag",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "tag_id"))
     private Set<Tag> tags;
+
+
+    @ManyToMany
+    @JoinTable(name = "user_recruit_follower",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "recruit_id"))
+    private Set<Recruit> followRecruits;
+
+    @ManyToMany
+    @JoinTable(name = "user_recruit_applicant",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "recruit_id"))
+    private Set<Recruit> applyRecruits;
+
 
 
 }
