@@ -2,6 +2,7 @@ package com.scsse.workflow.service;
 
 import com.scsse.workflow.entity.Tag;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -9,7 +10,7 @@ import java.util.List;
  * @author Alfred Fu
  * Created on 2019-02-19 20:14
  */
-@Component
+@Service
 public interface TagService {
 
     Tag findTagById(Integer tagId);

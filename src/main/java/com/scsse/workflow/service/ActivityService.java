@@ -2,17 +2,22 @@ package com.scsse.workflow.service;
 
 import com.scsse.workflow.entity.Activity;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+
+import javax.validation.constraints.Max;
+import java.util.List;
 
 /**
  * @author Alfred Fu
  * Created on 2019-02-19 20:14
  */
-@Component
+@Service
 public interface ActivityService {
 
+    List<Activity> findAllActivity();
     Activity findActivityById(Integer activityId);
-    void createActivity(Activity activity);
-    void updateActivity(Activity activity);
+    Object createActivity(Activity activity);
+    Object updateActivity(Activity activity);
     void deleteActivityById(Integer activityId);
 
 }
