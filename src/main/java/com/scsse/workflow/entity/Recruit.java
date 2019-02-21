@@ -21,7 +21,7 @@ public class Recruit {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
-    private Integer recruitId;
+    private int recruitId;
     @Column
     private String recruitPosition;
     @Column
@@ -29,9 +29,9 @@ public class Recruit {
     @Column
     private String recruitState;
     @Column
-    private Integer recruitWillingNumber;
+    private int recruitWillingNumber;
     @Column
-    private Integer recruitRegisteredNumber;
+    private int recruitRegisteredNumber;
 
     @OneToOne
     @JoinColumn(name = "user_id",unique = true)

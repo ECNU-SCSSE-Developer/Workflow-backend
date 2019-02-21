@@ -11,7 +11,6 @@ import java.util.List;
  * @author Alfred Fu
  * Created on 2019-02-19 20:14
  */
-@Service
 public interface ActivityService {
 
     List<Activity> findAllActivity();

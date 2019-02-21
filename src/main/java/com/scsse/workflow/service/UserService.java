@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
  * @author Alfred Fu
  * Created on 2019-02-19 20:17
  */
-@Service
+
 public interface UserService {
 
     User findUserById(Integer userId);

@@ -12,5 +12,4 @@ import java.util.List;
  */
 public interface ActivityRepository extends JpaRepository<Activity,Integer> {
     Activity findByActivityId(Integer activityId);
-    List<Activity> findAllActivity();
 }

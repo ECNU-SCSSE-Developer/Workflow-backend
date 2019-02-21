@@ -61,4 +61,6 @@ public class User {
     @ManyToMany(mappedBy = "members")
     private Set<Recruit> successRecruits;
 
+
+
 }

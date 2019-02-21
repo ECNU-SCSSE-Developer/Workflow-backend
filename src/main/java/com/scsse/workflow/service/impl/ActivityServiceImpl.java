@@ -7,6 +7,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -15,6 +16,7 @@ import java.util.List;
  * Created on 2019-02-19 20:18
  */
 @Service
+@Transactional
 public class ActivityServiceImpl implements ActivityService {
 
     private final ModelMapper modelMapper;
@@ -29,7 +31,7 @@ public class ActivityServiceImpl implements ActivityService {
 
     @Override
     public List<Activity> findAllActivity() {
-        return activityRepository.findAllActivity();
+        return activityRepository.findAll();
     }
 
     @Override
@@ -38,12 +40,12 @@ public class ActivityServiceImpl implements ActivityService {
     }
 
     @Override
-    public Object createActivity(Activity activity) {
+    public Activity createActivity(Activity activity) {
         return activityRepository.save(activity);
     }
 
     @Override
-    public Object updateActivity(Activity activity) {
+    public Activity updateActivity(Activity activity) {
         Integer activityId = activity.getActivityId();
         Activity oldActivity = activityRepository.findByActivityId(activityId);
         modelMapper.map(activity, oldActivity);
@@ -52,7 +54,6 @@ public class ActivityServiceImpl implements ActivityService {
 
     @Override
     public void deleteActivityById(Integer activityId) {
-        Activity old_activity = activityRepository.findByActivityId(activityId);
-        activityRepository.delete(old_activity);
+        activityRepository.deleteById(activityId);
     }
 }

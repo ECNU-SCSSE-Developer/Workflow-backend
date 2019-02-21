@@ -22,7 +22,7 @@ public class Activity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
-    private Integer activityId;
+    private int activityId;
     @Column
     private String activityName;
     @Column

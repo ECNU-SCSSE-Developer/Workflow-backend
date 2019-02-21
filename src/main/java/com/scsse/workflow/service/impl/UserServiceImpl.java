@@ -4,6 +4,7 @@ import com.scsse.workflow.entity.User;
 import com.scsse.workflow.service.UserService;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author Alfred Fu
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 
 @Service
+@Transactional
 public class UserServiceImpl implements UserService {
     @Override
     public User findUserById(Integer userId) {

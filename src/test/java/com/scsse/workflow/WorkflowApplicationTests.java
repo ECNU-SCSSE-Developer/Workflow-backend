@@ -1,7 +1,10 @@
 package com.scsse.workflow;
 
+import com.scsse.workflow.service.GraphService;
+import com.scsse.workflow.service.VectorService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -9,9 +12,19 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest
 public class WorkflowApplicationTests {
 
+    @Autowired
+    private VectorService vectorService;
+
     @Test
     public void contextLoads() {
     }
+
+    @Test
+    public void serviceTest(){
+        vectorService.test();
+    }
+
+
 
 }
 
