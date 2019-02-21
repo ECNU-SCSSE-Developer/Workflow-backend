@@ -1,6 +1,7 @@
 package com.scsse.workflow.entity;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -17,6 +18,7 @@ import java.util.Set;
 @Setter
 @ToString
 @Entity
+@NoArgsConstructor
 @Table(name = "activity")
 public class Activity {
     @Id
@@ -38,5 +40,13 @@ public class Activity {
     @JoinTable(name = "activity_tag",
             joinColumns = @JoinColumn(name = "activity_id"),
             inverseJoinColumns = @JoinColumn(name = "tag_id"))
-    public Set<Tag> tags;
+    private Set<Tag> tags;
+
+    public Activity(String activityName, Date activityTime, String activityPlace, String activityDescription, Date activitySignUpDeadline) {
+        this.activityName = activityName;
+        this.activityTime = activityTime;
+        this.activityPlace = activityPlace;
+        this.activityDescription = activityDescription;
+        this.activitySignUpDeadline = activitySignUpDeadline;
+    }
 }

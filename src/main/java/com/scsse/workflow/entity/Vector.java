@@ -1,6 +1,7 @@
 package com.scsse.workflow.entity;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -16,6 +17,7 @@ import java.util.Set;
 @Setter
 @ToString
 @Entity
+@NoArgsConstructor
 @Table(name = "vector")
 public class Vector {
     @Id
@@ -49,4 +51,11 @@ public class Vector {
     private Set<Vector> lastVectors;
 
 
+    public Vector(String vectorName, String vectorDescription, Date vectorCreateTime, User manager, Graph graph) {
+        this.vectorName = vectorName;
+        this.vectorDescription = vectorDescription;
+        this.vectorCreateTime = vectorCreateTime;
+        this.manager = manager;
+        this.graph = graph;
+    }
 }

@@ -1,6 +1,7 @@
 package com.scsse.workflow.entity;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -14,6 +15,7 @@ import javax.persistence.*;
 @Setter
 @ToString
 @Entity
+@NoArgsConstructor
 @Table(name = "graph")
 public class Graph {
 
@@ -29,4 +31,11 @@ public class Graph {
     @OneToOne
     @JoinColumn(name = "user_id",unique = true)
     private User manager;
+
+
+    public Graph(String graphName, String activityName, User manager) {
+        this.graphName = graphName;
+        this.activityName = activityName;
+        this.manager = manager;
+    }
 }

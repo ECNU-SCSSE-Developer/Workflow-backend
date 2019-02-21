@@ -1,6 +1,7 @@
 package com.scsse.workflow.entity;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -15,6 +16,7 @@ import java.util.Set;
 @Setter
 @ToString
 @Entity
+@NoArgsConstructor
 @Table(name = "tag")
 public class Tag {
     @Id
@@ -35,4 +37,9 @@ public class Tag {
 
     @ManyToMany(mappedBy = "tags")
     private Set<Recruit> recruits;
+
+    public Tag(String tagName, String tagDescription) {
+        this.tagName = tagName;
+        this.tagDescription = tagDescription;
+    }
 }

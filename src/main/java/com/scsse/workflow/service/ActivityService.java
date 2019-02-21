@@ -15,8 +15,8 @@ public interface ActivityService {
 
     List<Activity> findAllActivity();
     Activity findActivityById(Integer activityId);
-    Object createActivity(Activity activity);
-    Object updateActivity(Activity activity);
+    Activity createActivity(Activity activity);
+    Activity updateActivity(Activity activity);
     void deleteActivityById(Integer activityId);
 
 }
