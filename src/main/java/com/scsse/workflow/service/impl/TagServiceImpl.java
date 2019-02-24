@@ -1,9 +1,14 @@
 package com.scsse.workflow.service.impl;
 
 import com.scsse.workflow.entity.Tag;
+import com.scsse.workflow.repository.TagRepository;
 import com.scsse.workflow.service.TagService;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
+
+import java.util.List;
 
 /**
  * @author Alfred Fu
@@ -12,23 +17,41 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 public class TagServiceImpl implements TagService {
+
+    private ModelMapper modelMapper;
+
+    private TagRepository tagRepository;
+
+    public TagServiceImpl(ModelMapper modelMapper, TagRepository tagRepository){
+        this.modelMapper = modelMapper;
+        this.tagRepository = tagRepository;
+    }
+
+    @Override
+    public List<Tag> findAllTag(){
+        return tagRepository.findAll();
+    }
+
     @Override
     public Tag findTagById(Integer tagId) {
-        return null;
+        return tagRepository.findByTagId(tagId);
     }
 
     @Override
-    public void createTag(Tag tag) {
-
+    public Tag createTag(Tag tag) {
+        return tagRepository.save(tag);
     }
 
     @Override
-    public void updateTag(Tag tag) {
-
+    public Tag updateTag(Tag tag) {
+        Integer tagId = tag.getTagId();
+        Tag oldTag = tagRepository.findByTagId(tagId);
+        modelMapper.map(tag, oldTag);
+        return tagRepository.save(oldTag);
     }
 
     @Override
     public void deleteTagById(Integer tagId) {
-
+        tagRepository.deleteByTagId(tagId);
     }
 }

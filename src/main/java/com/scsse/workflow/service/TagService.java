@@ -12,8 +12,9 @@ import java.util.List;
  */
 public interface TagService {
 
+    List<Tag> findAllTag();
     Tag findTagById(Integer tagId);
-    void createTag(Tag tag);
-    void updateTag(Tag tag);
+    Tag createTag(Tag tag);
+    Tag updateTag(Tag tag);
     void deleteTagById(Integer tagId);
 }
