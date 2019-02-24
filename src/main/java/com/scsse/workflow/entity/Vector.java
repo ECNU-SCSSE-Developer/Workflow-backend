@@ -1,5 +1,6 @@
 package com.scsse.workflow.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -45,8 +46,7 @@ public class Vector {
             inverseJoinColumns = @JoinColumn(name = "end_vector_id"))
     private Set<Vector> nextVectors;
 
-
-
+    @JsonBackReference
     @ManyToMany(mappedBy = "nextVectors")
     private Set<Vector> lastVectors;
 

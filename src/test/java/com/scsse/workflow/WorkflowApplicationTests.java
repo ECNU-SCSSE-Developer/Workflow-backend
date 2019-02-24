@@ -12,17 +12,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest
 public class WorkflowApplicationTests {
 
-    @Autowired
-    private VectorService vectorService;
 
-    @Test
-    public void contextLoads() {
-    }
-
-    @Test
-    public void serviceTest(){
-        vectorService.test();
-    }
 
 
 

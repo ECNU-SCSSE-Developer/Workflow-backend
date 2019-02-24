@@ -1,11 +1,13 @@
 package com.scsse.workflow.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * @author Alfred Fu
@@ -31,6 +33,16 @@ public class Graph {
     @OneToOne
     @JoinColumn(name = "user_id",unique = true)
     private User manager;
+
+    @JsonBackReference
+    @ManyToMany(mappedBy = "graph")
+    private List<Vector> vectors;
+
+
+    public int size(){
+        return vectors.size();
+    }
+
 
 
     public Graph(String graphName, String activityName, User manager) {

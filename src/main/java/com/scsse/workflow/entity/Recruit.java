@@ -1,5 +1,6 @@
 package com.scsse.workflow.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -57,10 +58,12 @@ public class Recruit {
     private Set<User> members;
 
 
+    @JsonBackReference
     @ManyToMany(mappedBy = "applyRecruits")
     private Set<User> applicants;
 
 
+    @JsonBackReference
     @ManyToMany(mappedBy = "followRecruits")
     private Set<User> followers;
 
