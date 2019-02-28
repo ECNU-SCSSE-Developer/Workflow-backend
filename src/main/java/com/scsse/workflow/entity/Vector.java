@@ -50,8 +50,7 @@ public class Vector {
             inverseJoinColumns = @JoinColumn(name = "end_vector_id"))
     private List<Vector> nextVectors;
 
-
-
+    @JsonBackReference
     @ManyToMany(mappedBy = "nextVectors")
     @JsonBackReference
     private List<Vector> lastVectors;

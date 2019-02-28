@@ -65,6 +65,7 @@ public class User {
     private List<Recruit> applyRecruits;
 
 
+    @JsonBackReference
     @ManyToMany(mappedBy = "members")
     @JsonBackReference
     private List<Recruit> successRecruits;

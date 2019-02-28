@@ -31,14 +31,17 @@ public class Tag {
     private String tagDescription;
 
 
+    @JsonBackReference
     @ManyToMany(mappedBy = "tags")
     @JsonBackReference
     private List<User> users;
 
+    @JsonBackReference
     @ManyToMany(mappedBy = "tags")
     @JsonBackReference
     private List<Activity> activities;
 
+    @JsonBackReference
     @ManyToMany(mappedBy = "tags")
     @JsonBackReference
     private List<Recruit> recruits;

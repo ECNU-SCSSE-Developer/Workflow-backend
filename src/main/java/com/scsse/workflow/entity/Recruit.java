@@ -63,11 +63,13 @@ public class Recruit {
     private List<User> members;
 
 
+    @JsonBackReference
     @ManyToMany(mappedBy = "applyRecruits")
     @JsonBackReference
     private Set<User> applicants;
 
 
+    @JsonBackReference
     @ManyToMany(mappedBy = "followRecruits")
     @JsonBackReference
     private Set<User> followers;
