@@ -1,5 +1,6 @@
 package com.scsse.workflow.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -7,6 +8,7 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -29,26 +31,30 @@ public class Vector {
     @Column
     private String vectorDescription;
     @Column
-    private Date vectorCreateTime;
+    private Date vectorCreateTime = new Date();
 
     @OneToOne
+    @JsonBackReference
     @JoinColumn(name = "user_id",unique = true)
     private User manager;
 
     @OneToOne
+    @JsonBackReference
     @JoinColumn(name = "graph_id",unique = true)
     private Graph graph;
 
     @ManyToMany
+    @JsonBackReference
     @JoinTable(name = "edge",
             joinColumns = @JoinColumn(name = "begin_vector_id"),
             inverseJoinColumns = @JoinColumn(name = "end_vector_id"))
-    private Set<Vector> nextVectors;
+    private List<Vector> nextVectors;
 
 
 
     @ManyToMany(mappedBy = "nextVectors")
-    private Set<Vector> lastVectors;
+    @JsonBackReference
+    private List<Vector> lastVectors;
 
 
     public Vector(String vectorName, String vectorDescription, Date vectorCreateTime, User manager, Graph graph) {

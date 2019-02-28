@@ -1,11 +1,13 @@
 package com.scsse.workflow.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -40,28 +42,32 @@ public class User {
     @Column
     private String userResume;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JsonBackReference
     @JoinTable(name = "user_tag",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "tag_id"))
-    private Set<Tag> tags;
+    private List<Tag> tags;
 
 
     @ManyToMany
+    @JsonBackReference
     @JoinTable(name = "user_recruit_follower",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "recruit_id"))
-    private Set<Recruit> followRecruits;
+    private List<Recruit> followRecruits;
 
     @ManyToMany
+    @JsonBackReference
     @JoinTable(name = "user_recruit_applicant",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "recruit_id"))
-    private Set<Recruit> applyRecruits;
+    private List<Recruit> applyRecruits;
 
 
     @ManyToMany(mappedBy = "members")
-    private Set<Recruit> successRecruits;
+    @JsonBackReference
+    private List<Recruit> successRecruits;
 
     public User(String username, String userNumber, String userGrade, String userPhone, String userEmail, String userSpecialty, String userResume) {
         this.username = username;

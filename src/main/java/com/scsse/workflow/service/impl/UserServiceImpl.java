@@ -1,6 +1,9 @@
 package com.scsse.workflow.service.impl;
 
+import com.scsse.workflow.entity.Recruit;
+import com.scsse.workflow.entity.Tag;
 import com.scsse.workflow.entity.User;
+import com.scsse.workflow.repository.TagRepository;
 import com.scsse.workflow.repository.UserRepository;
 import com.scsse.workflow.service.UserService;
 import org.modelmapper.ModelMapper;
@@ -24,9 +27,12 @@ public class UserServiceImpl implements UserService {
 
     private UserRepository userRepository;
 
-    public UserServiceImpl(ModelMapper modelMapper, UserRepository userRepository) {
+    private TagRepository tagRepository;
+
+    public UserServiceImpl(ModelMapper modelMapper, UserRepository userRepository, TagRepository tagRepository) {
         this.modelMapper = modelMapper;
         this.userRepository = userRepository;
+        this.tagRepository = tagRepository;
     }
 
     @Override
@@ -56,5 +62,58 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteUserById(Integer userId) {
         userRepository.deleteByUserId(userId);
+    }
+
+    @Override
+    public void bindFollowedRecruitToUser(Integer userId, Integer recruitId) {
+
+    }
+
+    @Override
+    public void bindRegisteredRecruitToUser(Integer userId, Integer recruitId) {
+
+    }
+
+    @Override
+    public void unBindFollewedRecruitToUser(Integer userId, Integer recruitId) {
+
+    }
+
+    @Override
+    public void unBindRegisteredRecruitToUser(Integer userId, Integer recruitId) {
+
+    }
+
+    @Override
+    public List<Recruit> findAllFollowedRecruit(Integer userId) {
+        return null;
+    }
+
+    @Override
+    public List<Recruit> findAllRegisteredRecruit(Integer userId) {
+        return null;
+    }
+
+    @Override
+    public List<Tag> findAllTagOfUser(Integer userId) {
+        User user = userRepository.findByUserId(userId);
+        return user.getTags();
+    }
+
+    @Override
+    public void bindTagToUser(Integer userId, Integer tagId) {
+        //TODO:(插入前要先确保关联表里面没有该条关联数据)
+        User user = userRepository.findByUserId(userId);
+        Tag tag = tagRepository.findByTagId(tagId);
+        if(user != null && tag != null){
+            user.getTags().add(tag);
+            userRepository.save(user);
+        }
+
+    }
+
+    @Override
+    public void unBindTagToUser(Integer userId, Integer tagId) {
+
     }
 }

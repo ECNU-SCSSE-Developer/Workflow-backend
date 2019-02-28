@@ -1,6 +1,7 @@
 package com.scsse.workflow.service;
 
 import com.scsse.workflow.entity.Recruit;
+import com.scsse.workflow.entity.Tag;
 import com.scsse.workflow.entity.User;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -37,21 +38,42 @@ public interface RecruitService {
     /**
      * 返回一个招聘信息的所有应聘成功的应聘者
      * @param recruitId
-     * @return
+     * @return List{User}
      */
     List<User> findAllMemberOfRecruit(Integer recruitId);
 
     /**
      * 返回一个招聘信息的所有关注者
      * @param recruitId
-     * @return
+     * @return List{User}
      */
     List<User> findAllFollowerOfRecruit(Integer recruitId);
 
     /**
      * 返回一个招聘信息的所有申请者
      * @param recruitId
-     * @return
+     * @return List{User}
      */
     List<User> findAllApplicantOfRecruit(Integer recruitId);
+
+    /**
+     * 返回一个招聘信息的所有tag
+     * @param recruitId
+     * @return List{Tag}
+     */
+    List<Tag> findAllTagOfRecruit(Integer recruitId);
+
+    /**
+     * 给一个招聘信息绑定一个tag
+     * @param recruitId
+     * @param tagId
+     */
+    void bindTagToRecruit(Integer recruitId, Integer tagId);
+
+    /**
+     * 给一个招聘信息解绑一个tag
+     * @param recruitId
+     * @param tagId
+     */
+    void unBindTagToRecruit(Integer recruitId, Integer tagId);
 }

@@ -1,5 +1,6 @@
 package com.scsse.workflow.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -7,6 +8,7 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -28,19 +30,22 @@ public class Activity {
     @Column
     private String activityName;
     @Column
-    private Date activityTime;
+    private Date activityTime = new Date();
     @Column
     private String activityPlace;
     @Column
     private String activityDescription;
     @Column
-    private Date activitySignUpDeadline;
+    private Date activitySignUpDeadline = new Date();
+    @Column
+    private String activityUrl;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER, cascade={CascadeType.MERGE})
+    @JsonBackReference
     @JoinTable(name = "activity_tag",
             joinColumns = @JoinColumn(name = "activity_id"),
             inverseJoinColumns = @JoinColumn(name = "tag_id"))
-    private Set<Tag> tags;
+    private List<Tag> tags;
 
     public Activity(String activityName, Date activityTime, String activityPlace, String activityDescription, Date activitySignUpDeadline) {
         this.activityName = activityName;

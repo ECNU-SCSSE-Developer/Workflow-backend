@@ -1,7 +1,11 @@
 package com.scsse.workflow.service.impl;
 
 import com.scsse.workflow.entity.Activity;
+import com.scsse.workflow.entity.Recruit;
+import com.scsse.workflow.entity.Tag;
 import com.scsse.workflow.repository.ActivityRepository;
+import com.scsse.workflow.repository.RecruitRepository;
+import com.scsse.workflow.repository.TagRepository;
 import com.scsse.workflow.service.ActivityService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,10 +27,16 @@ public class ActivityServiceImpl implements ActivityService {
 
     private final ActivityRepository activityRepository;
 
+    private final RecruitRepository recruitRepository;
+
+    private final TagRepository tagRepository;
+
     @Autowired
-    public ActivityServiceImpl(ModelMapper modelMapper, ActivityRepository activityRepository) {
+    public ActivityServiceImpl(ModelMapper modelMapper, ActivityRepository activityRepository, RecruitRepository recruitRepository, TagRepository tagRepository) {
         this.modelMapper = modelMapper;
         this.activityRepository = activityRepository;
+        this.recruitRepository = recruitRepository;
+        this.tagRepository = tagRepository;
     }
 
     @Override
@@ -55,5 +65,34 @@ public class ActivityServiceImpl implements ActivityService {
     @Override
     public void deleteActivityById(Integer activityId) {
         activityRepository.deleteById(activityId);
+    }
+
+    @Override
+    public List<Recruit> findAllRecruitOfActivity(Integer activityId) {
+        return recruitRepository.findAllByActivity_ActivityId(activityId);
+    }
+
+    @Override
+    public List<Tag> findAllTagOfActivity(Integer activityId) {
+
+        Activity activity = activityRepository.findByActivityId(activityId);
+        return  activity.getTags();
+    }
+
+    @Override
+    public void bindTagToActivity(Integer activityId, Integer tagId) {
+        //TODO:(插入前要先确保关联表里面没有该条关联数据)
+        Activity activity = activityRepository.findByActivityId(activityId);
+        Tag tag = tagRepository.findByTagId(tagId);
+        if(activity != null && tag != null){
+            activity.getTags().add(tag);
+            activityRepository.save(activity);
+        }
+
+    }
+
+    @Override
+    public void unBindTagToActivity(Integer activityId, Integer tagId) {
+
     }
 }

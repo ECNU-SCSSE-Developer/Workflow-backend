@@ -1,11 +1,13 @@
 package com.scsse.workflow.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -36,32 +38,38 @@ public class Recruit {
     private int recruitRegisteredNumber;
 
     @OneToOne
+    @JsonBackReference
     @JoinColumn(name = "user_id",unique = true)
     private User manager;
 
     @OneToOne
+    @JsonBackReference
     @JoinColumn(name = "activity_id",unique = true)
     private Activity activity;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JsonBackReference
     @JoinTable(name = "recruit_tag",
             joinColumns = @JoinColumn(name = "recruit_id"),
             inverseJoinColumns = @JoinColumn(name = "tag_id"))
-    private Set<Tag> tags;
+    private List<Tag> tags;
 
 
     @ManyToMany
+    @JsonBackReference
     @JoinTable(name="recruit_member",
             joinColumns = @JoinColumn(name = "recruit_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id"))
-    private Set<User> members;
+    private List<User> members;
 
 
     @ManyToMany(mappedBy = "applyRecruits")
+    @JsonBackReference
     private Set<User> applicants;
 
 
     @ManyToMany(mappedBy = "followRecruits")
+    @JsonBackReference
     private Set<User> followers;
 
     public Recruit(String recruitPosition, String recruitDescription, String recruitState, int recruitWillingNumber, int recruitRegisteredNumber, User manager, Activity activity) {

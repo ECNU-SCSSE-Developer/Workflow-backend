@@ -1,6 +1,7 @@
 package com.scsse.workflow.service;
 
 import com.scsse.workflow.entity.Recruit;
+import com.scsse.workflow.entity.Tag;
 import com.scsse.workflow.entity.User;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -61,4 +62,25 @@ public interface UserService {
      * @return
      */
     List<Recruit> findAllRegisteredRecruit(Integer userId);
+
+    /**
+     * 返回一个用户绑定的所有tag
+     * @param userId
+     * @return List{Tag}
+     */
+    List<Tag> findAllTagOfUser(Integer userId);
+
+    /**
+     * 给一个user绑定一个tag
+     * @param userId
+     * @param tagId
+     */
+    void bindTagToUser(Integer userId, Integer tagId);
+
+    /**
+     * 给一个user解绑一个tag
+     * @param userId
+     * @param tagId
+     */
+    void unBindTagToUser(Integer userId, Integer tagId);
 }

@@ -1,11 +1,13 @@
 package com.scsse.workflow.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -30,13 +32,16 @@ public class Tag {
 
 
     @ManyToMany(mappedBy = "tags")
-    private Set<User> users;
+    @JsonBackReference
+    private List<User> users;
 
     @ManyToMany(mappedBy = "tags")
-    private Set<Activity> activities;
+    @JsonBackReference
+    private List<Activity> activities;
 
     @ManyToMany(mappedBy = "tags")
-    private Set<Recruit> recruits;
+    @JsonBackReference
+    private List<Recruit> recruits;
 
     public Tag(String tagName, String tagDescription) {
         this.tagName = tagName;

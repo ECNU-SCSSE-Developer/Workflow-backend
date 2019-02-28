@@ -1,5 +1,6 @@
 package com.scsse.workflow.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -29,6 +30,7 @@ public class Graph {
     private String activityName;
 
     @OneToOne
+    @JsonBackReference
     @JoinColumn(name = "user_id",unique = true)
     private User manager;
 
