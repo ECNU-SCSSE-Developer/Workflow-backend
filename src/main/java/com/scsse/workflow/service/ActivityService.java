@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import javax.validation.constraints.Max;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Alfred Fu
@@ -31,14 +32,14 @@ public interface ActivityService {
      * @param activityId
      * @return List<Recruit>
      */
-    List<Recruit> findAllRecruitOfActivity(Integer activityId);
+    Set<Recruit> findAllRecruitOfActivity(Integer activityId);
 
     /**
      * 返回一个比赛的所有tag
      * @param activityId
      * @return List{Tag}
      */
-    List<Tag> findAllTagOfActivity(Integer activityId);
+    Set<Tag> findAllTagOfActivity(Integer activityId);
 
     /**
      * 给一个比赛绑定一个tag

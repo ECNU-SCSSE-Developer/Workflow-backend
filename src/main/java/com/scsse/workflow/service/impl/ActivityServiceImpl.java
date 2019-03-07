@@ -9,7 +9,6 @@ import com.scsse.workflow.repository.TagRepository;
 import com.scsse.workflow.service.ActivityService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,6 +16,7 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Alfred Fu
@@ -111,15 +111,15 @@ public class ActivityServiceImpl implements ActivityService {
     }
 
     @Override
-    public List<Recruit> findAllRecruitOfActivity(Integer activityId) {
+    public Set<Recruit> findAllRecruitOfActivity(Integer activityId) {
         return recruitRepository.findAllByActivity_ActivityId(activityId);
     }
 
     @Override
-    public List<Tag> findAllTagOfActivity(Integer activityId) {
+    public Set<Tag> findAllTagOfActivity(Integer activityId) {
 
         Activity activity = activityRepository.findByActivityId(activityId);
-        return  activity.getTags();
+        return  activity.getActivityTags();
     }
 
     @Override
@@ -128,7 +128,7 @@ public class ActivityServiceImpl implements ActivityService {
         Activity activity = activityRepository.findByActivityId(activityId);
         Tag tag = tagRepository.findByTagId(tagId);
         if(activity != null && tag != null){
-            activity.getTags().add(tag);
+            activity.getActivityTags().add(tag);
             activityRepository.save(activity);
         }
 

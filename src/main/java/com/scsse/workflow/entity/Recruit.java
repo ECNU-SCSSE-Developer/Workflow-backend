@@ -46,11 +46,11 @@ public class Recruit {
     private Activity activity;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JsonBackReference(value = "tags")
+    @JsonBackReference(value = "recruitTags")
     @JoinTable(name = "recruit_tag",
             joinColumns = @JoinColumn(name = "recruit_id"),
             inverseJoinColumns = @JoinColumn(name = "tag_id"))
-    private List<Tag> tags;
+    private Set<Tag> recruitTags;
 
 
     @ManyToMany
@@ -58,7 +58,7 @@ public class Recruit {
     @JoinTable(name="recruit_member",
             joinColumns = @JoinColumn(name = "recruit_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id"))
-    private List<User> members;
+    private Set<User> members;
 
 
     @JsonBackReference(value = "applicants")

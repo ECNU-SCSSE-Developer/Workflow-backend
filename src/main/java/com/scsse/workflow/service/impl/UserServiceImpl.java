@@ -7,11 +7,11 @@ import com.scsse.workflow.repository.TagRepository;
 import com.scsse.workflow.repository.UserRepository;
 import com.scsse.workflow.service.UserService;
 import org.modelmapper.ModelMapper;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Alfred Fu
@@ -95,18 +95,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<Tag> findAllTagOfUser(Integer userId) {
+    public Set<Tag> findAllTagOfUser(Integer userId) {
         User user = userRepository.findByUserId(userId);
-        return user.getTags();
+        return user.getUserTags();
     }
 
     @Override
     public void bindTagToUser(Integer userId, Integer tagId) {
-        //TODO:(插入前要先确保关联表里面没有该条关联数据)
         User user = userRepository.findByUserId(userId);
         Tag tag = tagRepository.findByTagId(tagId);
         if(user != null && tag != null){
-            user.getTags().add(tag);
+            user.getUserTags().add(tag);
             userRepository.save(user);
         }
 

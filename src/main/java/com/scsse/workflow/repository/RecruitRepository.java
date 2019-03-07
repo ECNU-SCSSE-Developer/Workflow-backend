@@ -4,6 +4,7 @@ import com.scsse.workflow.entity.Recruit;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Alfred Fu
@@ -13,5 +14,5 @@ public interface RecruitRepository extends JpaRepository<Recruit,Integer> {
     Recruit findByRecruitId(Integer recruitId);
     void deleteByRecruitId(Integer recruitId);
 
-    List<Recruit> findAllByActivity_ActivityId(Integer activityId);
+    Set<Recruit> findAllByActivity_ActivityId(Integer activityId);
 }

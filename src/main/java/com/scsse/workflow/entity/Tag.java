@@ -32,16 +32,16 @@ public class Tag {
 
 
     @JsonBackReference(value = "users")
-    @ManyToMany(mappedBy = "tags")
-    private List<User> users;
+    @ManyToMany(mappedBy = "userTags")
+    private Set<User> users;
 
     @JsonBackReference(value = "activities")
-    @ManyToMany(mappedBy = "tags")
-    private List<Activity> activities;
+    @ManyToMany(mappedBy = "activityTags")
+    private Set<Activity> activities;
 
-    @ManyToMany(mappedBy = "tags")
+    @ManyToMany(mappedBy = "recruitTags")
     @JsonBackReference(value = "recruits")
-    private List<Recruit> recruits;
+    private Set<Recruit> recruits;
 
     public Tag(String tagName, String tagDescription) {
         this.tagName = tagName;

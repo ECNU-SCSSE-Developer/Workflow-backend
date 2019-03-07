@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Alfred Fu
@@ -75,24 +76,24 @@ public class RecruitServiceImpl implements RecruitService {
     }
 
     @Override
-    public List<User> findAllMemberOfRecruit(Integer recruitId) {
+    public Set<User> findAllMemberOfRecruit(Integer recruitId) {
         return null;
     }
 
     @Override
-    public List<User> findAllFollowerOfRecruit(Integer recruitId) {
+    public Set<User> findAllFollowerOfRecruit(Integer recruitId) {
         return null;
     }
 
     @Override
-    public List<User> findAllApplicantOfRecruit(Integer recruitId) {
+    public Set<User> findAllApplicantOfRecruit(Integer recruitId) {
         return null;
     }
 
     @Override
-    public List<Tag> findAllTagOfRecruit(Integer recruitId) {
+    public Set<Tag> findAllTagOfRecruit(Integer recruitId) {
         Recruit recruit = recruitRepository.findByRecruitId(recruitId);
-        return recruit.getTags();
+        return recruit.getRecruitTags();
     }
 
     @Override
@@ -101,7 +102,7 @@ public class RecruitServiceImpl implements RecruitService {
         Recruit recruit = recruitRepository.findByRecruitId(recruitId);
         Tag tag = tagRepository.findByTagId(tagId);
         if(recruit != null && tag != null){
-            recruit.getTags().add(tag);
+            recruit.getRecruitTags().add(tag);
             recruitRepository.save(recruit);
         }
     }

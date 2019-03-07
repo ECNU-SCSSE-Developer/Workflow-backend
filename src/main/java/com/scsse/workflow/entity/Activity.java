@@ -41,11 +41,11 @@ public class Activity {
     private String activityUrl;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade={CascadeType.MERGE})
-    @JsonBackReference
+    @JsonBackReference(value = "activityTags")
     @JoinTable(name = "activity_tag",
             joinColumns = @JoinColumn(name = "activity_id"),
             inverseJoinColumns = @JoinColumn(name = "tag_id"))
-    private List<Tag> tags;
+    private Set<Tag> activityTags;
 
     public Activity(String activityName, Date activityTime, String activityPlace, String activityDescription, Date activitySignUpDeadline) {
         this.activityName = activityName;

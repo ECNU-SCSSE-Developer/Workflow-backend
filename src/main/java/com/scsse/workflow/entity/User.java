@@ -43,11 +43,11 @@ public class User {
     private String userResume;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JsonBackReference(value = "tags")
+    @JsonBackReference(value = "userTags")
     @JoinTable(name = "user_tag",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "tag_id"))
-    private List<Tag> tags;
+    private Set<Tag> userTags;
 
 
     @ManyToMany
@@ -55,19 +55,19 @@ public class User {
     @JoinTable(name = "user_recruit_follower",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "recruit_id"))
-    private List<Recruit> followRecruits;
+    private Set<Recruit> followRecruits;
 
     @ManyToMany
     @JsonBackReference(value = "applyRecruits")
     @JoinTable(name = "user_recruit_applicant",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "recruit_id"))
-    private List<Recruit> applyRecruits;
+    private Set<Recruit> applyRecruits;
 
 
     @JsonBackReference(value = "successRecruits")
     @ManyToMany(mappedBy = "members")
-    private List<Recruit> successRecruits;
+    private Set<Recruit> successRecruits;
 
     public User(String username, String userNumber, String userGrade, String userPhone, String userEmail, String userSpecialty, String userResume) {
         this.username = username;

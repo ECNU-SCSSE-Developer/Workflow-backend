@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Alfred Fu
@@ -68,7 +69,7 @@ public interface UserService {
      * @param userId
      * @return List{Tag}
      */
-    List<Tag> findAllTagOfUser(Integer userId);
+    Set<Tag> findAllTagOfUser(Integer userId);
 
     /**
      * 给一个user绑定一个tag

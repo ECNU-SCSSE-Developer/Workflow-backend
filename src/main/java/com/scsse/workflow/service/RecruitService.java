@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Alfred Fu
@@ -40,28 +41,28 @@ public interface RecruitService {
      * @param recruitId
      * @return List{User}
      */
-    List<User> findAllMemberOfRecruit(Integer recruitId);
+    Set<User> findAllMemberOfRecruit(Integer recruitId);
 
     /**
      * 返回一个招聘信息的所有关注者
      * @param recruitId
      * @return List{User}
      */
-    List<User> findAllFollowerOfRecruit(Integer recruitId);
+    Set<User> findAllFollowerOfRecruit(Integer recruitId);
 
     /**
      * 返回一个招聘信息的所有申请者
      * @param recruitId
      * @return List{User}
      */
-    List<User> findAllApplicantOfRecruit(Integer recruitId);
+    Set<User> findAllApplicantOfRecruit(Integer recruitId);
 
     /**
      * 返回一个招聘信息的所有tag
      * @param recruitId
      * @return List{Tag}
      */
-    List<Tag> findAllTagOfRecruit(Integer recruitId);
+    Set<Tag> findAllTagOfRecruit(Integer recruitId);
 
     /**
      * 给一个招聘信息绑定一个tag
