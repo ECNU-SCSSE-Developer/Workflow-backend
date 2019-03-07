@@ -34,25 +34,22 @@ public class Vector {
     private Date vectorCreateTime = new Date();
 
     @OneToOne
-    @JsonBackReference
     @JoinColumn(name = "user_id",unique = true)
     private User manager;
 
     @OneToOne
-    @JsonBackReference
     @JoinColumn(name = "graph_id",unique = true)
     private Graph graph;
 
     @ManyToMany
-    @JsonBackReference
+    @JsonBackReference(value = "nextVectors")
     @JoinTable(name = "edge",
             joinColumns = @JoinColumn(name = "begin_vector_id"),
             inverseJoinColumns = @JoinColumn(name = "end_vector_id"))
     private List<Vector> nextVectors;
 
-    @JsonBackReference
     @ManyToMany(mappedBy = "nextVectors")
-    @JsonBackReference
+    @JsonBackReference(value = "lastVectors")
     private List<Vector> lastVectors;
 
 
