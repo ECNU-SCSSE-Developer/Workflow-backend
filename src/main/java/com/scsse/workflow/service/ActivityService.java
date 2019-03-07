@@ -16,6 +16,11 @@ import java.util.List;
 public interface ActivityService {
 
     List<Activity> findAllActivity();
+    List<Activity> findAllExpiredActivity();
+    List<Activity> findAllFinishedActivity();
+    List<Activity> findAllFreshActivity();
+
+
     Activity findActivityById(Integer activityId);
     Activity createActivity(Activity activity);
     Activity updateActivity(Activity activity);

@@ -13,6 +13,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -42,6 +45,46 @@ public class ActivityServiceImpl implements ActivityService {
     @Override
     public List<Activity> findAllActivity() {
         return activityRepository.findAll();
+    }
+
+    @Override
+    public List<Activity> findAllExpiredActivity() {
+        List<Activity> activities = new ArrayList<>();
+        activityRepository.findAll().stream()
+                // if the time now is greater than the signUpDeadline
+                .filter(activity -> LocalDate.now().compareTo
+                        (activity.getActivitySignUpDeadline().toInstant().atZone(ZoneId.of("Asia/Shanghai")).
+                                toLocalDate()) > 0)
+                // but less than the activity time
+                .filter(activity -> LocalDate.now().compareTo
+                        (activity.getActivityTime().toInstant().atZone(ZoneId.of("Asia/Shanghai")).
+                                toLocalDate()) < 0)
+                .forEach(activities::add);
+        return activities;
+    }
+
+    @Override
+    public List<Activity> findAllFinishedActivity() {
+        List<Activity> activities = new ArrayList<>();
+        activityRepository.findAll().stream()
+                // if the time now is greater than the activity time
+                .filter(activity -> LocalDate.now().compareTo
+                        (activity.getActivityTime().toInstant().atZone(ZoneId.of("Asia/Shanghai")).
+                                toLocalDate()) > 0)
+                .forEach(activities::add);
+        return activities;
+    }
+
+    @Override
+    public List<Activity> findAllFreshActivity() {
+        List<Activity> activities = new ArrayList<>();
+        activityRepository.findAll().stream()
+                // if the time now is less than the signUpDeadline
+                .filter(activity -> LocalDate.now().compareTo
+                        (activity.getActivitySignUpDeadline().toInstant().atZone(ZoneId.of("Asia/Shanghai")).
+                                toLocalDate()) < 0)
+                .forEach(activities::add);
+        return activities;
     }
 
     @Override
