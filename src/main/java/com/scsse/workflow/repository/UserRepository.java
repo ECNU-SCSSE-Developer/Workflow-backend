@@ -1,6 +1,6 @@
 package com.scsse.workflow.repository;
 
-import com.scsse.workflow.entity.User;
+import com.scsse.workflow.entity.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**

@@ -1,8 +1,8 @@
 package com.scsse.workflow.service.impl;
 
-import com.scsse.workflow.entity.Activity;
-import com.scsse.workflow.entity.Recruit;
-import com.scsse.workflow.entity.Tag;
+import com.scsse.workflow.entity.model.Activity;
+import com.scsse.workflow.entity.model.Recruit;
+import com.scsse.workflow.entity.model.Tag;
 import com.scsse.workflow.repository.ActivityRepository;
 import com.scsse.workflow.repository.RecruitRepository;
 import com.scsse.workflow.repository.TagRepository;

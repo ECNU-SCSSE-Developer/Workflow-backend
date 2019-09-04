@@ -8,6 +8,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author Alfred Fu
  * Created on 2019-03-07 20:48
@@ -23,6 +26,14 @@ public class ActivityController {
         this.activityService = activityService;
     }
 
+    /**
+     * 获取所有活动
+     * @param type {fresh,expire,finish}
+     *             fresh：未到报名截止时间
+     *             expire：超过报名截止时间，但活动尚未开始
+     *             finish：活动已经结束
+     * @return List{Activity}
+     */
     @GetMapping("/activity/all")
     public Result findAllActivity(@RequestParam(name = "type",required = false,defaultValue = "normal") String type){
         switch (type){

@@ -1,15 +1,13 @@
 package com.scsse.workflow.service.impl;
 
-import com.scsse.workflow.entity.Recruit;
-import com.scsse.workflow.entity.Tag;
-import com.scsse.workflow.entity.User;
+import com.scsse.workflow.entity.model.Recruit;
+import com.scsse.workflow.entity.model.Tag;
+import com.scsse.workflow.entity.model.User;
 import com.scsse.workflow.repository.RecruitRepository;
 import com.scsse.workflow.repository.TagRepository;
 import com.scsse.workflow.service.RecruitService;
-import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

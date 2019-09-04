@@ -1,12 +1,9 @@
 package com.scsse.workflow.service;
 
-import com.scsse.workflow.entity.Activity;
-import com.scsse.workflow.entity.Recruit;
-import com.scsse.workflow.entity.Tag;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
+import com.scsse.workflow.entity.model.Activity;
+import com.scsse.workflow.entity.model.Recruit;
+import com.scsse.workflow.entity.model.Tag;
 
-import javax.validation.constraints.Max;
 import java.util.List;
 import java.util.Set;
 

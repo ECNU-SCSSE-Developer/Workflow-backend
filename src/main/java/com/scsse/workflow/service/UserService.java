@@ -1,10 +1,8 @@
 package com.scsse.workflow.service;
 
-import com.scsse.workflow.entity.Recruit;
-import com.scsse.workflow.entity.Tag;
-import com.scsse.workflow.entity.User;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
+import com.scsse.workflow.entity.model.Recruit;
+import com.scsse.workflow.entity.model.Tag;
+import com.scsse.workflow.entity.model.User;
 
 import java.util.List;
 import java.util.Set;

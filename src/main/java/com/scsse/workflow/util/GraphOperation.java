@@ -1,7 +1,10 @@
 package com.scsse.workflow.util;
 
-import com.scsse.workflow.entity.Graph;
-import com.scsse.workflow.entity.Vector;
+import com.scsse.workflow.entity.model.Graph;
+import com.scsse.workflow.entity.model.Vector;
+import com.scsse.workflow.repository.GraphRepository;
+import com.scsse.workflow.repository.VectorRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
@@ -13,9 +16,23 @@ import java.util.*;
 @Component
 public class GraphOperation {
 
+    private final GraphRepository graphRepository;
+    private final VectorRepository vectorRepository;
+
+    @Autowired
+    public GraphOperation(GraphRepository graphRepository, VectorRepository vectorRepository) {
+        this.graphRepository = graphRepository;
+        this.vectorRepository = vectorRepository;
+    }
 
 
-    public static List<Vector> topologicalSort(Graph graph){
+    /**
+     *
+     * @param graph 需要排序的图
+     *              图中需要包括结点
+     * @return 排好序的结点
+     */
+    public List<Vector> topologicalSort(Graph graph){
         List<Vector> result = new ArrayList<>();
 
         // just make sure the first cycle can be procedure
@@ -29,7 +46,7 @@ public class GraphOperation {
             for (Vector each : graph.getVectors()){
                 if (each.getLastVectors().isEmpty()){
                     // remove itself from the node it points to
-                    for (Vector temp:each.getNextVectors()){
+                    for (Vector temp : each.getNextVectors()){
                         temp.getLastVectors().remove(each);
                     }
                     // add it to the result

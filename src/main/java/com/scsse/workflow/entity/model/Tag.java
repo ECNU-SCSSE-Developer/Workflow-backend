@@ -1,4 +1,4 @@
-package com.scsse.workflow.entity;
+package com.scsse.workflow.entity.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
@@ -7,7 +7,6 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -16,7 +15,7 @@ import java.util.Set;
  */
 @Getter
 @Setter
-@ToString
+@ToString(exclude = {"users","activities","recruits"})
 @Entity
 @NoArgsConstructor
 @Table(name = "tag")
@@ -31,16 +30,16 @@ public class Tag {
     private String tagDescription;
 
 
-    @JsonBackReference(value = "users")
     @ManyToMany(mappedBy = "userTags")
+    @JsonBackReference(value = "activity.users")
     private Set<User> users;
 
-    @JsonBackReference(value = "activities")
     @ManyToMany(mappedBy = "activityTags")
+    @JsonBackReference(value = "activity.activities")
     private Set<Activity> activities;
 
     @ManyToMany(mappedBy = "recruitTags")
-    @JsonBackReference(value = "recruits")
+    @JsonBackReference(value = "activity.recruits")
     private Set<Recruit> recruits;
 
     public Tag(String tagName, String tagDescription) {

@@ -1,9 +1,8 @@
 package com.scsse.workflow.repository;
 
-import com.scsse.workflow.entity.Recruit;
+import com.scsse.workflow.entity.model.Recruit;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.List;
 import java.util.Set;
 
 /**

@@ -1,4 +1,4 @@
-package com.scsse.workflow.entity;
+package com.scsse.workflow.entity.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
@@ -7,7 +7,6 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -18,7 +17,7 @@ import java.util.Set;
 
 @Getter
 @Setter
-@ToString
+@ToString(exclude = {"followRecruits","successRecruits","applyRecruits"})
 @Entity
 @NoArgsConstructor
 @Table(name = "user")
@@ -43,7 +42,7 @@ public class User {
     private String userResume;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JsonBackReference(value = "userTags")
+    @JsonBackReference(value = "user.userTags")
     @JoinTable(name = "user_tag",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "tag_id"))
@@ -51,22 +50,22 @@ public class User {
 
 
     @ManyToMany
-    @JsonBackReference(value = "followRecruits")
+    @JsonBackReference(value = "user.followRecruits")
     @JoinTable(name = "user_recruit_follower",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "recruit_id"))
     private Set<Recruit> followRecruits;
 
     @ManyToMany
-    @JsonBackReference(value = "applyRecruits")
+    @JsonBackReference(value = "user.applyRecruits")
     @JoinTable(name = "user_recruit_applicant",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "recruit_id"))
     private Set<Recruit> applyRecruits;
 
 
-    @JsonBackReference(value = "successRecruits")
     @ManyToMany(mappedBy = "members")
+    @JsonBackReference(value = "user.successRecruits")
     private Set<Recruit> successRecruits;
 
     public User(String username, String userNumber, String userGrade, String userPhone, String userEmail, String userSpecialty, String userResume) {

@@ -1,7 +1,8 @@
 package com.scsse.workflow.repository;
 
 
-import com.scsse.workflow.entity.Graph;
+import com.scsse.workflow.entity.model.Graph;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
@@ -10,4 +11,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface GraphRepository extends JpaRepository<Graph,Integer> {
 
+    @EntityGraph(value = "Graph.vectors")
+    Graph findWithVectorsByGraphId(Integer graphId);
+    Graph findByGraphId(Integer graphId);
 }

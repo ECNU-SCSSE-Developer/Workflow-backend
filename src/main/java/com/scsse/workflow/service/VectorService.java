@@ -1,7 +1,6 @@
 package com.scsse.workflow.service;
 
-import com.scsse.workflow.entity.Vector;
-import org.springframework.stereotype.Service;
+import com.scsse.workflow.entity.model.Vector;
 
 /**
  * @author Alfred Fu

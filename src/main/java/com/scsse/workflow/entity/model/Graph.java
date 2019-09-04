@@ -1,4 +1,4 @@
-package com.scsse.workflow.entity;
+package com.scsse.workflow.entity.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
@@ -7,7 +7,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.Set;
 
 /**
  * @author Alfred Fu
@@ -15,10 +15,12 @@ import java.util.List;
  */
 @Getter
 @Setter
-@ToString
+@ToString(exclude = {"vectors"})
 @Entity
 @NoArgsConstructor
 @Table(name = "graph")
+@NamedEntityGraphs(value = {
+        @NamedEntityGraph(name = "Graph.vectors",attributeNodes=@NamedAttributeNode(value = "vectors")),})
 public class Graph {
 
     @Id
@@ -31,13 +33,13 @@ public class Graph {
     private String activityName;
 
     @OneToOne
-    @JsonBackReference
+    @JsonBackReference(value = "graph.manager")
     @JoinColumn(name = "user_id",unique = true)
     private User manager;
 
-    @JsonBackReference
-    @ManyToMany(mappedBy = "graph")
-    private List<Vector> vectors;
+    @JsonBackReference(value = "graph.vectors")
+    @OneToMany(mappedBy = "graph")
+    private Set<Vector> vectors;
 
 
     public int size(){

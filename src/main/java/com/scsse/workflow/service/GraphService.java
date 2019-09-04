@@ -1,6 +1,6 @@
 package com.scsse.workflow.service;
 
-import org.springframework.stereotype.Service;
+import com.scsse.workflow.entity.model.Graph;
 
 /**
  * @author Alfred Fu
@@ -8,4 +8,6 @@ import org.springframework.stereotype.Service;
  */
 
 public interface GraphService {
+    Graph findSimpleGraphById(Integer graphId);
+    Graph findWithVectorsById(Integer graphId);
 }

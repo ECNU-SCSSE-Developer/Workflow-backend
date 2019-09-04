@@ -1,4 +1,4 @@
-package com.scsse.workflow.entity;
+package com.scsse.workflow.entity.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
@@ -8,7 +8,6 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -17,7 +16,7 @@ import java.util.Set;
  */
 @Getter
 @Setter
-@ToString
+@ToString(exclude = {"nextVectors","lastVectors"})
 @Entity
 @NoArgsConstructor
 @Table(name = "vector")
@@ -38,21 +37,30 @@ public class Vector {
     private User manager;
 
     @OneToOne
+    @JsonBackReference(value = "vector.graph")
     @JoinColumn(name = "graph_id",unique = true)
     private Graph graph;
 
-    @ManyToMany
-    @JsonBackReference(value = "nextVectors")
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JsonBackReference(value = "vector.nextVectors")
     @JoinTable(name = "edge",
             joinColumns = @JoinColumn(name = "begin_vector_id"),
             inverseJoinColumns = @JoinColumn(name = "end_vector_id"))
-    private List<Vector> nextVectors;
+    private Set<Vector> nextVectors;
 
-    @ManyToMany(mappedBy = "nextVectors")
-    @JsonBackReference(value = "lastVectors")
-    private List<Vector> lastVectors;
+    @ManyToMany(mappedBy = "nextVectors",fetch = FetchType.EAGER)
+    @JsonBackReference(value = "vector.lastVectors")
+    private Set<Vector> lastVectors;
 
 
+    /**
+     *
+     * @param vectorName 名字
+     * @param vectorDescription 描述
+     * @param vectorCreateTime 创建时间
+     * @param manager 管理员
+     * @param graph 关联图
+     */
     public Vector(String vectorName, String vectorDescription, Date vectorCreateTime, User manager, Graph graph) {
         this.vectorName = vectorName;
         this.vectorDescription = vectorDescription;

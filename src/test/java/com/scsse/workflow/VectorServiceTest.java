@@ -1,11 +1,15 @@
 package com.scsse.workflow;
 
+import com.scsse.workflow.entity.model.Vector;
+import com.scsse.workflow.service.GraphService;
 import com.scsse.workflow.service.VectorService;
+import com.scsse.workflow.util.GraphOperation;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -20,18 +24,35 @@ public class VectorServiceTest {
 
     private final static Logger logger = LoggerFactory.getLogger(VectorServiceTest.class);
 
-    private final VectorService vectorService;
+    @Autowired
+    private VectorService vectorService;
 
-    private final ModelMapper modelMapper;
+    @Autowired
+    private GraphService graphService;
 
-    public VectorServiceTest(VectorService vectorService, ModelMapper modelMapper) {
-        this.vectorService = vectorService;
-        this.modelMapper = modelMapper;
-    }
+    @Autowired
+    private ModelMapper modelMapper;
+
+    @Autowired
+    private GraphOperation graphOperation;
+
 
     @Test
-    public void contextLoadTest(){
-        
+    public void topologicalTest(){
+        graphOperation.topologicalSort(graphService.findWithVectorsById(1))
+                .stream()
+                .map(Vector::getVectorId)
+                .map(p->Integer.toString(p))
+                .forEach(logger::info);
+    }
+
+
+    @Test
+    public void CRUDTest(){
+        Vector vector =  vectorService.findVectorById(1);
+        Vector newVector = new Vector(null,"新描述",null,null,null);
+        newVector.setVectorId(1);
+        vectorService.updateVector(newVector);
     }
 
 }

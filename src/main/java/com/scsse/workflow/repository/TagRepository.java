@@ -1,9 +1,7 @@
 package com.scsse.workflow.repository;
 
-import com.scsse.workflow.entity.Tag;
+import com.scsse.workflow.entity.model.Tag;
 import org.springframework.data.jpa.repository.JpaRepository;
-
-import java.util.List;
 
 /**
  * @author Alfred Fu

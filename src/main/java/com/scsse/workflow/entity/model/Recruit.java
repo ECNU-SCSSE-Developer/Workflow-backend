@@ -1,4 +1,4 @@
-package com.scsse.workflow.entity;
+package com.scsse.workflow.entity.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
@@ -7,7 +7,6 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -46,7 +45,7 @@ public class Recruit {
     private Activity activity;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JsonBackReference(value = "recruitTags")
+    @JsonBackReference(value = "recruit.recruitTags")
     @JoinTable(name = "recruit_tag",
             joinColumns = @JoinColumn(name = "recruit_id"),
             inverseJoinColumns = @JoinColumn(name = "tag_id"))
@@ -54,20 +53,21 @@ public class Recruit {
 
 
     @ManyToMany
-    @JsonBackReference(value = "members")
+    @JsonBackReference(value = "recruit.members")
     @JoinTable(name="recruit_member",
             joinColumns = @JoinColumn(name = "recruit_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id"))
     private Set<User> members;
 
 
-    @JsonBackReference(value = "applicants")
+
     @ManyToMany(mappedBy = "applyRecruits")
+    @JsonBackReference(value = "recruit.applicants")
     private Set<User> applicants;
 
 
     @ManyToMany(mappedBy = "followRecruits")
-    @JsonBackReference(value = "followers")
+    @JsonBackReference(value = "recruit.followers")
     private Set<User> followers;
 
     public Recruit(String recruitPosition, String recruitDescription, String recruitState, int recruitWillingNumber, int recruitRegisteredNumber, User manager, Activity activity) {

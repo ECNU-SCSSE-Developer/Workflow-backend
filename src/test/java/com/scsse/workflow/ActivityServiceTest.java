@@ -1,7 +1,7 @@
 package com.scsse.workflow;
 
-import com.scsse.workflow.entity.Activity;
-import com.scsse.workflow.entity.Tag;
+import com.scsse.workflow.entity.model.Activity;
+import com.scsse.workflow.entity.model.Tag;
 import com.scsse.workflow.service.ActivityService;
 import com.scsse.workflow.service.TagService;
 import org.junit.Test;
@@ -11,10 +11,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Date;
-import java.util.List;
 
 /**
  * @Author JJJJJJ

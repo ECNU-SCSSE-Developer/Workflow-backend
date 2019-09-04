@@ -1,4 +1,4 @@
-package com.scsse.workflow.entity;
+package com.scsse.workflow.entity.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
@@ -8,7 +8,6 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -41,7 +40,7 @@ public class Activity {
     private String activityUrl;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade={CascadeType.MERGE})
-    @JsonBackReference(value = "activityTags")
+    @JsonBackReference(value = "activity.activityTags")
     @JoinTable(name = "activity_tag",
             joinColumns = @JoinColumn(name = "activity_id"),
             inverseJoinColumns = @JoinColumn(name = "tag_id"))

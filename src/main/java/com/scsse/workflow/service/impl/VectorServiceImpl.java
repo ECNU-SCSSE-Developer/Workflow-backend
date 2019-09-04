@@ -1,6 +1,6 @@
 package com.scsse.workflow.service.impl;
 
-import com.scsse.workflow.entity.Vector;
+import com.scsse.workflow.entity.model.Vector;
 import com.scsse.workflow.repository.VectorRepository;
 import com.scsse.workflow.service.VectorService;
 import org.modelmapper.ModelMapper;

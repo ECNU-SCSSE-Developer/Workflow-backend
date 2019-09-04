@@ -1,6 +1,6 @@
 package com.scsse.workflow.repository;
 
-import com.scsse.workflow.entity.Vector;
+import com.scsse.workflow.entity.model.Vector;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
@@ -9,4 +9,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface VectorRepository extends JpaRepository<Vector,Integer> {
     Vector findByVectorId(Integer vectorId);
+
+
 }
