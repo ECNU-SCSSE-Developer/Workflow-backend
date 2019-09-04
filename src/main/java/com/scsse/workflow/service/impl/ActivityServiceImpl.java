@@ -124,10 +124,9 @@ public class ActivityServiceImpl implements ActivityService {
 
     @Override
     public void bindTagToActivity(Integer activityId, Integer tagId) {
-        //TODO:(插入前要先确保关联表里面没有该条关联数据)
         Activity activity = activityRepository.findByActivityId(activityId);
         Tag tag = tagRepository.findByTagId(tagId);
-        if(activity != null && tag != null){
+        if(activity != null && tag != null && !activity.getActivityTags().contains(tag)){
             activity.getActivityTags().add(tag);
             activityRepository.save(activity);
         }

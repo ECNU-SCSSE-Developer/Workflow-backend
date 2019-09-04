@@ -8,6 +8,7 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -46,11 +47,11 @@ public class Vector {
     @JoinTable(name = "edge",
             joinColumns = @JoinColumn(name = "begin_vector_id"),
             inverseJoinColumns = @JoinColumn(name = "end_vector_id"))
-    private Set<Vector> nextVectors;
+    private Set<Vector> nextVectors = new HashSet<>();
 
     @ManyToMany(mappedBy = "nextVectors",fetch = FetchType.EAGER)
     @JsonBackReference(value = "vector.lastVectors")
-    private Set<Vector> lastVectors;
+    private Set<Vector> lastVectors = new HashSet<>();
 
 
     /**

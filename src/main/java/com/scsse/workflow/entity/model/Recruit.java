@@ -7,6 +7,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -49,7 +50,7 @@ public class Recruit {
     @JoinTable(name = "recruit_tag",
             joinColumns = @JoinColumn(name = "recruit_id"),
             inverseJoinColumns = @JoinColumn(name = "tag_id"))
-    private Set<Tag> recruitTags;
+    private Set<Tag> recruitTags = new HashSet<>();
 
 
     @ManyToMany
@@ -57,18 +58,18 @@ public class Recruit {
     @JoinTable(name="recruit_member",
             joinColumns = @JoinColumn(name = "recruit_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id"))
-    private Set<User> members;
+    private Set<User> members = new HashSet<>();
 
 
 
     @ManyToMany(mappedBy = "applyRecruits")
     @JsonBackReference(value = "recruit.applicants")
-    private Set<User> applicants;
+    private Set<User> applicants = new HashSet<>();
 
 
     @ManyToMany(mappedBy = "followRecruits")
     @JsonBackReference(value = "recruit.followers")
-    private Set<User> followers;
+    private Set<User> followers = new HashSet<>();
 
     public Recruit(String recruitPosition, String recruitDescription, String recruitState, int recruitWillingNumber, int recruitRegisteredNumber, User manager, Activity activity) {
         this.recruitPosition = recruitPosition;

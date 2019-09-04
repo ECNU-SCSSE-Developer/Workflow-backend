@@ -7,6 +7,8 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -32,18 +34,31 @@ public class Tag {
 
     @ManyToMany(mappedBy = "userTags")
     @JsonBackReference(value = "activity.users")
-    private Set<User> users;
+    private Set<User> users = new HashSet<>();
 
     @ManyToMany(mappedBy = "activityTags")
     @JsonBackReference(value = "activity.activities")
-    private Set<Activity> activities;
+    private Set<Activity> activities = new HashSet<>();
 
     @ManyToMany(mappedBy = "recruitTags")
     @JsonBackReference(value = "activity.recruits")
-    private Set<Recruit> recruits;
+    private Set<Recruit> recruits = new HashSet<>();
 
     public Tag(String tagName, String tagDescription) {
         this.tagName = tagName;
         this.tagDescription = tagDescription;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Tag)) return false;
+        Tag tag = (Tag) o;
+        return getTagId() == tag.getTagId();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getTagId());
     }
 }

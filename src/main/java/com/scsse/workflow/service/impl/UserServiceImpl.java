@@ -75,7 +75,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void unBindFollewedRecruitToUser(Integer userId, Integer recruitId) {
+    public void unBindFollowedRecruitToUser(Integer userId, Integer recruitId) {
 
     }
 

@@ -96,10 +96,9 @@ public class RecruitServiceImpl implements RecruitService {
 
     @Override
     public void bindTagToRecruit(Integer recruitId, Integer tagId) {
-        //TODO:(插入前要先确保关联表里面没有该条关联数据)
         Recruit recruit = recruitRepository.findByRecruitId(recruitId);
         Tag tag = tagRepository.findByTagId(tagId);
-        if(recruit != null && tag != null){
+        if(recruit != null && tag != null && !recruit.getRecruitTags().contains(tag)){
             recruit.getRecruitTags().add(tag);
             recruitRepository.save(recruit);
         }

@@ -8,6 +8,7 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -44,7 +45,7 @@ public class Activity {
     @JoinTable(name = "activity_tag",
             joinColumns = @JoinColumn(name = "activity_id"),
             inverseJoinColumns = @JoinColumn(name = "tag_id"))
-    private Set<Tag> activityTags;
+    private Set<Tag> activityTags = new HashSet<>();
 
     public Activity(String activityName, Date activityTime, String activityPlace, String activityDescription, Date activitySignUpDeadline) {
         this.activityName = activityName;

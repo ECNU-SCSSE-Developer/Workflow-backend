@@ -22,64 +22,64 @@ public interface UserService {
 
     /**
      * 用户关注一条招聘
-     * @param userId
-     * @param recruitId
+     * @param userId 用户ID
+     * @param recruitId 招聘ID
      */
     void bindFollowedRecruitToUser(Integer userId, Integer recruitId);
 
     /**
      * 用户申请一条招聘
-     * @param userId
-     * @param recruitId
+     * @param userId 用户ID
+     * @param recruitId 招聘ID
      */
     void bindRegisteredRecruitToUser(Integer userId, Integer recruitId);
 
     /**
      * 用户取消关注一条招聘
-     * @param userId
-     * @param recruitId
+     * @param userId 用户ID
+     * @param recruitId 招聘ID
      */
-    void unBindFollewedRecruitToUser(Integer userId, Integer recruitId);
+    void unBindFollowedRecruitToUser(Integer userId, Integer recruitId);
 
     /**
      * 用户取消申请一条招聘
-     * @param userId
-     * @param recruitId
+     * @param userId 用户ID
+     * @param recruitId 招聘ID
      */
     void unBindRegisteredRecruitToUser(Integer userId, Integer recruitId);
 
     /**
      * 返回一个用户关注的所有招聘
-     * @param userId
-     * @return
+     * @param userId 用户ID
+     * @return List{Recruit}
      */
     List<Recruit> findAllFollowedRecruit(Integer userId);
 
     /**
      * 返回一个用户应聘的所有招聘
-     * @param userId
-     * @return
+     * @param userId 用户ID
+     * @return List{Recruit}
      */
     List<Recruit> findAllRegisteredRecruit(Integer userId);
 
     /**
      * 返回一个用户绑定的所有tag
-     * @param userId
+     * @param userId 用户ID
      * @return List{Tag}
      */
     Set<Tag> findAllTagOfUser(Integer userId);
 
     /**
      * 给一个user绑定一个tag
-     * @param userId
-     * @param tagId
+     * @param userId 用户ID
+     * @param tagId 标签ID
      */
     void bindTagToUser(Integer userId, Integer tagId);
 
     /**
      * 给一个user解绑一个tag
-     * @param userId
-     * @param tagId
+     * @param userId 用户ID
+     * @param tagId 标签ID
      */
     void unBindTagToUser(Integer userId, Integer tagId);
 }

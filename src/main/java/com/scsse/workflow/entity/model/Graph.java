@@ -7,6 +7,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -39,7 +40,7 @@ public class Graph {
 
     @JsonBackReference(value = "graph.vectors")
     @OneToMany(mappedBy = "graph")
-    private Set<Vector> vectors;
+    private Set<Vector> vectors = new HashSet<>();
 
 
     public int size(){
