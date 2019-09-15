@@ -5,6 +5,7 @@ import com.scsse.workflow.util.Result.Result;
 import com.scsse.workflow.util.Result.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -47,6 +48,16 @@ public class ActivityController {
                 return ResultUtil.success(activityService.findAllActivity());
         }
 
+    }
+
+    /**
+     * 获取调用者关注的所有比赛
+     * @param openid 调用者的openid
+     * @return
+     */
+    @GetMapping("/activity/followed")
+    public Result getFollowedActivity(@RequestAttribute() String openid){
+        return ResultUtil.success();
     }
 
 

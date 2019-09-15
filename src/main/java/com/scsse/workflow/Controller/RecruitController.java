@@ -30,7 +30,7 @@ public class RecruitController {
      *      /recruit/all?name=java?recruitPosition=java_backend&&time=xxx&&offset=0 xxx时间点前第1页的职位为后端的recruitName带java的应聘数据
      *  属性:
      *      organizer:应聘发起人
-     *      like:此人是否收藏了该比赛
+     *      star:此人是否关注了该比赛
      *      recruitName:此条应聘名称
      *      ...
      *
@@ -40,7 +40,7 @@ public class RecruitController {
      *              userId: xxx,
      *              username: 'xxx',
      *          },
-     *          like：true,
+     *          follow：true,
      *          recruitName: 'xxx',
      *          recruitId: xxx,
      *          recruitWillingNumber: xxx,
@@ -88,6 +88,48 @@ public class RecruitController {
     }
 
     /**
+     * 获取调用者关注的所有应聘
+     * @param openid 调用者的openid
+     * @return
+     * 例:
+     *  url:
+     *      /recruit/followed
+     *
+     *  json:
+     *      [{
+     *          organizer: {
+     *              userId: xxx,
+     *              username: 'xxx',
+     *          },
+     *          follow：true,
+     *          recruitName: 'xxx',
+     *          recruitId: xxx,
+     *          recruitWillingNumber: xxx,
+     *          recruitRegisteredNumber: xxx,
+     *          activityName: 'xxx'
+     *      },{
+     *          xxx
+     *      },{
+     *          xxx
+     *      }]
+     */
+    @GetMapping("/followed")
+    public Result getFollowedRecruit(@RequestAttribute() String openid){
+        return ResultUtil.success();
+    }
+
+    /**
+     * 获取调用者申请应聘的所有应聘
+     * @param openid
+     * @return
+     */
+    @GetMapping("/applied")
+    public Result getAppliedRecruit(@RequestAttribute() String openid){
+        return ResultUtil.success();
+    }
+
+
+    /**
      * 创建一条应聘
      * @param recruit
      * @return
@@ -100,22 +142,36 @@ public class RecruitController {
      *
      */
     @PostMapping("")
-    public Result createOneRecruit(@RequestBody() Recruit recruit){
+    public Result createOneRecruit(@RequestBody() Recruit recruit, @RequestAttribute() String openid){
         return ResultUtil.success();
     }
 
     /**
-     * 关注一条招聘
-     * @param id
+     * 关注一条应聘
+     * 因为是新建一条关注，所以用post
+     * @param id 该条应聘的id
+     * @param openid 调用者的openid
      * @return
+     * 例:
+     *  url:
+     *      /recruit/1/follow
      */
-    @PostMapping("/{id}/star")
-    public Result starOneRecruit(@PathVariable() Integer id){
+    @PostMapping("/{id}/follow")
+    public Result starOneRecruit(@PathVariable() Integer id, @RequestAttribute() String openid){
         return ResultUtil.success();
     }
 
-    @PutMapping("/{id}/unstar")
-    public Result unstarOneRecruit(@PathVariable() Integer id){
+    /**
+     * 取消关注一条应聘
+     * @param id
+     * @param openid
+     * @return
+     * 例:
+     *  url:
+     *      /recruit/1/unfollow
+     */
+    @DeleteMapping("/{id}/unfollow")
+    public Result unstarOneRecruit(@PathVariable() Integer id, @RequestAttribute() String openid){
         return ResultUtil.success();
     }
 }
