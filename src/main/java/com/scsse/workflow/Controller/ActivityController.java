@@ -49,18 +49,24 @@ public class ActivityController {
 
     /**
      * 获取某个活动的具体信息
-     * @param id
-     * @return
+     * @param activityId 活动Id
+     * @return Activity
+     *
+     * e.g.
+     *  GET /activity/1
      */
-    @GetMapping("/activity/{id}")
-    public Result getActivityDetail(@PathVariable Integer id){
+    @GetMapping("/activity/{activityId}")
+    public Result getActivityDetail(@PathVariable Integer activityId){
         return ResultUtil.success();
     }
 
     /**
      * 获取调用者关注的所有比赛
      * @param openid 调用者的openid
-     * @return
+     * @return List{Activity}
+     *
+     * e.g.
+     *  GET /activity/1
      */
     @GetMapping("/activity/followed")
     public Result getFollowedActivity(@RequestAttribute() String openid){
@@ -69,30 +75,29 @@ public class ActivityController {
 
     /**
      * 关注一个活动
-     * 因为是新建一条关注，所以用post
-     * @param id 该活动的id
+     * @param activityId 该活动的id
      * @param openid 调用者的openid
      * @return
      * 例:
      *  url:
-     *      /activity/1/follow
+     *      PUT /user/1/activity/1
      */
-    @PostMapping("/activity/{id}/follow")
-    public Result followOneActivity(@PathVariable() Integer id, @RequestAttribute() String openid){
+    @PutMapping("/user/{openid}/activity/{activityId}")
+    public Result followOneActivity(@PathVariable() Integer activityId, @PathVariable String openid){
         return ResultUtil.success();
     }
 
     /**
      * 取消关注一个活动
-     * @param id 该活动的id
+     * @param activityId 该活动的id
      * @param openid 调用者的openid
      * @return
      * 例:
      *  url:
-     *      /activity/1/unfollow
+     *      DELETE /user/1/activity/1
      */
-    @DeleteMapping("/activity/{id}/unfollow")
-    public Result unfollowOneActivity(@PathVariable() Integer id, @RequestAttribute() String openid){
+    @DeleteMapping("/user/{openid}/activity/{activityId}")
+    public Result unfollowOneActivity(@PathVariable() Integer activityId, @PathVariable String openid){
         return ResultUtil.success();
     }
 

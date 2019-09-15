@@ -12,15 +12,14 @@ import org.springframework.web.bind.annotation.*;
  * @date 2019-09-15 09:49
  */
 @RestController
-@RequestMapping("/user")
 public class UserController {
 
     /**
      * 获取某个用户的具体信息
-     * @param openid
-     * @return
+     * @param openid user primary key
+     * @return User
      */
-    @GetMapping("/{openid}")
+    @GetMapping("/user/{openid}")
     public Result getUserDetail(@PathVariable() String openid){
         return ResultUtil.success();
     }
@@ -28,49 +27,59 @@ public class UserController {
     /**
      * 获取调用者关注的所有user
      * @param openid 调用者的openid
-     * @return
+     * @return List{User}
      */
-    @GetMapping("/followed")
+    @GetMapping("/user/follower")
     public Result getFollowedUser(@RequestAttribute() String openid){
         return ResultUtil.success();
     }
 
     /**
      * 编辑个人信息
-     * @param user
-     * @return
+     * @param user 需要更新的User信息
+     * @param openid user唯一标示
+     * @return 200 OK
+     *
+     * e.g.
+     *      Put /user/1
+     *
+     * JsonBody
+     *      {
+     *          username: "test",
+     *          userNumber: "10105101111"
+     *      }
+     *
      */
-    @PutMapping("/edit")
-    public Result editInformation(@RequestBody User user){
+    @PutMapping("/user/{openid}")
+    public Result editInformation(@RequestBody User user, @PathVariable String openid){
         return ResultUtil.success();
     }
 
     /**
      * 关注一个user
-     * 因为是新建一条关注，所以用post
-     * @param id 该user的id(即openid)
-     * @param openid 调用者的openid
+     * @param userId 调用者的openid
+     * @param followerId 要关注的用户user的id(即openid)
      * @return
      * 例:
      *  url:
-     *      /user/1/follow
+     *      PUT /user/1/follower/2
      */
-    @PostMapping("/{id}/follow")
-    public Result followOneUser(@PathVariable() Integer id, @RequestAttribute() String openid){
+    @PutMapping("/user/{userId}/follower/{followerId}")
+    public Result followOneUser(@PathVariable String userId, @PathVariable String followerId){
         return ResultUtil.success();
     }
 
     /**
      * 取消关注一个user
-     * @param id 该user的id(即openid)
-     * @param openid 调用者的openid
+     * @param userId 该user的id(即openid)
+     * @param followerId 要关注的用户user的id(即openid)
      * @return
      * 例:
      *  url:
-     *      /user/1/unfollow
+     *      DELETE /user/1/follower/2
      */
-    @DeleteMapping("/{id}/unfollow")
-    public Result unfollowOneUser(@PathVariable() Integer id, @RequestAttribute() String openid){
+    @DeleteMapping("/user/{userId}/follower/{followerId}")
+    public Result unfollowOneUser(@PathVariable String userId, @PathVariable String followerId){
         return ResultUtil.success();
     }
 }
