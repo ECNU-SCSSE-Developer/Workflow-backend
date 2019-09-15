@@ -1,10 +1,7 @@
 package com.scsse.workflow.entity.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -18,9 +15,10 @@ import java.util.Set;
 
 @Getter
 @Setter
-@ToString(exclude = {"followRecruits","successRecruits","applyRecruits"})
+@ToString(exclude = {"followRecruits","successRecruits","applyRecruits","followUser"})
 @Entity
 @NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "user")
 public class User {
     @Id
@@ -41,6 +39,8 @@ public class User {
     private String userSpecialty;
     @Column
     private String userResume;
+    @Column
+    private String openid;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JsonBackReference(value = "user.userTags")
@@ -49,6 +49,12 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "tag_id"))
     private Set<Tag> userTags = new HashSet<>();
 
+    @OneToMany
+    @JsonBackReference(value = "user.followUsers")
+    @JoinTable(name = "user_follower",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "follower_id"))
+    private Set<User> followUser = new HashSet<>();
 
     @ManyToMany
     @JsonBackReference(value = "user.followRecruits")
@@ -69,13 +75,7 @@ public class User {
     @JsonBackReference(value = "user.successRecruits")
     private Set<Recruit> successRecruits = new HashSet<>();
 
-    public User(String username, String userNumber, String userGrade, String userPhone, String userEmail, String userSpecialty, String userResume) {
-        this.username = username;
-        this.userNumber = userNumber;
-        this.userGrade = userGrade;
-        this.userPhone = userPhone;
-        this.userEmail = userEmail;
-        this.userSpecialty = userSpecialty;
-        this.userResume = userResume;
+    public User(String openid) {
+        this.openid = openid;
     }
 }

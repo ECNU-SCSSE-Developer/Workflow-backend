@@ -27,6 +27,8 @@ public class Recruit {
     @Column
     private int recruitId;
     @Column
+    private int recruitName;
+    @Column
     private String recruitPosition;
     @Column
     private String recruitDescription;
@@ -71,7 +73,8 @@ public class Recruit {
     @JsonBackReference(value = "recruit.followers")
     private Set<User> followers = new HashSet<>();
 
-    public Recruit(String recruitPosition, String recruitDescription, String recruitState, int recruitWillingNumber, int recruitRegisteredNumber, User manager, Activity activity) {
+    public Recruit(int recruitName, String recruitPosition, String recruitDescription, String recruitState, int recruitWillingNumber, int recruitRegisteredNumber, User manager, Activity activity) {
+        this.recruitName = recruitName;
         this.recruitPosition = recruitPosition;
         this.recruitDescription = recruitDescription;
         this.recruitState = recruitState;

@@ -5,7 +5,7 @@ package com.scsse.workflow.util.Result;
  * Created on 2019-03-07 20:52
  */
 public enum ResultCode {
-    UNKNOW_ERROR(-1, "未知错误"),
+    UNKNOWN_ERROR(-1, "未知错误"),
     CODE_200(200, "访问成功"),
     CODE_400(400, "用户名或密码错误!"),
     CODE_401(401, "未携带Token或Token无效!"),
