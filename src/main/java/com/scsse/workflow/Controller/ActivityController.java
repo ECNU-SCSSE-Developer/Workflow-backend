@@ -4,10 +4,7 @@ import com.scsse.workflow.service.ActivityService;
 import com.scsse.workflow.util.Result.Result;
 import com.scsse.workflow.util.Result.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestAttribute;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,7 +57,34 @@ public class ActivityController {
         return ResultUtil.success();
     }
 
+    /**
+     * 关注一个活动
+     * 因为是新建一条关注，所以用post
+     * @param id 该活动的id
+     * @param openid 调用者的openid
+     * @return
+     * 例:
+     *  url:
+     *      /activity/1/follow
+     */
+    @PostMapping("/activity/{id}/follow")
+    public Result followOneActivity(@PathVariable() Integer id, @RequestAttribute() String openid){
+        return ResultUtil.success();
+    }
 
+    /**
+     * 取消关注一个活动
+     * @param id 该活动的id
+     * @param openid 调用者的openid
+     * @return
+     * 例:
+     *  url:
+     *      /activity/1/unfollow
+     */
+    @DeleteMapping("/activity/{id}/unfollow")
+    public Result unfollowOneActivity(@PathVariable() Integer id, @RequestAttribute() String openid){
+        return ResultUtil.success();
+    }
 
 
 }
