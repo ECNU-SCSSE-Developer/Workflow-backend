@@ -48,6 +48,16 @@ public class ActivityController {
     }
 
     /**
+     * 获取某个活动的具体信息
+     * @param id
+     * @return
+     */
+    @GetMapping("/activity/{id}")
+    public Result getActivityDetail(@PathVariable Integer id){
+        return ResultUtil.success();
+    }
+
+    /**
      * 获取调用者关注的所有比赛
      * @param openid 调用者的openid
      * @return
