@@ -117,7 +117,6 @@ public class ActivityServiceImpl implements ActivityService {
 
     @Override
     public Set<Tag> findAllTagOfActivity(Integer activityId) {
-
         Activity activity = activityRepository.findByActivityId(activityId);
         return  activity.getActivityTags();
     }
@@ -135,6 +134,8 @@ public class ActivityServiceImpl implements ActivityService {
 
     @Override
     public void unBindTagToActivity(Integer activityId, Integer tagId) {
-
+        Activity activity = activityRepository.findByActivityId(activityId);
+        activity.getActivityTags().remove(tagRepository.findByTagId(tagId));
+        activityRepository.save(activity);
     }
 }

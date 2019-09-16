@@ -48,8 +48,15 @@ class ActivityServiceTest {
         assertNotNull(activityService.findActivityById(activity.getActivityId()));
         assertNotNull(tagService.findTagById(tag.getTagId()));
         // test binding
-        activityService.bindTagToActivity(1,1);
+        activityService.bindTagToActivity(activity.getActivityId(),tag.getTagId());
         assertTrue(
+                activityService.findActivityById(activity.getActivityId()).getActivityTags().contains(
+                        tagService.findTagById(tag.getTagId())
+                )
+        );
+        // test unbind
+        activityService.unBindTagToActivity(activity.getActivityId(),tag.getTagId());
+        assertFalse(
                 activityService.findActivityById(activity.getActivityId()).getActivityTags().contains(
                         tagService.findTagById(tag.getTagId())
                 )
