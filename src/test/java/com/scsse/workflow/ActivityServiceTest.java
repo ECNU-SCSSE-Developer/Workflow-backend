@@ -39,10 +39,10 @@ class ActivityServiceTest {
     @Test
     public void testBindTagToActivity(){
         Activity activity = new Activity();
-        activity.setActivityName("test_activity1");
+        activity.setActivityName("test_activity");
         activity = activityService.createActivity(activity);
         Tag tag = new Tag();
-        tag.setTagName("test_tag1");
+        tag.setTagName("test_tag");
         tag = tagService.createTag(tag);
         // pre-condition
         assertNotNull(activityService.findActivityById(activity.getActivityId()));
