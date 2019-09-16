@@ -153,7 +153,7 @@ public class RecruitController {
      *  url:
      *      PUT /user/1/recruit/1
      */
-    @PostMapping("/user/{openid}/recruit/{recruitId}")
+    @PutMapping("/user/{openid}/recruit/{recruitId}")
     public Result followOneRecruit(@PathVariable() Integer recruitId,  @PathVariable String openid){
         return ResultUtil.success();
     }

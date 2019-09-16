@@ -37,7 +37,7 @@ class ActivityServiceTest {
     }
 
     @Test
-    public void testBindTagToActivity(){
+    public void bindTagToActivityTest(){
         Activity activity = new Activity();
         activity.setActivityName("test_activity");
         activity = activityService.createActivity(activity);

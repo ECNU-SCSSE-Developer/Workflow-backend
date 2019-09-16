@@ -54,4 +54,8 @@ public class Activity {
         this.activityDescription = activityDescription;
         this.activitySignUpDeadline = activitySignUpDeadline;
     }
+
+    public Activity(String activityName) {
+        this.activityName = activityName;
+    }
 }

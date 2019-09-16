@@ -7,6 +7,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -27,7 +28,7 @@ public class Recruit {
     @Column
     private int recruitId;
     @Column
-    private int recruitName;
+    private String recruitName;
     @Column
     private String recruitPosition;
     @Column
@@ -38,6 +39,8 @@ public class Recruit {
     private int recruitWillingNumber;
     @Column
     private int recruitRegisteredNumber;
+    @Column
+    private Date createTime = new Date();
 
     @OneToOne
     @JoinColumn(name = "user_id",unique = true)
@@ -73,7 +76,13 @@ public class Recruit {
     @JsonBackReference(value = "recruit.followers")
     private Set<User> followers = new HashSet<>();
 
-    public Recruit(int recruitName, String recruitPosition, String recruitDescription, String recruitState, int recruitWillingNumber, int recruitRegisteredNumber, User manager, Activity activity) {
+
+    public Recruit(String recruitName, Activity activity) {
+        this.recruitName = recruitName;
+        this.activity = activity;
+    }
+
+    public Recruit(String recruitName, String recruitPosition, String recruitDescription, String recruitState, int recruitWillingNumber, int recruitRegisteredNumber, User manager, Activity activity) {
         this.recruitName = recruitName;
         this.recruitPosition = recruitPosition;
         this.recruitDescription = recruitDescription;
