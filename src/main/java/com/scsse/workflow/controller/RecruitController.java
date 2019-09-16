@@ -1,4 +1,4 @@
-package com.scsse.workflow.Controller;
+package com.scsse.workflow.controller;
 
 import com.scsse.workflow.entity.model.Recruit;
 import com.scsse.workflow.util.Result.Result;

@@ -1,9 +1,8 @@
-package com.scsse.workflow.Controller;
+package com.scsse.workflow.controller;
 
 import com.scsse.workflow.entity.model.User;
 import com.scsse.workflow.util.Result.Result;
 import com.scsse.workflow.util.Result.ResultUtil;
-import org.apache.logging.log4j.message.ReusableMessage;
 import org.springframework.web.bind.annotation.*;
 
 /**

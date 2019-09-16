@@ -1,13 +1,10 @@
-package com.scsse.workflow.Controller;
+package com.scsse.workflow.controller;
 
 import com.scsse.workflow.service.ActivityService;
 import com.scsse.workflow.util.Result.Result;
 import com.scsse.workflow.util.Result.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Alfred Fu

@@ -1,4 +1,4 @@
-package com.scsse.workflow.Controller;
+package com.scsse.workflow.controller;
 
 import com.scsse.workflow.service.LoginService;
 import com.scsse.workflow.util.Result.Result;
