@@ -9,5 +9,6 @@ import com.scsse.workflow.entity.model.Graph;
 
 public interface GraphService {
     Graph findSimpleGraphById(Integer graphId);
+
     Graph findWithVectorsById(Integer graphId);
 }

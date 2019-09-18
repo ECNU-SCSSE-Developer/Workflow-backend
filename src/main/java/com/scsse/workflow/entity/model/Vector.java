@@ -17,7 +17,7 @@ import java.util.Set;
  */
 @Getter
 @Setter
-@ToString(exclude = {"nextVectors","lastVectors"})
+@ToString(exclude = {"nextVectors", "lastVectors"})
 @Entity
 @NoArgsConstructor
 @Table(name = "vector")
@@ -34,12 +34,12 @@ public class Vector {
     private Date vectorCreateTime = new Date();
 
     @OneToOne
-    @JoinColumn(name = "user_id",unique = true)
+    @JoinColumn(name = "user_id", unique = true)
     private User manager;
 
     @OneToOne
     @JsonBackReference(value = "vector.graph")
-    @JoinColumn(name = "graph_id",unique = true)
+    @JoinColumn(name = "graph_id", unique = true)
     private Graph graph;
 
     @ManyToMany(fetch = FetchType.EAGER)
@@ -49,18 +49,17 @@ public class Vector {
             inverseJoinColumns = @JoinColumn(name = "end_vector_id"))
     private Set<Vector> nextVectors = new HashSet<>();
 
-    @ManyToMany(mappedBy = "nextVectors",fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = "nextVectors", fetch = FetchType.EAGER)
     @JsonBackReference(value = "vector.lastVectors")
     private Set<Vector> lastVectors = new HashSet<>();
 
 
     /**
-     *
-     * @param vectorName 名字
+     * @param vectorName        名字
      * @param vectorDescription 描述
-     * @param vectorCreateTime 创建时间
-     * @param manager 管理员
-     * @param graph 关联图
+     * @param vectorCreateTime  创建时间
+     * @param manager           管理员
+     * @param graph             关联图
      */
     public Vector(String vectorName, String vectorDescription, Date vectorCreateTime, User manager, Graph graph) {
         this.vectorName = vectorName;

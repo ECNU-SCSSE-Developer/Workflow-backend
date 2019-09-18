@@ -40,7 +40,7 @@ public class VectorServiceImpl implements VectorService {
     @Override
     public Vector updateVector(Vector vector) {
         Vector oldOne = vectorRepository.findByVectorId(vector.getVectorId());
-        modelMapper.map(vector,oldOne);
+        modelMapper.map(vector, oldOne);
         return vectorRepository.save(oldOne);
     }
 
@@ -49,16 +49,16 @@ public class VectorServiceImpl implements VectorService {
         vectorRepository.deleteById(vectorId);
     }
 
-    public void addSuccessor(Vector theVector, Vector successor){
-        if (theVector.getNextVectors()!=null) {
+    public void addSuccessor(Vector theVector, Vector successor) {
+        if (theVector.getNextVectors() != null) {
             theVector.getNextVectors().add(successor);
         }
         vectorRepository.save(theVector);
 
     }
 
-    public void deleteSuccessor(Vector theVector, Vector successor){
-        if (theVector.getNextVectors()!=null)
+    public void deleteSuccessor(Vector theVector, Vector successor) {
+        if (theVector.getNextVectors() != null)
             theVector.getNextVectors().remove(successor);
         vectorRepository.save(theVector);
     }

@@ -10,13 +10,17 @@ import com.scsse.workflow.entity.model.Vector;
 public interface VectorService {
 
     Vector findVectorById(Integer vectorId);
+
     Vector createVector(Vector vector);
+
     Vector updateVector(Vector vector);
+
     void deleteVector(Integer vectorId);
 
 
     /**
      * 给指定节点添加后继结点
+     *
      * @param theVector 指定节点
      * @param successor 后继结点
      */
@@ -24,6 +28,7 @@ public interface VectorService {
 
     /**
      * 删除指定节点的后继结点
+     *
      * @param theVector 指定结点
      * @param successor 待删除结点
      */

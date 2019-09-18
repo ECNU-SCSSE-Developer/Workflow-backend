@@ -14,18 +14,25 @@ import java.util.Set;
 public interface ActivityService {
 
     List<Activity> findAllActivity();
+
     List<Activity> findAllExpiredActivity();
+
     List<Activity> findAllFinishedActivity();
+
     List<Activity> findAllFreshActivity();
 
 
     Activity findActivityById(Integer activityId);
+
     Activity createActivity(Activity activity);
+
     Activity updateActivity(Activity activity);
+
     void deleteActivityById(Integer activityId);
 
     /**
      * 返回一个比赛的所有的招聘
+     *
      * @param activityId
      * @return List<Recruit>
      */
@@ -33,6 +40,7 @@ public interface ActivityService {
 
     /**
      * 返回一个比赛的所有tag
+     *
      * @param activityId
      * @return List{Tag}
      */
@@ -40,6 +48,7 @@ public interface ActivityService {
 
     /**
      * 给一个比赛绑定一个tag
+     *
      * @param activityId
      * @param tagId
      */
@@ -47,6 +56,7 @@ public interface ActivityService {
 
     /**
      * 给一个比赛解绑一个tag
+     *
      * @param activityId
      * @param tagId
      */

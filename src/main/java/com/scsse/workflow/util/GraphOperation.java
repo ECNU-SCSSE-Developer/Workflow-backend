@@ -7,7 +7,8 @@ import com.scsse.workflow.repository.VectorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Alfred Fu
@@ -27,26 +28,25 @@ public class GraphOperation {
 
 
     /**
-     *
      * @param graph 需要排序的图
      *              图中需要包括结点
      * @return 排好序的结点
      */
-    public List<Vector> topologicalSort(Graph graph){
+    public List<Vector> topologicalSort(Graph graph) {
         List<Vector> result = new ArrayList<>();
 
         // just make sure the first cycle can be procedure
-        int lastCircleNumber = graph.size()+1;
+        int lastCircleNumber = graph.size() + 1;
         // in case of ultimate cycle
-        while (graph.size()!=lastCircleNumber){
-            lastCircleNumber=graph.size();
+        while (graph.size() != lastCircleNumber) {
+            lastCircleNumber = graph.size();
             //
             Vector theNodeNeedToBeRemoved = null;
             //
-            for (Vector each : graph.getVectors()){
-                if (each.getLastVectors().isEmpty()){
+            for (Vector each : graph.getVectors()) {
+                if (each.getLastVectors().isEmpty()) {
                     // remove itself from the node it points to
-                    for (Vector temp : each.getNextVectors()){
+                    for (Vector temp : each.getNextVectors()) {
                         temp.getLastVectors().remove(each);
                     }
                     // add it to the result
@@ -57,7 +57,7 @@ public class GraphOperation {
                 }
             }
             // remove itself from the list
-            if (theNodeNeedToBeRemoved!=null)
+            if (theNodeNeedToBeRemoved != null)
                 graph.getVectors().remove(theNodeNeedToBeRemoved);
         }
 

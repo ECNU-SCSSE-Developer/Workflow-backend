@@ -1,12 +1,16 @@
 package com.scsse.workflow.service.impl;
 
+import com.scsse.workflow.entity.dto.RecruitDto;
 import com.scsse.workflow.entity.model.Recruit;
 import com.scsse.workflow.entity.model.Tag;
 import com.scsse.workflow.entity.model.User;
+import com.scsse.workflow.repository.RecruitRepository;
 import com.scsse.workflow.repository.TagRepository;
 import com.scsse.workflow.repository.UserRepository;
+import com.scsse.workflow.service.RecruitService;
 import com.scsse.workflow.service.UserService;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,20 +27,27 @@ import java.util.Set;
 @Transactional
 public class UserServiceImpl implements UserService {
 
-    private ModelMapper modelMapper;
+    private final ModelMapper modelMapper;
 
-    private UserRepository userRepository;
+    private final RecruitService recruitService;
 
-    private TagRepository tagRepository;
+    private final RecruitRepository recruitRepository;
 
-    public UserServiceImpl(ModelMapper modelMapper, UserRepository userRepository, TagRepository tagRepository) {
+    private final UserRepository userRepository;
+
+    private final TagRepository tagRepository;
+
+    @Autowired
+    public UserServiceImpl(ModelMapper modelMapper, RecruitService recruitService, RecruitRepository recruitRepository, UserRepository userRepository, TagRepository tagRepository) {
         this.modelMapper = modelMapper;
+        this.recruitService = recruitService;
+        this.recruitRepository = recruitRepository;
         this.userRepository = userRepository;
         this.tagRepository = tagRepository;
     }
 
     @Override
-    public List<User> findAllUser(){
+    public List<User> findAllUser() {
         return userRepository.findAll();
     }
 
@@ -65,33 +76,73 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void bindFollowedRecruitToUser(Integer userId, Integer recruitId) {
-
+    public void followRecruit(Integer userId, Integer recruitId) {
+        User user = userRepository.findByUserId(userId);
+        Recruit recruit = recruitRepository.findByRecruitId(recruitId);
+        if (user != null && recruit != null) {
+            user.getFollowRecruits().add(recruit);
+            userRepository.save(user);
+        }
     }
 
     @Override
-    public void bindRegisteredRecruitToUser(Integer userId, Integer recruitId) {
-
+    public void registerRecruit(Integer userId, Integer recruitId) {
+        User user = userRepository.findByUserId(userId);
+        Recruit recruit = recruitRepository.findByRecruitId(recruitId);
+        if (user != null && recruit != null) {
+            user.getApplyRecruits().add(recruit);
+            userRepository.save(user);
+        }
     }
 
     @Override
-    public void unBindFollowedRecruitToUser(Integer userId, Integer recruitId) {
-
+    public void unfollowRecruit(Integer userId, Integer recruitId) {
+        User user = userRepository.findByUserId(userId);
+        Recruit recruit = recruitRepository.findByRecruitId(recruitId);
+        if (user != null && recruit != null) {
+            user.getFollowRecruits().remove(recruit);
+            userRepository.save(user);
+        }
     }
 
     @Override
-    public void unBindRegisteredRecruitToUser(Integer userId, Integer recruitId) {
-
+    public void unregisterRecruit(Integer userId, Integer recruitId) {
+        User user = userRepository.findByUserId(userId);
+        Recruit recruit = recruitRepository.findByRecruitId(recruitId);
+        if (user != null && recruit != null) {
+            user.getApplyRecruits().remove(recruit);
+            userRepository.save(user);
+        }
     }
 
     @Override
-    public List<Recruit> findAllFollowedRecruit(Integer userId) {
-        return null;
+    public List<RecruitDto> findAllFollowedRecruit(Integer userId) {
+        User user = userRepository.findByUserId(userId);
+        if (user != null) {
+            return recruitService.transferRecruitToListDto(user.getFollowRecruits(), user);
+        } else {
+            return null;
+        }
     }
 
     @Override
-    public List<Recruit> findAllRegisteredRecruit(Integer userId) {
-        return null;
+    public List<RecruitDto> findAllRegisteredRecruit(Integer userId) {
+        User user = userRepository.findByUserId(userId);
+        if (user != null) {
+            return recruitService.transferRecruitToListDto(user.getApplyRecruits(), user);
+        } else {
+            return null;
+        }
+    }
+
+    @Override
+    public List<RecruitDto> findAllAssignedRecruit(Integer userId) {
+        User user = userRepository.findByUserId(userId);
+        if (user != null) {
+            return recruitService.transferRecruitToListDto(user.getSuccessRecruits(), user);
+        } else {
+            return null;
+        }
     }
 
     @Override
@@ -104,15 +155,19 @@ public class UserServiceImpl implements UserService {
     public void bindTagToUser(Integer userId, Integer tagId) {
         User user = userRepository.findByUserId(userId);
         Tag tag = tagRepository.findByTagId(tagId);
-        if(user != null && tag != null){
+        if (user != null && tag != null) {
             user.getUserTags().add(tag);
             userRepository.save(user);
         }
-
     }
 
     @Override
     public void unBindTagToUser(Integer userId, Integer tagId) {
-
+        User user = userRepository.findByUserId(userId);
+        Tag tag = tagRepository.findByTagId(tagId);
+        if (user != null && tag != null) {
+            user.getUserTags().remove(tag);
+            userRepository.save(user);
+        }
     }
 }

@@ -25,7 +25,6 @@ public class GraphServiceImpl implements GraphService {
     }
 
 
-
     @Override
     public Graph findSimpleGraphById(Integer graphId) {
         return graphRepository.findByGraphId(graphId);

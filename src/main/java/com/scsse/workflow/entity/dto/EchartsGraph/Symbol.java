@@ -1,7 +1,6 @@
 package com.scsse.workflow.entity.dto.EchartsGraph;
 
 import lombok.Getter;
-import lombok.Setter;
 import lombok.ToString;
 
 /**

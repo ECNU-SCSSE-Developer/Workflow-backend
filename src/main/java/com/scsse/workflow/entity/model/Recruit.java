@@ -43,11 +43,11 @@ public class Recruit {
     private Date createTime = new Date();
 
     @OneToOne
-    @JoinColumn(name = "user_id",unique = true)
+    @JoinColumn(name = "user_id", unique = true)
     private User manager;
 
     @OneToOne
-    @JoinColumn(name = "activity_id",unique = true)
+    @JoinColumn(name = "activity_id", unique = true)
     private Activity activity;
 
     @ManyToMany(fetch = FetchType.EAGER)
@@ -60,11 +60,10 @@ public class Recruit {
 
     @ManyToMany
     @JsonBackReference(value = "recruit.members")
-    @JoinTable(name="recruit_member",
+    @JoinTable(name = "recruit_member",
             joinColumns = @JoinColumn(name = "recruit_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id"))
     private Set<User> members = new HashSet<>();
-
 
 
     @ManyToMany(mappedBy = "applyRecruits")

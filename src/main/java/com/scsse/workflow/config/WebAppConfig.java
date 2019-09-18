@@ -16,16 +16,14 @@ public class WebAppConfig extends WebMvcConfigurationSupport {
 
     /**
      * 对拦截器进行Bean处理, 否则拦截器中无法注入Bean
-     * @return
      */
     @Bean
-    public LoginInterceptor myInterceptor(){
+    public LoginInterceptor myInterceptor() {
         return new LoginInterceptor();
     }
 
     /**
      * 注册拦截器myInterceptor
-     * @param registry
      */
     @Override
     protected void addInterceptors(InterceptorRegistry registry) {

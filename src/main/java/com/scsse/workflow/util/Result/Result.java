@@ -19,11 +19,11 @@ public class Result<T> {
 
     private T data;//具体数据
 
-    public Result(){
+    public Result() {
 
     }
 
-    Result(ResultCode resultCode){
+    Result(ResultCode resultCode) {
         this.code = resultCode.getCode();
         this.msg = resultCode.getMsg();
     }

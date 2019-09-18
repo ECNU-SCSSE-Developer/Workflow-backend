@@ -21,13 +21,13 @@ public class TagServiceImpl implements TagService {
 
     private TagRepository tagRepository;
 
-    public TagServiceImpl(ModelMapper modelMapper, TagRepository tagRepository){
+    public TagServiceImpl(ModelMapper modelMapper, TagRepository tagRepository) {
         this.modelMapper = modelMapper;
         this.tagRepository = tagRepository;
     }
 
     @Override
-    public List<Tag> findAllTag(){
+    public List<Tag> findAllTag() {
         return tagRepository.findAll();
     }
 

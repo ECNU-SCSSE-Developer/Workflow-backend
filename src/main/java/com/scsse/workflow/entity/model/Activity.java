@@ -40,7 +40,7 @@ public class Activity {
     @Column
     private String activityUrl;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade={CascadeType.MERGE})
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE})
     @JsonBackReference(value = "activity.activityTags")
     @JoinTable(name = "activity_tag",
             joinColumns = @JoinColumn(name = "activity_id"),

@@ -118,14 +118,14 @@ public class ActivityServiceImpl implements ActivityService {
     @Override
     public Set<Tag> findAllTagOfActivity(Integer activityId) {
         Activity activity = activityRepository.findByActivityId(activityId);
-        return  activity.getActivityTags();
+        return activity.getActivityTags();
     }
 
     @Override
     public void bindTagToActivity(Integer activityId, Integer tagId) {
         Activity activity = activityRepository.findByActivityId(activityId);
         Tag tag = tagRepository.findByTagId(tagId);
-        if(activity != null && tag != null && !activity.getActivityTags().contains(tag)){
+        if (activity != null && tag != null && !activity.getActivityTags().contains(tag)) {
             activity.getActivityTags().add(tag);
             activityRepository.save(activity);
         }

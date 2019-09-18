@@ -21,7 +21,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Table(name = "graph")
 @NamedEntityGraphs(value = {
-        @NamedEntityGraph(name = "Graph.vectors",attributeNodes=@NamedAttributeNode(value = "vectors")),})
+        @NamedEntityGraph(name = "Graph.vectors", attributeNodes = @NamedAttributeNode(value = "vectors")),})
 public class Graph {
 
     @Id
@@ -35,7 +35,7 @@ public class Graph {
 
     @OneToOne
     @JsonBackReference(value = "graph.manager")
-    @JoinColumn(name = "user_id",unique = true)
+    @JoinColumn(name = "user_id", unique = true)
     private User manager;
 
     @JsonBackReference(value = "graph.vectors")
@@ -43,15 +43,13 @@ public class Graph {
     private Set<Vector> vectors = new HashSet<>();
 
 
-    public int size(){
-        return vectors.size();
-    }
-
-
-
     public Graph(String graphName, String activityName, User manager) {
         this.graphName = graphName;
         this.activityName = activityName;
         this.manager = manager;
+    }
+
+    public int size() {
+        return vectors.size();
     }
 }

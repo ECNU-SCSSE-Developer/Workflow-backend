@@ -18,8 +18,7 @@ public enum ResultCode {
     CODE_503(503, "对象不存在，请检测请求参数"),
     CODE_504(504, "服务器连接错误，请稍后重试"),
     CODE_505(505, "key校验失败"),
-    CODE_506(506, "RPC服务连接失败，请稍后重试")
-    ;
+    CODE_506(506, "RPC服务连接失败，请稍后重试");
 
     private Integer code;
 
