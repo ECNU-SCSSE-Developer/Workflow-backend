@@ -47,6 +47,10 @@ public class Activity {
             inverseJoinColumns = @JoinColumn(name = "tag_id"))
     private Set<Tag> activityTags = new HashSet<>();
 
+    @OneToMany(mappedBy = "activity")
+    @JsonBackReference(value = "activity.recruitSet")
+    private Set<Recruit> recruitSet = new HashSet<>();
+
     public Activity(String activityName, Date activityTime, String activityPlace, String activityDescription, Date activitySignUpDeadline) {
         this.activityName = activityName;
         this.activityTime = activityTime;

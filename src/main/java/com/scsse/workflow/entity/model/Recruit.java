@@ -46,8 +46,8 @@ public class Recruit {
     @JoinColumn(name = "user_id", unique = true)
     private User manager;
 
-    @OneToOne
-    @JoinColumn(name = "activity_id", unique = true)
+    @ManyToOne
+    @JoinColumn(name = "activity_id")
     private Activity activity;
 
     @ManyToMany(fetch = FetchType.EAGER)

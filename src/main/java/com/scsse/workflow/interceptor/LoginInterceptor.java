@@ -8,6 +8,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+
+import static javax.servlet.http.HttpServletResponse.SC_FORBIDDEN;
 
 /**
  * @author Andrew Dong
@@ -23,13 +26,13 @@ public class LoginInterceptor implements HandlerInterceptor {
      * 若不存在,则返回false
      */
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws IOException {
         String openid = request.getHeader("openid");
         if (openid == null) {
-            logger.info("拒绝访问");
+            response.sendError(SC_FORBIDDEN,"RequestHeader中携带调用者的openid！");
             return false;
         } else {
-            //将openid放入参数中
+            // 添加至RequestContextHolder
             RequestUtil.setOpenId(openid);
             return true;
         }
@@ -37,7 +40,6 @@ public class LoginInterceptor implements HandlerInterceptor {
 
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) {
-
     }
 
     @Override

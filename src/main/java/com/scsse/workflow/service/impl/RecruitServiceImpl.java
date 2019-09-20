@@ -1,5 +1,6 @@
 package com.scsse.workflow.service.impl;
 
+import com.scsse.workflow.constant.PredicateType;
 import com.scsse.workflow.entity.dto.RecruitDto;
 import com.scsse.workflow.entity.model.Recruit;
 import com.scsse.workflow.entity.model.Tag;
@@ -8,8 +9,10 @@ import com.scsse.workflow.repository.RecruitRepository;
 import com.scsse.workflow.repository.TagRepository;
 import com.scsse.workflow.repository.UserRepository;
 import com.scsse.workflow.service.RecruitService;
+import com.scsse.workflow.util.PredicateUtil;
 import com.scsse.workflow.util.RequestUtil;
 import com.scsse.workflow.util.UserUtil;
+import javafx.util.Pair;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -20,10 +23,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.criteria.Predicate;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Set;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * @author Alfred Fu
@@ -63,18 +65,15 @@ public class RecruitServiceImpl implements RecruitService {
     }
 
     @Override
-    public List<RecruitDto> findPaginationRecruitWithCriteria(Integer pageNum, Integer pageSize, HashMap<String, String> queryParam) {
-        Pageable pageable = PageRequest.of(pageNum, pageSize, Sort.Direction.DESC, "creatTime");
+    public List<RecruitDto> findPaginationRecruitWithCriteria(Integer pageNum, Integer pageSize, HashMap<Integer, Pair<String, String>> queryParam) {
+        Pageable pageable = PageRequest.of(pageNum, pageSize, Sort.Direction.DESC, "createTime");
         List<RecruitDto> result = new ArrayList<>();
         User currentUser = userRepository.findByOpenid(RequestUtil.getOpenId());
         recruitRepository.findAll((Specification<Recruit>) (root, query, criteriaBuilder) -> {
             List<Predicate> predicateList = new ArrayList<>();
+            PredicateUtil predicateHelper = new PredicateUtil<>(criteriaBuilder,root);
             queryParam.forEach(
-                    (key, value) -> predicateList.add(
-                            criteriaBuilder.equal(
-                                    root.get(key).as(String.class), value
-                            )
-                    )
+                    (predicateType, KV) -> predicateList.add(predicateHelper.generatePredicate(predicateType,KV.getKey(),KV.getValue()))
             );
             return criteriaBuilder.and(predicateList.toArray(new Predicate[0]));
         }, pageable).get().map(

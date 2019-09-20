@@ -1,16 +1,20 @@
 package com.scsse.workflow.controller;
 
+import com.scsse.workflow.constant.PredicateType;
 import com.scsse.workflow.entity.dto.RecruitDto;
 import com.scsse.workflow.entity.model.Recruit;
 import com.scsse.workflow.service.RecruitService;
+import com.scsse.workflow.util.QueryParameterBuilder;
 import com.scsse.workflow.util.Result.Result;
 import com.scsse.workflow.util.Result.ResultUtil;
 import com.scsse.workflow.util.UserUtil;
+import javafx.util.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
+import java.util.HashMap;
 
 /**
  * @author Andrew Dong
@@ -32,36 +36,33 @@ public class RecruitController {
 
 
     /**
-     * 分页返回指定时间前(防止新数据写入到数据库时出现bug)的应聘数据(每页10条)
+     * 分页返回指定时间前(防止新数据写入到数据库时出现bug)的应聘数据
      *
-     * @param name            应聘名称(可选，供界面上的搜索按钮使用，若有就SQL再加个模糊查询)
-     * @param recruitPosition 职位
-     * @param time            指定时间点
-     * @param offset          偏移量，从0开始
+     * @param recruitName     应聘名称(可选, 模糊查询)
+     * @param recruitPosition 职位(可选, 严格匹配)
+     * @param pageNum         页码，从0开始(可选,默认0)
+     * @param pageSize        每页条数(可选,默认10)
+     * @param currentTime     指定时间点 @DateTimeFormat(pattern = "yyyy-MM-ddThh:mm:ss")
      * @return List{RecruitListDto}
      * 例:
      * url:
      * /recruit/all?recruitPosition=java_backend&&time=xxx&&offset=1  xxx时间点前第2页的职位为后端的应聘数据
-     * /recruit/all?name=java?recruitPosition=java_backend&&time=xxx&&offset=0 xxx时间点前第1页的职位为后端的recruitName带java的应聘数据
+     * /recruit/all?recruitName=java?recruitPosition=java_backend&&time=xxx&&offset=0 xxx时间点前第1页的职位为后端的recruitName带java的应聘数据
      * @see RecruitDto 返回详细属性见此类
-     * <p>
-     * Response Json:
-     * [{
-     * organizer: {
-     * userId: xxx,
-     * username: 'xxx',
-     * },
-     * recruitName: 'xxx',
-     * activityName: 'xxx'
-     * ...
-     * },{...},{...}]
      */
     @GetMapping("/recruit/all")
-    public Result getRecruitList(@RequestParam String name,
-                                 @RequestParam String recruitPosition,
-                                 @RequestParam @DateTimeFormat(pattern = "yyyy-MM-ddThh:mm:ss") Date time,
-                                 @RequestParam Integer offset) {
-        return ResultUtil.success();
+    public Result getRecruitList(@RequestParam(required = false) String recruitName,
+                                 @RequestParam(required = false) String recruitPosition,
+                                 @RequestParam(required = false, defaultValue = "0") Integer pageNum,
+                                 @RequestParam(required = false, defaultValue = "10") Integer pageSize,
+                                 @RequestParam String currentTime) {
+        HashMap<Integer, Pair<String,String>> requestParam = new QueryParameterBuilder()
+                .addParameter(PredicateType.LIKE,"recruitName", recruitName)
+                .addParameter(PredicateType.EQUAL,"recruitPosition", recruitPosition)
+                .addParameter(PredicateType.TIME_COMPARE,"createTime", currentTime)
+                .build();
+
+        return ResultUtil.success(recruitService.findPaginationRecruitWithCriteria(pageNum,pageSize,requestParam));
     }
 
     /**

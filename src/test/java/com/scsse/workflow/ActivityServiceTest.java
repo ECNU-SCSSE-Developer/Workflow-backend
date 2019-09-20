@@ -33,10 +33,6 @@ class ActivityServiceTest {
     TagService tagService;
 
     @Test
-    public void test() {
-    }
-
-    @Test
     public void bindTagToActivityTest(){
         Activity activity = new Activity();
         activity.setActivityName("test_activity");

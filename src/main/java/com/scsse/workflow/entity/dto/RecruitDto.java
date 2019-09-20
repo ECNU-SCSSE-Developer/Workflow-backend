@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Date;
+
 /**
  * @author Alfred Fu
  * Created on 2019/9/18 8:34 上午
@@ -26,6 +28,8 @@ public class RecruitDto {
     private Integer activityId;
 
     private String activityName;
+
+    private Date createTime;
 
     // 是否关注
     private boolean isFollowed = false;

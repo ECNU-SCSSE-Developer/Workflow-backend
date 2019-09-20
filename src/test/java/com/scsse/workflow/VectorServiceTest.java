@@ -40,22 +40,14 @@ class VectorServiceTest {
     private GraphOperation graphOperation;
 
 
-    @Test
-    public void topologicalTest(){
-        graphOperation.topologicalSort(graphService.findWithVectorsById(1))
-                .stream()
-                .map(Vector::getVectorId)
-                .map(p->Integer.toString(p))
-                .forEach(logger::info);
-    }
+//    @Test
+//    public void topologicalTest(){
+//        graphOperation.topologicalSort(graphService.findWithVectorsById(1))
+//                .stream()
+//                .map(Vector::getVectorId)
+//                .map(p->Integer.toString(p))
+//                .forEach(logger::info);
+//    }
 
-
-    @Test
-    public void CRUDTest(){
-        Vector vector =  vectorService.findVectorById(1);
-        Vector newVector = new Vector(null,"新描述",null,null,null);
-        newVector.setVectorId(1);
-        vectorService.updateVector(newVector);
-    }
 
 }

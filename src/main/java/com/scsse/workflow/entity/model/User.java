@@ -75,6 +75,11 @@ public class User {
     @JsonBackReference(value = "user.successRecruits")
     private Set<Recruit> successRecruits = new HashSet<>();
 
+    public User(String username, String openid) {
+        this.username = username;
+        this.openid = openid;
+    }
+
     public User(String openid) {
         this.openid = openid;
     }

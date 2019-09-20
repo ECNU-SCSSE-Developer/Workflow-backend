@@ -1,9 +1,11 @@
 package com.scsse.workflow.util;
 
 import com.scsse.workflow.constant.MyRequestScope;
+import javafx.util.Builder;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 
+import java.util.HashMap;
 import java.util.Optional;
 
 /**
@@ -11,7 +13,6 @@ import java.util.Optional;
  * Created on 2019/9/18 10:41 上午
  */
 public class RequestUtil {
-
 
     private static final String OPENID_ATTRIBUTE_KEY = "openid";
 

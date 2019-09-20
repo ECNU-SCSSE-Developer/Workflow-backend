@@ -4,6 +4,7 @@ import com.scsse.workflow.entity.dto.RecruitDto;
 import com.scsse.workflow.entity.model.Recruit;
 import com.scsse.workflow.entity.model.Tag;
 import com.scsse.workflow.entity.model.User;
+import javafx.util.Pair;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -19,7 +20,7 @@ public interface RecruitService {
 
     List<RecruitDto> findPaginationRecruit(Integer pageNum, Integer pageSize);
 
-    List<RecruitDto> findPaginationRecruitWithCriteria(Integer pageNum, Integer pageSize, final HashMap<String, String> queryParam);
+    List<RecruitDto> findPaginationRecruitWithCriteria(Integer pageNum, Integer pageSize, final HashMap<Integer, Pair<String,String>> queryParam);
 
     Recruit findRecruitById(Integer recruitId);
 
