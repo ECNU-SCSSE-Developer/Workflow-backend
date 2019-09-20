@@ -4,16 +4,15 @@ import com.scsse.workflow.constant.PredicateType;
 import com.scsse.workflow.entity.dto.RecruitDto;
 import com.scsse.workflow.entity.model.Recruit;
 import com.scsse.workflow.service.RecruitService;
+import com.scsse.workflow.service.UserService;
 import com.scsse.workflow.util.QueryParameterBuilder;
 import com.scsse.workflow.util.Result.Result;
 import com.scsse.workflow.util.Result.ResultUtil;
 import com.scsse.workflow.util.UserUtil;
 import javafx.util.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
 import java.util.HashMap;
 
 /**
@@ -27,11 +26,13 @@ public class RecruitController {
     private final UserUtil userUtil;
 
     private final RecruitService recruitService;
+    private final UserService userService;
 
     @Autowired
-    public RecruitController(UserUtil userUtil, RecruitService recruitService) {
+    public RecruitController(UserUtil userUtil, RecruitService recruitService, UserService userService) {
         this.userUtil = userUtil;
         this.recruitService = recruitService;
+        this.userService = userService;
     }
 
 
@@ -56,28 +57,28 @@ public class RecruitController {
                                  @RequestParam(required = false, defaultValue = "0") Integer pageNum,
                                  @RequestParam(required = false, defaultValue = "10") Integer pageSize,
                                  @RequestParam String currentTime) {
-        HashMap<Integer, Pair<String,String>> requestParam = new QueryParameterBuilder()
-                .addParameter(PredicateType.LIKE,"recruitName", recruitName)
-                .addParameter(PredicateType.EQUAL,"recruitPosition", recruitPosition)
-                .addParameter(PredicateType.TIME_COMPARE,"createTime", currentTime)
+        HashMap<Integer, Pair<String, String>> requestParam = new QueryParameterBuilder()
+                .addParameter(PredicateType.LIKE, "recruitName", recruitName)
+                .addParameter(PredicateType.EQUAL, "recruitPosition", recruitPosition)
+                .addParameter(PredicateType.TIME_COMPARE, "createTime", currentTime)
                 .build();
 
-        return ResultUtil.success(recruitService.findPaginationRecruitWithCriteria(pageNum,pageSize,requestParam));
+        return ResultUtil.success(recruitService.findPaginationRecruitWithCriteria(pageNum, pageSize, requestParam));
     }
 
     /**
      * 某条招聘的具体信息
      *
-     * @param id recruitId
+     * @param recruitId recruitId
      * @return RecruitDto
      * 例:
      * url:
      * /recruit/1
      * @see RecruitDto 返回详细属性见此类
      */
-    @GetMapping("/recruit/{id}")
-    public Result getRecruitDetail(@PathVariable() Integer id) {
-        return ResultUtil.success();
+    @GetMapping("/recruit/{recruitId}")
+    public Result getRecruitDetail(@PathVariable() Integer recruitId) {
+        return ResultUtil.success(recruitService.findRecruitById(recruitId));
     }
 
     /**
@@ -90,7 +91,11 @@ public class RecruitController {
      */
     @GetMapping("/recruit/followed")
     public Result getFollowedRecruit() {
-        return ResultUtil.success();
+        return ResultUtil.success(
+                userService.findAllFollowedRecruit(
+                        userUtil.findLoginUserId()
+                )
+        );
     }
 
     /**
@@ -101,9 +106,27 @@ public class RecruitController {
      */
     @GetMapping("/recruit/applied")
     public Result getAppliedRecruit() {
-        return ResultUtil.success();
+        return ResultUtil.success(
+                userService.findAllRegisteredRecruit(
+                        userUtil.findLoginUserId()
+                )
+        );
     }
 
+    /**
+     * 获取<b>调用者</b>成功加入应聘的所有应聘
+     *
+     * @return RecruitDto
+     * @see RecruitDto
+     */
+    @GetMapping("/recruit/assigned")
+    public Result getAssignedRecruit() {
+        return ResultUtil.success(
+                userService.findAllAssignedRecruit(
+                        userUtil.findLoginUserId()
+                )
+        );
+    }
 
     /**
      * 创建一条应聘
@@ -116,8 +139,21 @@ public class RecruitController {
      * @see RecruitDto
      */
     @PostMapping("/recruit")
-    public Result createOneRecruit(@RequestBody() Recruit recruit, @RequestAttribute() String openid) {
+    public Result createOneRecruit(@RequestBody() Recruit recruit) {
+        return ResultUtil.success(recruitService.createRecruit(recruit));
+    }
+
+    @PutMapping("/recruit/{recruitId}")
+    public Result updateOneRecruit(@RequestBody() Recruit recruit, @PathVariable Integer recruitId) {
+        recruit.setRecruitId(recruitId);
+        return ResultUtil.success(recruitService.updateRecruit(recruit));
+    }
+
+    @DeleteMapping("/recruit/{recruitId}")
+    public Result deleteOneRecruit(@PathVariable Integer recruitId) {
+        recruitService.deleteRecruitById(recruitId);
         return ResultUtil.success();
     }
+
 
 }

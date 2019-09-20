@@ -1,6 +1,7 @@
 package com.scsse.workflow.controller;
 
 import com.scsse.workflow.entity.model.User;
+import com.scsse.workflow.service.UserService;
 import com.scsse.workflow.util.Result.Result;
 import com.scsse.workflow.util.Result.ResultUtil;
 import com.scsse.workflow.util.UserUtil;
@@ -17,9 +18,12 @@ public class UserController {
 
     private final UserUtil userUtil;
 
+    private final UserService userService;
+
     @Autowired
-    public UserController(UserUtil userUtil) {
+    public UserController(UserUtil userUtil, UserService userService) {
         this.userUtil = userUtil;
+        this.userService = userService;
     }
 
     /**
@@ -30,18 +34,7 @@ public class UserController {
      */
     @GetMapping("/user/{openid}")
     public Result getUserDetail(@PathVariable() String openid) {
-        return ResultUtil.success();
-    }
-
-    /**
-     * 获取调用者关注的所有user
-     *
-     * @param openid 调用者的openid
-     * @return List{User}
-     */
-    @GetMapping("/user/follower")
-    public Result getFollowedUser(@RequestAttribute() String openid) {
-        return ResultUtil.success();
+        return ResultUtil.success(userService.findUserById(userUtil.findUserIdByOpenid(openid)));
     }
 
     /**
@@ -61,8 +54,24 @@ public class UserController {
      * }
      */
     @PutMapping("/user/{openid}")
-    public Result editInformation(@RequestBody User user, @PathVariable String openid) {
-        return ResultUtil.success();
+    public Result updateUserInformation(@RequestBody User user, @PathVariable String openid) {
+        user.setUserId(userUtil.findLoginUserId());
+        return ResultUtil.success(
+                userService.updateUser(user)
+        );
+    }
+
+    /**
+     * 获取调用者关注的所有user
+     *
+     * @param openid 调用者的openid
+     * @return List{User}
+     */
+    @GetMapping("/user/follower")
+    public Result getFollowedUser(@RequestAttribute() String openid) {
+        return ResultUtil.success(
+
+        );
     }
 
     /**
@@ -76,7 +85,7 @@ public class UserController {
      */
     @PutMapping("/user/{userId}/follower/{followerId}")
     public Result followOneUser(@PathVariable String userId, @PathVariable String followerId) {
-        Integer _originUserId = userUtil.findUserIdByOpenid(userId);
+        Integer _originUserId = userUtil.findLoginUserId();
         Integer _followerUserId = userUtil.findUserIdByOpenid(followerId);
         return ResultUtil.success();
     }
@@ -92,7 +101,7 @@ public class UserController {
      */
     @DeleteMapping("/user/{userId}/follower/{followerId}")
     public Result unfollowOneUser(@PathVariable String userId, @PathVariable String followerId) {
-        Integer _originUserId = userUtil.findUserIdByOpenid(userId);
+        Integer _originUserId = userUtil.findLoginUserId();
         Integer _followerUserId = userUtil.findUserIdByOpenid(followerId);
         return ResultUtil.success();
     }
@@ -109,8 +118,7 @@ public class UserController {
      */
     @PutMapping("/user/{openid}/recruit/{recruitId}")
     public Result followOneRecruit(@PathVariable() Integer recruitId, @PathVariable String openid) {
-        Integer userId = userUtil.findUserIdByOpenid(openid);
-
+        userService.followRecruit(userUtil.findLoginUserId(),recruitId);
         return ResultUtil.success();
     }
 
@@ -125,8 +133,7 @@ public class UserController {
      */
     @DeleteMapping("/user/{openid}/{recruitId}/unfollow")
     public Result unfollowOneRecruit(@PathVariable() Integer recruitId, @PathVariable String openid) {
-        Integer userId = userUtil.findUserIdByOpenid(openid);
-
+        userService.unfollowRecruit(userUtil.findLoginUserId(),recruitId);
         return ResultUtil.success();
     }
 }

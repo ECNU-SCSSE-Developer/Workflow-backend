@@ -1,8 +1,10 @@
 package com.scsse.workflow.controller;
 
 import com.scsse.workflow.service.ActivityService;
+import com.scsse.workflow.service.UserService;
 import com.scsse.workflow.util.Result.Result;
 import com.scsse.workflow.util.Result.ResultUtil;
+import com.scsse.workflow.util.UserUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,11 +16,17 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class ActivityController {
 
+    private final UserUtil userUtil;
+
     private final ActivityService activityService;
 
+    private final UserService userService;
+
     @Autowired
-    public ActivityController(ActivityService activityService) {
+    public ActivityController(UserUtil userUtil, ActivityService activityService, UserService userService) {
+        this.userUtil = userUtil;
         this.activityService = activityService;
+        this.userService = userService;
     }
 
     /**
@@ -56,7 +64,7 @@ public class ActivityController {
      */
     @GetMapping("/activity/{activityId}")
     public Result getActivityDetail(@PathVariable Integer activityId) {
-        return ResultUtil.success();
+        return ResultUtil.success(activityService.findActivityById(activityId));
     }
 
     /**
@@ -84,6 +92,7 @@ public class ActivityController {
      */
     @PutMapping("/user/{openid}/activity/{activityId}")
     public Result followOneActivity(@PathVariable() Integer activityId, @PathVariable String openid) {
+        userService.followActivity(userUtil.findLoginUserId(),activityId);
         return ResultUtil.success();
     }
 
@@ -98,6 +107,7 @@ public class ActivityController {
      */
     @DeleteMapping("/user/{openid}/activity/{activityId}")
     public Result unfollowOneActivity(@PathVariable() Integer activityId, @PathVariable String openid) {
+        userService.unfollowActivity(userUtil.findLoginUserId(),activityId);
         return ResultUtil.success();
     }
 

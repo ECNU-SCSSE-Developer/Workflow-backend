@@ -103,4 +103,8 @@ public interface UserService {
      * @param tagId  标签ID
      */
     void unBindTagToUser(Integer userId, Integer tagId);
+
+    void followActivity(Integer userId, Integer activityId);
+
+    void unfollowActivity(Integer userId, Integer activityId);
 }

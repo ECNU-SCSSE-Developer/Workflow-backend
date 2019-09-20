@@ -1,9 +1,11 @@
 package com.scsse.workflow.service.impl;
 
 import com.scsse.workflow.entity.dto.RecruitDto;
+import com.scsse.workflow.entity.model.Activity;
 import com.scsse.workflow.entity.model.Recruit;
 import com.scsse.workflow.entity.model.Tag;
 import com.scsse.workflow.entity.model.User;
+import com.scsse.workflow.repository.ActivityRepository;
 import com.scsse.workflow.repository.RecruitRepository;
 import com.scsse.workflow.repository.TagRepository;
 import com.scsse.workflow.repository.UserRepository;
@@ -37,13 +39,16 @@ public class UserServiceImpl implements UserService {
 
     private final TagRepository tagRepository;
 
+    private final ActivityRepository activityRepository;
+
     @Autowired
-    public UserServiceImpl(ModelMapper modelMapper, RecruitService recruitService, RecruitRepository recruitRepository, UserRepository userRepository, TagRepository tagRepository) {
+    public UserServiceImpl(ModelMapper modelMapper, RecruitService recruitService, RecruitRepository recruitRepository, UserRepository userRepository, TagRepository tagRepository, ActivityRepository activityRepository) {
         this.modelMapper = modelMapper;
         this.recruitService = recruitService;
         this.recruitRepository = recruitRepository;
         this.userRepository = userRepository;
         this.tagRepository = tagRepository;
+        this.activityRepository = activityRepository;
     }
 
     @Override
@@ -167,6 +172,26 @@ public class UserServiceImpl implements UserService {
         Tag tag = tagRepository.findByTagId(tagId);
         if (user != null && tag != null) {
             user.getUserTags().remove(tag);
+            userRepository.save(user);
+        }
+    }
+
+    @Override
+    public void followActivity(Integer userId, Integer activityId) {
+        User user = userRepository.findByUserId(userId);
+        Activity activity = activityRepository.findByActivityId(activityId);
+        if (user!=null && activity!=null){
+            user.getFollowActivities().add(activity);
+            userRepository.save(user);
+        }
+    }
+
+    @Override
+    public void unfollowActivity(Integer userId, Integer activityId) {
+        User user = userRepository.findByUserId(userId);
+        Activity activity = activityRepository.findByActivityId(activityId);
+        if (user!=null && activity!=null){
+            user.getFollowActivities().remove(activity);
             userRepository.save(user);
         }
     }

@@ -56,6 +56,13 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "follower_id"))
     private Set<User> followUser = new HashSet<>();
 
+    @OneToMany
+    @JsonBackReference(value = "user.followActivities")
+    @JoinTable(name = "user_activity",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "activity_id"))
+    private Set<Activity> followActivities = new HashSet<>();
+
     @ManyToMany
     @JsonBackReference(value = "user.followRecruits")
     @JoinTable(name = "user_recruit_follower",

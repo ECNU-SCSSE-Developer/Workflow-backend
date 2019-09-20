@@ -1,6 +1,5 @@
 package com.scsse.workflow.service.impl;
 
-import com.scsse.workflow.constant.PredicateType;
 import com.scsse.workflow.entity.dto.RecruitDto;
 import com.scsse.workflow.entity.model.Recruit;
 import com.scsse.workflow.entity.model.Tag;
@@ -23,9 +22,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.criteria.Predicate;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Set;
 
 /**
  * @author Alfred Fu
@@ -71,9 +71,9 @@ public class RecruitServiceImpl implements RecruitService {
         User currentUser = userRepository.findByOpenid(RequestUtil.getOpenId());
         recruitRepository.findAll((Specification<Recruit>) (root, query, criteriaBuilder) -> {
             List<Predicate> predicateList = new ArrayList<>();
-            PredicateUtil predicateHelper = new PredicateUtil<>(criteriaBuilder,root);
+            PredicateUtil predicateHelper = new PredicateUtil<>(criteriaBuilder, root);
             queryParam.forEach(
-                    (predicateType, KV) -> predicateList.add(predicateHelper.generatePredicate(predicateType,KV.getKey(),KV.getValue()))
+                    (predicateType, KV) -> predicateList.add(predicateHelper.generatePredicate(predicateType, KV.getKey(), KV.getValue()))
             );
             return criteriaBuilder.and(predicateList.toArray(new Predicate[0]));
         }, pageable).get().map(
