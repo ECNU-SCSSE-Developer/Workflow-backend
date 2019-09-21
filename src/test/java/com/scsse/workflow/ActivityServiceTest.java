@@ -15,6 +15,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import javax.transaction.Transactional;
 
 import static org.junit.jupiter.api.Assertions.*;
+
 /**
  * @Author JJJJJJ
  * @Date 2019/2/21 19:50
@@ -33,7 +34,7 @@ class ActivityServiceTest {
     TagService tagService;
 
     @Test
-    public void bindTagToActivityTest(){
+    public void bindTagToActivityTest() {
         Activity activity = new Activity();
         activity.setActivityName("test_activity");
         activity = activityService.createActivity(activity);
@@ -44,14 +45,14 @@ class ActivityServiceTest {
         assertNotNull(activityService.findActivityById(activity.getActivityId()));
         assertNotNull(tagService.findTagById(tag.getTagId()));
         // test binding
-        activityService.bindTagToActivity(activity.getActivityId(),tag.getTagId());
+        activityService.bindTagToActivity(activity.getActivityId(), tag.getTagId());
         assertTrue(
                 activityService.findActivityById(activity.getActivityId()).getActivityTags().contains(
                         tagService.findTagById(tag.getTagId())
                 )
         );
         // test unbind
-        activityService.unBindTagToActivity(activity.getActivityId(),tag.getTagId());
+        activityService.unBindTagToActivity(activity.getActivityId(), tag.getTagId());
         assertFalse(
                 activityService.findActivityById(activity.getActivityId()).getActivityTags().contains(
                         tagService.findTagById(tag.getTagId())

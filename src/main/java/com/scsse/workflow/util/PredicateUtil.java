@@ -27,6 +27,19 @@ public class PredicateUtil<T> {
         this.root = root;
     }
 
+    public static String transferTimeFromPSTToGMT(String localTimeString) {
+        try {
+            DateFormat dateFormat = new SimpleDateFormat(FORMAT_TIME_PATTERN);
+            dateFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
+            return dateFormat.format(
+                    new SimpleDateFormat(TIME_PATTERN).parse(localTimeString + " GMT+08:00")
+            );
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     public Predicate generatePredicate(int predicateType, String key, String value) {
         switch (predicateType) {
             case PredicateType.EQUAL:
@@ -43,20 +56,6 @@ public class PredicateUtil<T> {
                 return criteriaBuilder.lessThan(root.get(key).as(String.class), transferTimeFromPSTToGMT(value));
             default:
                 throw new IllegalStateException("Unexpected value: " + predicateType);
-        }
-    }
-
-
-    public static String transferTimeFromPSTToGMT(String localTimeString) {
-        try {
-            DateFormat dateFormat = new SimpleDateFormat(FORMAT_TIME_PATTERN);
-            dateFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
-            return dateFormat.format(
-                    new SimpleDateFormat(TIME_PATTERN).parse(localTimeString + " GMT+08:00")
-            );
-        } catch (ParseException e) {
-            e.printStackTrace();
-            return null;
         }
     }
 }

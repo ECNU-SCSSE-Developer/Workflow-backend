@@ -1,10 +1,8 @@
 package com.scsse.workflow;
 
-import com.scsse.workflow.entity.model.Vector;
 import com.scsse.workflow.service.GraphService;
 import com.scsse.workflow.service.VectorService;
 import com.scsse.workflow.util.GraphOperation;
-import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;

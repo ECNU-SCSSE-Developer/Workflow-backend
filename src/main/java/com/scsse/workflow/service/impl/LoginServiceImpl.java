@@ -17,8 +17,6 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.web.client.ResponseErrorHandler;
 import org.springframework.web.client.RestTemplate;
 
-import java.io.IOException;
-
 /**
  * @author Andrew Dong
  * @ProjectName workflow

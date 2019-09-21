@@ -67,7 +67,7 @@ public class UserController {
      * @param openid 调用者的openid
      * @return List{User}
      */
-    @GetMapping("/user/follower")
+    @GetMapping("/user/Follower")
     public Result getFollowedUser(@RequestAttribute() String openid) {
         return ResultUtil.success(
 
@@ -118,7 +118,7 @@ public class UserController {
      */
     @PutMapping("/user/{openid}/recruit/{recruitId}")
     public Result followOneRecruit(@PathVariable() Integer recruitId, @PathVariable String openid) {
-        userService.followRecruit(userUtil.findLoginUserId(),recruitId);
+        userService.followRecruit(userUtil.findLoginUserId(), recruitId);
         return ResultUtil.success();
     }
 
@@ -133,7 +133,7 @@ public class UserController {
      */
     @DeleteMapping("/user/{openid}/{recruitId}/unfollow")
     public Result unfollowOneRecruit(@PathVariable() Integer recruitId, @PathVariable String openid) {
-        userService.unfollowRecruit(userUtil.findLoginUserId(),recruitId);
+        userService.unfollowRecruit(userUtil.findLoginUserId(), recruitId);
         return ResultUtil.success();
     }
 }

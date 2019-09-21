@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+import static com.scsse.workflow.constant.ErrorMessage.OPENID_NOT_CARRY;
 import static javax.servlet.http.HttpServletResponse.SC_FORBIDDEN;
 
 /**
@@ -29,7 +30,7 @@ public class LoginInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws IOException {
         String openid = request.getHeader("openid");
         if (openid == null) {
-            response.sendError(SC_FORBIDDEN,"RequestHeader中携带调用者的openid！");
+            response.sendError(SC_FORBIDDEN, OPENID_NOT_CARRY);
             return false;
         } else {
             // 添加至RequestContextHolder

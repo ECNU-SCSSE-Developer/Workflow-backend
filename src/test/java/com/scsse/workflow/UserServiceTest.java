@@ -24,10 +24,10 @@ class UserServiceTest {
     private UserService userService;
 
     @Test
-    public void generateUser(){
+    public void generateUser() {
         for (int i = 0; i < 2; i++) {
             userService.createUser(new User(
-                    "testUser"+i,"INVALID_OPEN_ID_"+i
+                    "testUser" + i, "INVALID_OPEN_ID_" + i
             ));
         }
     }

@@ -25,7 +25,7 @@ public class UserUtil {
         return result.getUserId();
     }
 
-    public Integer findLoginUserId(){
+    public Integer findLoginUserId() {
         User result = userRepository.findByOpenid(RequestUtil.getOpenId());
         // This will throw null pointer exception
         // TODO(): throw custom exception

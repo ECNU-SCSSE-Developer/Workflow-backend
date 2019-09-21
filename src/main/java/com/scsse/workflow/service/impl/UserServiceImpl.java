@@ -180,7 +180,7 @@ public class UserServiceImpl implements UserService {
     public void followActivity(Integer userId, Integer activityId) {
         User user = userRepository.findByUserId(userId);
         Activity activity = activityRepository.findByActivityId(activityId);
-        if (user!=null && activity!=null){
+        if (user != null && activity != null) {
             user.getFollowActivities().add(activity);
             userRepository.save(user);
         }
@@ -190,7 +190,7 @@ public class UserServiceImpl implements UserService {
     public void unfollowActivity(Integer userId, Integer activityId) {
         User user = userRepository.findByUserId(userId);
         Activity activity = activityRepository.findByActivityId(activityId);
-        if (user!=null && activity!=null){
+        if (user != null && activity != null) {
             user.getFollowActivities().remove(activity);
             userRepository.save(user);
         }

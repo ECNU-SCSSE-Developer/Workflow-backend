@@ -11,21 +11,21 @@ import java.util.HashMap;
  */
 public class QueryParameterBuilder implements Builder {
 
-    private HashMap<Integer, Pair<String,String>> queryParameter = new HashMap<>();
+    private HashMap<Integer, Pair<String, String>> queryParameter = new HashMap<>();
 
-    public QueryParameterBuilder addParameter(int predicateType,String key, String value){
+    public QueryParameterBuilder addParameter(int predicateType, String key, String value) {
         if (value != null && !value.isEmpty()) {
             queryParameter.put(predicateType, new Pair<>(key, value));
         }
         return this;
     }
 
-    public void resetParameter(){
+    public void resetParameter() {
         queryParameter = new HashMap<>();
     }
 
     @Override
-    public HashMap<Integer,Pair<String,String>> build() {
+    public HashMap<Integer, Pair<String, String>> build() {
         return queryParameter;
     }
 }

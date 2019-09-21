@@ -6,7 +6,6 @@ import com.scsse.workflow.entity.model.Tag;
 import com.scsse.workflow.service.ActivityService;
 import com.scsse.workflow.service.RecruitService;
 import com.scsse.workflow.service.TagService;
-import com.scsse.workflow.util.PredicateUtil;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.slf4j.Logger;
@@ -16,9 +15,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import javax.annotation.Resource;
 import javax.transaction.Transactional;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -52,8 +48,6 @@ public class RecruitServiceTest {
             );
         }
     }
-
-
 
 
     @Test

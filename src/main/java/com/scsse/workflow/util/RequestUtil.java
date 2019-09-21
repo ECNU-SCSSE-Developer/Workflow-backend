@@ -1,11 +1,9 @@
 package com.scsse.workflow.util;
 
 import com.scsse.workflow.constant.MyRequestScope;
-import javafx.util.Builder;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 
-import java.util.HashMap;
 import java.util.Optional;
 
 /**
@@ -18,10 +16,11 @@ public class RequestUtil {
 
 
     public static boolean setAttribute(String key, String value, int scope) {
-        try {
-            RequestContextHolder.getRequestAttributes().setAttribute(key, value, scope);
+        Optional attribute = Optional.ofNullable(RequestContextHolder.getRequestAttributes());
+        if (attribute.isPresent()) {
+            ((RequestAttributes) attribute.get()).setAttribute(key, value, scope);
             return true;
-        } catch (Exception e) {
+        } else {
             return false;
         }
     }

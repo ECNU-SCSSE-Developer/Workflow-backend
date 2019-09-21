@@ -91,8 +91,8 @@ public class ActivityController {
      * PUT /user/1/activity/1
      */
     @PutMapping("/user/{openid}/activity/{activityId}")
-    public Result followOneActivity(@PathVariable() Integer activityId, @PathVariable String openid) {
-        userService.followActivity(userUtil.findLoginUserId(),activityId);
+    public Result followActivity(@PathVariable() Integer activityId, @PathVariable String openid) {
+        userService.followActivity(userUtil.findLoginUserId(), activityId);
         return ResultUtil.success();
     }
 
@@ -106,8 +106,8 @@ public class ActivityController {
      * DELETE /user/1/activity/1
      */
     @DeleteMapping("/user/{openid}/activity/{activityId}")
-    public Result unfollowOneActivity(@PathVariable() Integer activityId, @PathVariable String openid) {
-        userService.unfollowActivity(userUtil.findLoginUserId(),activityId);
+    public Result unfollowActivity(@PathVariable() Integer activityId, @PathVariable String openid) {
+        userService.unfollowActivity(userUtil.findLoginUserId(), activityId);
         return ResultUtil.success();
     }
 
