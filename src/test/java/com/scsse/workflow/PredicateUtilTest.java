@@ -1,6 +1,6 @@
 package com.scsse.workflow;
 
-import com.scsse.workflow.util.PredicateUtil;
+import com.scsse.workflow.util.MVCUtil.PredicateUtil;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.context.SpringBootTest;

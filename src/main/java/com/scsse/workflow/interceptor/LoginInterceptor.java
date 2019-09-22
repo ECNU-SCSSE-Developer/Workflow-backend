@@ -1,6 +1,6 @@
 package com.scsse.workflow.interceptor;
 
-import com.scsse.workflow.util.RequestUtil;
+import com.scsse.workflow.util.MVCUtil.RequestUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.HandlerInterceptor;

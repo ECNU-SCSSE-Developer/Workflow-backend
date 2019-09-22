@@ -1,4 +1,4 @@
-package com.scsse.workflow.util;
+package com.scsse.workflow.util.DAOUtil;
 
 import com.scsse.workflow.entity.dto.ActivityDto;
 import com.scsse.workflow.entity.dto.RecruitDto;

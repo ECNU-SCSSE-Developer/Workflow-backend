@@ -4,7 +4,7 @@ import com.scsse.workflow.entity.model.User;
 import com.scsse.workflow.service.UserService;
 import com.scsse.workflow.util.Result.Result;
 import com.scsse.workflow.util.Result.ResultUtil;
-import com.scsse.workflow.util.UserUtil;
+import com.scsse.workflow.util.DAOUtil.UserUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

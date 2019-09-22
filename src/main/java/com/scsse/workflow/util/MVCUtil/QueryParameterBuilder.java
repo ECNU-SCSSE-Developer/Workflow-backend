@@ -1,4 +1,4 @@
-package com.scsse.workflow.util;
+package com.scsse.workflow.util.MVCUtil;
 
 import javafx.util.Builder;
 import javafx.util.Pair;

@@ -1,7 +1,8 @@
-package com.scsse.workflow.util;
+package com.scsse.workflow.util.DAOUtil;
 
 import com.scsse.workflow.entity.model.User;
 import com.scsse.workflow.repository.UserRepository;
+import com.scsse.workflow.util.MVCUtil.RequestUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

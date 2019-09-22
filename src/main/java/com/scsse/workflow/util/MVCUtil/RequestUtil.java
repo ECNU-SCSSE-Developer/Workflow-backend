@@ -1,4 +1,4 @@
-package com.scsse.workflow.util;
+package com.scsse.workflow.util.MVCUtil;
 
 import com.scsse.workflow.constant.MyRequestScope;
 import org.springframework.web.context.request.RequestAttributes;
