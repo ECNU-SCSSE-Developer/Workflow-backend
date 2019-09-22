@@ -81,22 +81,6 @@ public class RecruitController {
         return ResultUtil.success(recruitService.findRecruitById(recruitId));
     }
 
-    /**
-     * 获取<b>调用者</b>关注的所有应聘
-     *
-     * @return List{RecruitDto}
-     * 例:
-     * url:
-     * /recruit/followed
-     */
-    @GetMapping("/recruit/followed")
-    public Result getFollowedRecruit() {
-        return ResultUtil.success(
-                userService.findAllFollowedRecruit(
-                        userUtil.findLoginUserId()
-                )
-        );
-    }
 
     /**
      * 获取<b>调用者</b>申请应聘的所有应聘

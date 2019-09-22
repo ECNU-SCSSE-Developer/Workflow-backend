@@ -16,17 +16,11 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class ActivityController {
 
-    private final UserUtil userUtil;
-
     private final ActivityService activityService;
 
-    private final UserService userService;
-
     @Autowired
-    public ActivityController(UserUtil userUtil, ActivityService activityService, UserService userService) {
-        this.userUtil = userUtil;
+    public ActivityController(ActivityService activityService) {
         this.activityService = activityService;
-        this.userService = userService;
     }
 
     /**
@@ -67,49 +61,6 @@ public class ActivityController {
         return ResultUtil.success(activityService.findActivityById(activityId));
     }
 
-    /**
-     * 获取调用者关注的所有比赛
-     *
-     * @param openid 调用者的openid
-     * @return List{Activity}
-     * <p>
-     * e.g.
-     * GET /activity/1
-     */
-    @GetMapping("/activity/followed")
-    public Result getFollowedActivity(@RequestAttribute() String openid) {
-        return ResultUtil.success();
-    }
-
-    /**
-     * 关注一个活动
-     *
-     * @param activityId 该活动的id
-     * @param openid     调用者的openid
-     * @return 例:
-     * url:
-     * PUT /user/1/activity/1
-     */
-    @PutMapping("/user/{openid}/activity/{activityId}")
-    public Result followActivity(@PathVariable() Integer activityId, @PathVariable String openid) {
-        userService.followActivity(userUtil.findLoginUserId(), activityId);
-        return ResultUtil.success();
-    }
-
-    /**
-     * 取消关注一个活动
-     *
-     * @param activityId 该活动的id
-     * @param openid     调用者的openid
-     * @return 例:
-     * url:
-     * DELETE /user/1/activity/1
-     */
-    @DeleteMapping("/user/{openid}/activity/{activityId}")
-    public Result unfollowActivity(@PathVariable() Integer activityId, @PathVariable String openid) {
-        userService.unfollowActivity(userUtil.findLoginUserId(), activityId);
-        return ResultUtil.success();
-    }
 
 
 }

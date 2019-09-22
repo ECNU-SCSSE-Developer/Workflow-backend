@@ -1,6 +1,9 @@
 package com.scsse.workflow.service;
 
+import com.scsse.workflow.entity.dto.ActivityDto;
 import com.scsse.workflow.entity.dto.RecruitDto;
+import com.scsse.workflow.entity.dto.UserDto;
+import com.scsse.workflow.entity.model.Activity;
 import com.scsse.workflow.entity.model.Tag;
 import com.scsse.workflow.entity.model.User;
 
@@ -14,7 +17,7 @@ import java.util.Set;
 
 public interface UserService {
 
-    List<User> findAllUser();
+    List<UserDto> findAllUser();
 
     User findUserById(Integer userId);
 
@@ -24,21 +27,7 @@ public interface UserService {
 
     void deleteUserById(Integer userId);
 
-    /**
-     * 用户关注一条招聘
-     *
-     * @param userId    用户ID
-     * @param recruitId 招聘ID
-     */
-    void followRecruit(Integer userId, Integer recruitId);
 
-    /**
-     * 用户取消关注一条招聘
-     *
-     * @param userId    用户ID
-     * @param recruitId 招聘ID
-     */
-    void unfollowRecruit(Integer userId, Integer recruitId);
 
     /**
      * 用户申请一条招聘
@@ -55,6 +44,22 @@ public interface UserService {
      * @param recruitId 招聘ID
      */
     void unregisterRecruit(Integer userId, Integer recruitId);
+
+    List<ActivityDto> findAllFollowedActivity(Integer userId);
+
+    List<UserDto> findAllColleague(Integer userId);
+
+    /**
+     * 获取粉丝
+     * @param userId 用户ID
+     */
+    List<UserDto> findAllFollowedUser(Integer userId);
+
+    /**
+     * 获取关注的人
+     * @param userId 用户ID
+     */
+    List<UserDto> findAllFollowingUser(Integer userId);
 
     /**
      * 返回一个用户关注的所有招聘
@@ -107,4 +112,12 @@ public interface UserService {
     void followActivity(Integer userId, Integer activityId);
 
     void unfollowActivity(Integer userId, Integer activityId);
+
+    void followUser(Integer originUserId, Integer followUserId);
+
+    void unfollowUser(Integer originUserId, Integer followUserId);
+
+    void followRecruit(Integer userId, Integer recruitId);
+
+    void unfollowRecruit(Integer userId, Integer recruitId);
 }

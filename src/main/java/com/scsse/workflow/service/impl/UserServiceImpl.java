@@ -1,6 +1,8 @@
 package com.scsse.workflow.service.impl;
 
+import com.scsse.workflow.entity.dto.ActivityDto;
 import com.scsse.workflow.entity.dto.RecruitDto;
+import com.scsse.workflow.entity.dto.UserDto;
 import com.scsse.workflow.entity.model.Activity;
 import com.scsse.workflow.entity.model.Recruit;
 import com.scsse.workflow.entity.model.Tag;
@@ -11,6 +13,7 @@ import com.scsse.workflow.repository.TagRepository;
 import com.scsse.workflow.repository.UserRepository;
 import com.scsse.workflow.service.RecruitService;
 import com.scsse.workflow.service.UserService;
+import com.scsse.workflow.util.DtoTransferHelper;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,7 +34,7 @@ public class UserServiceImpl implements UserService {
 
     private final ModelMapper modelMapper;
 
-    private final RecruitService recruitService;
+    private final DtoTransferHelper dtoTransferHelper;
 
     private final RecruitRepository recruitRepository;
 
@@ -42,9 +45,9 @@ public class UserServiceImpl implements UserService {
     private final ActivityRepository activityRepository;
 
     @Autowired
-    public UserServiceImpl(ModelMapper modelMapper, RecruitService recruitService, RecruitRepository recruitRepository, UserRepository userRepository, TagRepository tagRepository, ActivityRepository activityRepository) {
+    public UserServiceImpl(ModelMapper modelMapper, DtoTransferHelper dtoTransferHelper, RecruitRepository recruitRepository, UserRepository userRepository, TagRepository tagRepository, ActivityRepository activityRepository) {
         this.modelMapper = modelMapper;
-        this.recruitService = recruitService;
+        this.dtoTransferHelper = dtoTransferHelper;
         this.recruitRepository = recruitRepository;
         this.userRepository = userRepository;
         this.tagRepository = tagRepository;
@@ -52,8 +55,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> findAllUser() {
-        return userRepository.findAll();
+    public List<UserDto> findAllUser() {
+        return dtoTransferHelper.transferToUserDto(userRepository.findAll());
     }
 
     @Override
@@ -121,10 +124,30 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public List<ActivityDto> findAllFollowedActivity(Integer userId) {
+        return null;
+    }
+
+    @Override
+    public List<UserDto> findAllColleague(Integer userId) {
+        return null;
+    }
+
+    @Override
+    public List<UserDto> findAllFollowedUser(Integer userId) {
+        return null;
+    }
+
+    @Override
+    public List<UserDto> findAllFollowingUser(Integer userId) {
+        return null;
+    }
+
+    @Override
     public List<RecruitDto> findAllFollowedRecruit(Integer userId) {
         User user = userRepository.findByUserId(userId);
         if (user != null) {
-            return recruitService.transferRecruitToListDto(user.getFollowRecruits(), user);
+            return dtoTransferHelper.transferToRecruitDto(user.getFollowRecruits(), user);
         } else {
             return null;
         }
@@ -134,7 +157,7 @@ public class UserServiceImpl implements UserService {
     public List<RecruitDto> findAllRegisteredRecruit(Integer userId) {
         User user = userRepository.findByUserId(userId);
         if (user != null) {
-            return recruitService.transferRecruitToListDto(user.getApplyRecruits(), user);
+            return dtoTransferHelper.transferToRecruitDto(user.getApplyRecruits(), user);
         } else {
             return null;
         }
@@ -144,7 +167,7 @@ public class UserServiceImpl implements UserService {
     public List<RecruitDto> findAllAssignedRecruit(Integer userId) {
         User user = userRepository.findByUserId(userId);
         if (user != null) {
-            return recruitService.transferRecruitToListDto(user.getSuccessRecruits(), user);
+            return dtoTransferHelper.transferToRecruitDto(user.getSuccessRecruits(), user);
         } else {
             return null;
         }
@@ -193,6 +216,27 @@ public class UserServiceImpl implements UserService {
         if (user != null && activity != null) {
             user.getFollowActivities().remove(activity);
             userRepository.save(user);
+        }
+    }
+
+    @Override
+    public void followUser(Integer originUserId, Integer followUserId) {
+        User originUser = userRepository.findByUserId(originUserId);
+        User followUser = userRepository.findByUserId(followUserId);
+        if (originUser!=null && followUser!=null){
+            originUser.getFollowUser().add(followUser);
+            userRepository.save(originUser);
+        }
+
+    }
+
+    @Override
+    public void unfollowUser(Integer originUserId, Integer followUserId) {
+        User originUser = userRepository.findByUserId(originUserId);
+        User followUser = userRepository.findByUserId(followUserId);
+        if (originUser!=null && followUser!=null){
+            originUser.getFollowUser().remove(followUser);
+            userRepository.save(originUser);
         }
     }
 }

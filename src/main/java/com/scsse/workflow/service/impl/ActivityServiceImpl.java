@@ -1,12 +1,15 @@
 package com.scsse.workflow.service.impl;
 
+import com.scsse.workflow.entity.dto.ActivityDto;
+import com.scsse.workflow.entity.dto.RecruitDto;
 import com.scsse.workflow.entity.model.Activity;
-import com.scsse.workflow.entity.model.Recruit;
 import com.scsse.workflow.entity.model.Tag;
 import com.scsse.workflow.repository.ActivityRepository;
 import com.scsse.workflow.repository.RecruitRepository;
 import com.scsse.workflow.repository.TagRepository;
 import com.scsse.workflow.service.ActivityService;
+import com.scsse.workflow.util.DtoTransferHelper;
+import com.scsse.workflow.util.UserUtil;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,6 +31,10 @@ public class ActivityServiceImpl implements ActivityService {
 
     private final ModelMapper modelMapper;
 
+    private final UserUtil userUtil;
+
+    private final DtoTransferHelper dtoTransferHelper;
+
     private final ActivityRepository activityRepository;
 
     private final RecruitRepository recruitRepository;
@@ -35,20 +42,22 @@ public class ActivityServiceImpl implements ActivityService {
     private final TagRepository tagRepository;
 
     @Autowired
-    public ActivityServiceImpl(ModelMapper modelMapper, ActivityRepository activityRepository, RecruitRepository recruitRepository, TagRepository tagRepository) {
+    public ActivityServiceImpl(ModelMapper modelMapper, UserUtil userUtil, DtoTransferHelper dtoTransferHelper, ActivityRepository activityRepository, RecruitRepository recruitRepository, TagRepository tagRepository) {
         this.modelMapper = modelMapper;
+        this.userUtil = userUtil;
+        this.dtoTransferHelper = dtoTransferHelper;
         this.activityRepository = activityRepository;
         this.recruitRepository = recruitRepository;
         this.tagRepository = tagRepository;
     }
 
     @Override
-    public List<Activity> findAllActivity() {
-        return activityRepository.findAll();
+    public List<ActivityDto> findAllActivity() {
+        return dtoTransferHelper.transferToActivityDto(activityRepository.findAll());
     }
 
     @Override
-    public List<Activity> findAllExpiredActivity() {
+    public List<ActivityDto> findAllExpiredActivity() {
         List<Activity> activities = new ArrayList<>();
         activityRepository.findAll().stream()
                 // if the time now is greater than the signUpDeadline
@@ -60,11 +69,11 @@ public class ActivityServiceImpl implements ActivityService {
                         (activity.getActivityTime().toInstant().atZone(ZoneId.of("Asia/Shanghai")).
                                 toLocalDate()) < 0)
                 .forEach(activities::add);
-        return activities;
+        return dtoTransferHelper.transferToActivityDto(activities);
     }
 
     @Override
-    public List<Activity> findAllFinishedActivity() {
+    public List<ActivityDto> findAllFinishedActivity() {
         List<Activity> activities = new ArrayList<>();
         activityRepository.findAll().stream()
                 // if the time now is greater than the activity time
@@ -72,11 +81,11 @@ public class ActivityServiceImpl implements ActivityService {
                         (activity.getActivityTime().toInstant().atZone(ZoneId.of("Asia/Shanghai")).
                                 toLocalDate()) > 0)
                 .forEach(activities::add);
-        return activities;
+        return dtoTransferHelper.transferToActivityDto(activities);
     }
 
     @Override
-    public List<Activity> findAllFreshActivity() {
+    public List<ActivityDto> findAllFreshActivity() {
         List<Activity> activities = new ArrayList<>();
         activityRepository.findAll().stream()
                 // if the time now is less than the signUpDeadline
@@ -84,7 +93,7 @@ public class ActivityServiceImpl implements ActivityService {
                         (activity.getActivitySignUpDeadline().toInstant().atZone(ZoneId.of("Asia/Shanghai")).
                                 toLocalDate()) < 0)
                 .forEach(activities::add);
-        return activities;
+        return dtoTransferHelper.transferToActivityDto(activities);
     }
 
     @Override
@@ -111,8 +120,8 @@ public class ActivityServiceImpl implements ActivityService {
     }
 
     @Override
-    public Set<Recruit> findAllRecruitOfActivity(Integer activityId) {
-        return recruitRepository.findAllByActivity_ActivityId(activityId);
+    public List<RecruitDto> findAllRecruitOfActivity(Integer activityId) {
+        return dtoTransferHelper.transferToRecruitDto(recruitRepository.findAllByActivity_ActivityId(activityId),userUtil.getLoginUser());
     }
 
     @Override

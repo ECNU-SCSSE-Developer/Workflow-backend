@@ -18,6 +18,11 @@ public class UserUtil {
         this.userRepository = userRepository;
     }
 
+    public User getLoginUser(){
+        // This will throw null pointer exception
+        return userRepository.findByOpenid(RequestUtil.getOpenId());
+    }
+
     public Integer findUserIdByOpenid(String openId) {
         User result = userRepository.findByOpenid(openId);
         // This will throw null pointer exception

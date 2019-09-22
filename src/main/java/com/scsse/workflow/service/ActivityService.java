@@ -1,5 +1,7 @@
 package com.scsse.workflow.service;
 
+import com.scsse.workflow.entity.dto.ActivityDto;
+import com.scsse.workflow.entity.dto.RecruitDto;
 import com.scsse.workflow.entity.model.Activity;
 import com.scsse.workflow.entity.model.Recruit;
 import com.scsse.workflow.entity.model.Tag;
@@ -13,13 +15,13 @@ import java.util.Set;
  */
 public interface ActivityService {
 
-    List<Activity> findAllActivity();
+    List<ActivityDto> findAllActivity();
 
-    List<Activity> findAllExpiredActivity();
+    List<ActivityDto> findAllExpiredActivity();
 
-    List<Activity> findAllFinishedActivity();
+    List<ActivityDto> findAllFinishedActivity();
 
-    List<Activity> findAllFreshActivity();
+    List<ActivityDto> findAllFreshActivity();
 
 
     Activity findActivityById(Integer activityId);
@@ -30,35 +32,11 @@ public interface ActivityService {
 
     void deleteActivityById(Integer activityId);
 
-    /**
-     * 返回一个比赛的所有的招聘
-     *
-     * @param activityId
-     * @return List<Recruit>
-     */
-    Set<Recruit> findAllRecruitOfActivity(Integer activityId);
+    List<RecruitDto> findAllRecruitOfActivity(Integer activityId);
 
-    /**
-     * 返回一个比赛的所有tag
-     *
-     * @param activityId
-     * @return List{Tag}
-     */
     Set<Tag> findAllTagOfActivity(Integer activityId);
 
-    /**
-     * 给一个比赛绑定一个tag
-     *
-     * @param activityId
-     * @param tagId
-     */
     void bindTagToActivity(Integer activityId, Integer tagId);
 
-    /**
-     * 给一个比赛解绑一个tag
-     *
-     * @param activityId
-     * @param tagId
-     */
     void unBindTagToActivity(Integer activityId, Integer tagId);
 }

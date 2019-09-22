@@ -1,6 +1,7 @@
 package com.scsse.workflow.service;
 
 import com.scsse.workflow.entity.dto.RecruitDto;
+import com.scsse.workflow.entity.dto.UserDto;
 import com.scsse.workflow.entity.model.Recruit;
 import com.scsse.workflow.entity.model.Tag;
 import com.scsse.workflow.entity.model.User;
@@ -52,7 +53,7 @@ public interface RecruitService {
      * @param recruitId 招聘主键
      * @return List{User}
      */
-    Set<User> findAllMemberOfRecruit(Integer recruitId);
+    List<UserDto> findAllMemberOfRecruit(Integer recruitId);
 
     /**
      * 返回一个招聘信息的所有关注者
@@ -60,7 +61,7 @@ public interface RecruitService {
      * @param recruitId 招聘主键
      * @return List{User}
      */
-    Set<User> findAllFollowerOfRecruit(Integer recruitId);
+    List<UserDto> findAllFollowerOfRecruit(Integer recruitId);
 
     /**
      * 返回一个招聘信息的所有申请者
@@ -68,7 +69,7 @@ public interface RecruitService {
      * @param recruitId 招聘主键
      * @return List{User}
      */
-    Set<User> findAllApplicantOfRecruit(Integer recruitId);
+    List<UserDto> findAllApplicantOfRecruit(Integer recruitId);
 
     /**
      * 返回一个招聘信息的所有tag
@@ -93,11 +94,6 @@ public interface RecruitService {
      * @param tagId     标签
      */
     void unBindTagToRecruit(Integer recruitId, Integer tagId);
-
-
-    List<RecruitDto> transferRecruitToListDto(Set<Recruit> recruitSet, User user);
-
-    RecruitDto transferRecruitToDto(Recruit recruit, User user);
 
 
 }

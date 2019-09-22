@@ -29,32 +29,29 @@ public class UserController {
     /**
      * 获取某个用户的具体信息
      *
-     * @param openid user primary key
+     * @param userId user primary key
      * @return User
      */
-    @GetMapping("/user/{openid}")
-    public Result getUserDetail(@PathVariable() String openid) {
-        return ResultUtil.success(userService.findUserById(userUtil.findUserIdByOpenid(openid)));
+    @GetMapping("/user/{userId}")
+    public Result getUserDetail(@PathVariable() Integer userId) {
+        return ResultUtil.success(userService.findUserById(userId));
     }
 
     /**
-     * 编辑个人信息
+     * 编辑自己的个人信息
      *
-     * @param user   需要更新的User信息
-     * @param openid user唯一标示
+     * @param user 需要更新的User信息
      * @return 200 OK
-     * <p>
      * e.g.
-     * Put /user/1
-     * <p>
-     * JsonBody
+     * Put /user/self
+     * Request Body
      * {
      * username: "test",
      * userNumber: "10105101111"
      * }
      */
-    @PutMapping("/user/{openid}")
-    public Result updateUserInformation(@RequestBody User user, @PathVariable String openid) {
+    @PutMapping("/user/self")
+    public Result updateUserInformation(@RequestBody User user) {
         user.setUserId(userUtil.findLoginUserId());
         return ResultUtil.success(
                 userService.updateUser(user)
@@ -62,62 +59,117 @@ public class UserController {
     }
 
     /**
-     * 获取调用者关注的所有user
+     * 获取用户关注的所有user
      *
-     * @param openid 调用者的openid
+     * @param userId 用户主键
      * @return List{User}
      */
-    @GetMapping("/user/Follower")
-    public Result getFollowedUser(@RequestAttribute() String openid) {
+    @GetMapping("/user/{userId}/followingUser")
+    public Result getFollowingUser(@PathVariable Integer userId) {
         return ResultUtil.success(
 
         );
     }
 
     /**
+     * 获取用户的粉丝
+     *
+     * @param userId 用户主键
+     * @return List{User}
+     */
+    @GetMapping("/user/{userId}/followedUser")
+    public Result getFollowedUser(@PathVariable Integer userId) {
+        return ResultUtil.success(
+
+        );
+    }
+
+    /**
+     * 获取用户的同事 (同个招聘的人)
+     *
+     * @param userId 用户主键
+     * @return List{User}
+     */
+    @GetMapping("/user/{userId}/colleague")
+    public Result getColleague(@PathVariable Integer userId) {
+        return ResultUtil.success(
+
+        );
+    }
+
+    /**
+     * 获取用户关注的所有应聘
+     *
+     * @return List{RecruitDto}
+     * 例:
+     * url:
+     * /recruit/followed
+     */
+    @GetMapping("/user/{userId}/followedRecruit")
+    public Result getFollowedRecruit(@PathVariable Integer userId) {
+        return ResultUtil.success(
+                userService.findAllFollowedRecruit(
+                        userId
+                )
+        );
+    }
+
+
+    /**
+     * 获取用户关注的所有比赛
+     *
+     * @param userId 调用者的openid
+     * @return List{Activity}
+     * <p>
+     * e.g.
+     * GET /activity/1
+     */
+    @GetMapping("/user/{userId}/followedActivity")
+    public Result getFollowedActivity(@PathVariable() Integer userId) {
+        return ResultUtil.success();
+    }
+
+
+    /**
      * 关注一个user
      *
-     * @param userId     调用者的openid
-     * @param followerId 要关注的用户user的id(即openid)
+     * @param followedUserId 要关注的用户的userId
      * @return 例:
      * url:
      * PUT /user/1/follower/2
      */
-    @PutMapping("/user/{userId}/follower/{followerId}")
-    public Result followOneUser(@PathVariable String userId, @PathVariable String followerId) {
-        Integer _originUserId = userUtil.findLoginUserId();
-        Integer _followerUserId = userUtil.findUserIdByOpenid(followerId);
+    @PutMapping("/user/follower/{followedUserId}")
+    public Result followUser(@PathVariable Integer followedUserId) {
+        Integer originUserId = userUtil.findLoginUserId();
+        userService.followUser(originUserId,followedUserId);
         return ResultUtil.success();
     }
 
     /**
      * 取消关注一个user
      *
-     * @param userId     该user的id(即openid)
-     * @param followerId 要关注的用户user的id(即openid)
+     * @param followedUserId 要关注的用户的userId
      * @return 例:
      * url:
      * DELETE /user/1/follower/2
      */
-    @DeleteMapping("/user/{userId}/follower/{followerId}")
-    public Result unfollowOneUser(@PathVariable String userId, @PathVariable String followerId) {
-        Integer _originUserId = userUtil.findLoginUserId();
-        Integer _followerUserId = userUtil.findUserIdByOpenid(followerId);
+    @DeleteMapping("/user/follower/{followedUserId}")
+    public Result unfollowUser(@PathVariable Integer followedUserId) {
+        Integer originUserId = userUtil.findLoginUserId();
+        userService.unfollowRecruit(originUserId,followedUserId);
         return ResultUtil.success();
     }
-
 
     /**
      * 关注一条应聘
      *
      * @param recruitId 该条应聘的id
-     * @param openid    调用者的openid
      * @return 例:
      * url:
      * PUT /user/1/recruit/1
      */
-    @PutMapping("/user/{openid}/recruit/{recruitId}")
-    public Result followOneRecruit(@PathVariable() Integer recruitId, @PathVariable String openid) {
+    @PutMapping("/user/recruit/{recruitId}")
+    public Result followRecruit(@PathVariable() Integer recruitId) {
         userService.followRecruit(userUtil.findLoginUserId(), recruitId);
         return ResultUtil.success();
     }
@@ -126,14 +178,41 @@ public class UserController {
      * 取消关注一条应聘
      *
      * @param recruitId 应聘id
-     * @param openid    调用者的openid
      * @return 例:
      * url:
      * DELETE /user/1/recruit/1
      */
-    @DeleteMapping("/user/{openid}/{recruitId}/unfollow")
-    public Result unfollowOneRecruit(@PathVariable() Integer recruitId, @PathVariable String openid) {
+    @DeleteMapping("/user/recruit/{recruitId}")
+    public Result unfollowRecruit(@PathVariable() Integer recruitId) {
         userService.unfollowRecruit(userUtil.findLoginUserId(), recruitId);
+        return ResultUtil.success();
+    }
+
+    /**
+     * 关注一个活动
+     *
+     * @param activityId 活动id
+     * @return 例:
+     * url:
+     * PUT /user/1/recruit/1
+     */
+    @PutMapping("/user/activity/{activityId}")
+    public Result followActivity(@PathVariable() Integer activityId) {
+        userService.followActivity(userUtil.findLoginUserId(), activityId);
+        return ResultUtil.success();
+    }
+
+    /**
+     * 取消关注一个活动
+     *
+     * @param activityId 活动id
+     * @return 例:
+     * url:
+     * DELETE /user/1/recruit/1
+     */
+    @DeleteMapping("/user/activity/{activityId}")
+    public Result unfollowActivity(@PathVariable() Integer activityId) {
+        userService.unfollowActivity(userUtil.findLoginUserId(), activityId);
         return ResultUtil.success();
     }
 }
