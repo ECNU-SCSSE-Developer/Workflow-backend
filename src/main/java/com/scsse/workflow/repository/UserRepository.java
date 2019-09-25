@@ -15,7 +15,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     User findByUserId(Integer userId);
 
-    @Query(" select count(f) from user_follower f where follower_id = :userId")
+    @Query(" select count(f) from UserFollower f where f.followerId = :userId")
     Integer findFollowerNumberByUserId(@Param("userId") Integer userId);
 
     void deleteByUserId(Integer userId);
