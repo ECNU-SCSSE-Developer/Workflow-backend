@@ -2,18 +2,20 @@ package com.scsse.workflow.util.DAOUtil;
 
 import com.scsse.workflow.entity.dto.ActivityDto;
 import com.scsse.workflow.entity.dto.RecruitDto;
+import com.scsse.workflow.entity.dto.UserDetailPage;
 import com.scsse.workflow.entity.dto.UserDto;
 import com.scsse.workflow.entity.model.Activity;
 import com.scsse.workflow.entity.model.Recruit;
 import com.scsse.workflow.entity.model.User;
+import com.scsse.workflow.repository.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Set;
+import javax.transaction.Transactional;
+import java.util.*;
 
 /**
  * @author Alfred Fu
@@ -24,9 +26,12 @@ public class DtoTransferHelper {
 
     private final ModelMapper modelMapper;
 
+    private final UserRepository userRepository;
+
     @Autowired
-    public DtoTransferHelper(ModelMapper modelMapper) {
+    public DtoTransferHelper(ModelMapper modelMapper, UserRepository userRepository) {
         this.modelMapper = modelMapper;
+        this.userRepository = userRepository;
     }
 
     public RecruitDto transferToRecruitDto(Recruit recruit, User user) {
@@ -52,6 +57,23 @@ public class DtoTransferHelper {
 
     public UserDto transferToUserDto(User user) {
         UserDto result = modelMapper.map(user, UserDto.class);
+        return result;
+    }
+
+    @Transactional
+    public UserDetailPage transferToUserDetailPage(User user) {
+        UserDetailPage result = modelMapper.map(user, UserDetailPage.class);
+        Set<User> colleagueSet = new HashSet<>();
+        user.getApplyRecruits().forEach(recruit -> colleagueSet.addAll(recruit.getMembers()));
+        result.setColleagueNumber(colleagueSet.size());
+        result.setFollowerNumber(userRepository.findFollowerNumberByUserId(user.getUserId()));
+        result.setFollowingPeopleNumber(user.getFollowUser().size());
+        return result;
+    }
+
+    public List<UserDetailPage> transferToUserDetailPage(Collection<User> userSet) {
+        List<UserDetailPage> result = new ArrayList<>();
+        userSet.stream().map(this::transferToUserDetailPage).forEach(result::add);
         return result;
     }
 

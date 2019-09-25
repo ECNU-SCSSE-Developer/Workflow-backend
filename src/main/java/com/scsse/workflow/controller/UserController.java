@@ -2,9 +2,9 @@ package com.scsse.workflow.controller;
 
 import com.scsse.workflow.entity.model.User;
 import com.scsse.workflow.service.UserService;
+import com.scsse.workflow.util.DAOUtil.UserUtil;
 import com.scsse.workflow.util.Result.Result;
 import com.scsse.workflow.util.Result.ResultUtil;
-import com.scsse.workflow.util.DAOUtil.UserUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,8 +33,8 @@ public class UserController {
      * @return User
      */
     @GetMapping("/user/{userId}")
-    public Result getUserDetail(@PathVariable() Integer userId) {
-        return ResultUtil.success(userService.findUserById(userId));
+    public Result getUserDetail(@PathVariable Integer userId) {
+        return ResultUtil.success(userService.findUserDetail(userId));
     }
 
     /**
@@ -67,7 +67,7 @@ public class UserController {
     @GetMapping("/user/{userId}/followingUser")
     public Result getFollowingUser(@PathVariable Integer userId) {
         return ResultUtil.success(
-
+                userService.findAllFollowingUser(userId)
         );
     }
 
@@ -80,7 +80,7 @@ public class UserController {
     @GetMapping("/user/{userId}/followedUser")
     public Result getFollowedUser(@PathVariable Integer userId) {
         return ResultUtil.success(
-
+                userService.findAllFollowedUser(userId)
         );
     }
 
@@ -93,7 +93,7 @@ public class UserController {
     @GetMapping("/user/{userId}/colleague")
     public Result getColleague(@PathVariable Integer userId) {
         return ResultUtil.success(
-
+                userService.findAllColleague(userId)
         );
     }
 
@@ -103,14 +103,12 @@ public class UserController {
      * @return List{RecruitDto}
      * 例:
      * url:
-     * /recruit/followed
+     * GET /user/1/followedRecruit
      */
     @GetMapping("/user/{userId}/followedRecruit")
     public Result getFollowedRecruit(@PathVariable Integer userId) {
         return ResultUtil.success(
-                userService.findAllFollowedRecruit(
-                        userId
-                )
+                userService.findAllFollowedRecruit(userId)
         );
     }
 
@@ -122,12 +120,16 @@ public class UserController {
      * @return List{Activity}
      * <p>
      * e.g.
-     * GET /activity/1
+     * GET /user/1/followedActivity
      */
     @GetMapping("/user/{userId}/followedActivity")
     public Result getFollowedActivity(@PathVariable() Integer userId) {
-        return ResultUtil.success();
+        return ResultUtil.success(
+                userService.findAllFollowedActivity(userId)
+        );
     }
+
+
 
 
     /**
@@ -136,12 +138,12 @@ public class UserController {
      * @param followedUserId 要关注的用户的userId
      * @return 例:
      * url:
-     * PUT /user/1/follower/2
+     * PUT /user/follower/2
      */
     @PutMapping("/user/follower/{followedUserId}")
     public Result followUser(@PathVariable Integer followedUserId) {
         Integer originUserId = userUtil.findLoginUserId();
-        userService.followUser(originUserId,followedUserId);
+        userService.followUser(originUserId, followedUserId);
         return ResultUtil.success();
     }
 
@@ -151,12 +153,12 @@ public class UserController {
      * @param followedUserId 要关注的用户的userId
      * @return 例:
      * url:
-     * DELETE /user/1/follower/2
+     * DELETE /user/follower/2
      */
     @DeleteMapping("/user/follower/{followedUserId}")
     public Result unfollowUser(@PathVariable Integer followedUserId) {
         Integer originUserId = userUtil.findLoginUserId();
-        userService.unfollowRecruit(originUserId,followedUserId);
+        userService.unfollowRecruit(originUserId, followedUserId);
         return ResultUtil.success();
     }
 
@@ -166,7 +168,7 @@ public class UserController {
      * @param recruitId 该条应聘的id
      * @return 例:
      * url:
-     * PUT /user/1/recruit/1
+     * PUT /user/recruit/1
      */
     @PutMapping("/user/recruit/{recruitId}")
     public Result followRecruit(@PathVariable() Integer recruitId) {
@@ -180,7 +182,7 @@ public class UserController {
      * @param recruitId 应聘id
      * @return 例:
      * url:
-     * DELETE /user/1/recruit/1
+     * DELETE /user/recruit/1
      */
     @DeleteMapping("/user/recruit/{recruitId}")
     public Result unfollowRecruit(@PathVariable() Integer recruitId) {
@@ -194,7 +196,7 @@ public class UserController {
      * @param activityId 活动id
      * @return 例:
      * url:
-     * PUT /user/1/recruit/1
+     * PUT /user/recruit/1
      */
     @PutMapping("/user/activity/{activityId}")
     public Result followActivity(@PathVariable() Integer activityId) {
@@ -208,7 +210,7 @@ public class UserController {
      * @param activityId 活动id
      * @return 例:
      * url:
-     * DELETE /user/1/recruit/1
+     * DELETE /user/recruit/1
      */
     @DeleteMapping("/user/activity/{activityId}")
     public Result unfollowActivity(@PathVariable() Integer activityId) {

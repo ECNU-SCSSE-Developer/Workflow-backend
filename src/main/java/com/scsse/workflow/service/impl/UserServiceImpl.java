@@ -2,6 +2,7 @@ package com.scsse.workflow.service.impl;
 
 import com.scsse.workflow.entity.dto.ActivityDto;
 import com.scsse.workflow.entity.dto.RecruitDto;
+import com.scsse.workflow.entity.dto.UserDetailPage;
 import com.scsse.workflow.entity.dto.UserDto;
 import com.scsse.workflow.entity.model.Activity;
 import com.scsse.workflow.entity.model.Recruit;
@@ -59,21 +60,21 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findUserById(Integer userId) {
-        return userRepository.findByUserId(userId);
+    public UserDetailPage findUserDetail(Integer userId) {
+        return dtoTransferHelper.transferToUserDetailPage(userRepository.findByUserId(userId));
     }
 
     @Override
-    public User createUser(User user) {
-        return userRepository.save(user);
+    public UserDto createUser(User user) {
+        return dtoTransferHelper.transferToUserDto(userRepository.save(user));
     }
 
     @Override
-    public User updateUser(User user) {
+    public UserDto updateUser(User user) {
         Integer userId = user.getUserId();
         User oldUser = userRepository.findByUserId(userId);
         modelMapper.map(user, oldUser);
-        return userRepository.save(oldUser);
+        return dtoTransferHelper.transferToUserDto(userRepository.save(oldUser));
 
     }
 

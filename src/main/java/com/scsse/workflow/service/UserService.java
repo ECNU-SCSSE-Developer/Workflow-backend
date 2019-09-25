@@ -2,6 +2,7 @@ package com.scsse.workflow.service;
 
 import com.scsse.workflow.entity.dto.ActivityDto;
 import com.scsse.workflow.entity.dto.RecruitDto;
+import com.scsse.workflow.entity.dto.UserDetailPage;
 import com.scsse.workflow.entity.dto.UserDto;
 import com.scsse.workflow.entity.model.Activity;
 import com.scsse.workflow.entity.model.Tag;
@@ -19,14 +20,13 @@ public interface UserService {
 
     List<UserDto> findAllUser();
 
-    User findUserById(Integer userId);
+    UserDetailPage findUserDetail(Integer userId);
 
-    User createUser(User user);
+    UserDto createUser(User user);
 
-    User updateUser(User user);
+    UserDto updateUser(User user);
 
     void deleteUserById(Integer userId);
-
 
 
     /**

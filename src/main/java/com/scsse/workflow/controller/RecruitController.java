@@ -88,7 +88,7 @@ public class RecruitController {
      * @return RecruitDto
      * @see RecruitDto
      */
-    @GetMapping("/recruit/applied")
+    @GetMapping("/recruit/appliedRecruit")
     public Result getAppliedRecruit() {
         return ResultUtil.success(
                 userService.findAllRegisteredRecruit(
@@ -103,7 +103,7 @@ public class RecruitController {
      * @return RecruitDto
      * @see RecruitDto
      */
-    @GetMapping("/recruit/assigned")
+    @GetMapping("/recruit/assignedRecruit")
     public Result getAssignedRecruit() {
         return ResultUtil.success(
                 userService.findAllAssignedRecruit(
