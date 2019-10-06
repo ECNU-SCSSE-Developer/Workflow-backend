@@ -1,9 +1,6 @@
 package com.scsse.workflow.service;
 
-import com.scsse.workflow.entity.dto.ActivityDto;
-import com.scsse.workflow.entity.dto.RecruitDto;
-import com.scsse.workflow.entity.dto.UserDetailPage;
-import com.scsse.workflow.entity.dto.UserDto;
+import com.scsse.workflow.entity.dto.*;
 import com.scsse.workflow.entity.model.Activity;
 import com.scsse.workflow.entity.model.Tag;
 import com.scsse.workflow.entity.model.User;
@@ -120,4 +117,9 @@ public interface UserService {
     void followRecruit(Integer userId, Integer recruitId);
 
     void unfollowRecruit(Integer userId, Integer recruitId);
+
+
+    List<TeamDto> findJoinedTeam(User user);
+
+
 }

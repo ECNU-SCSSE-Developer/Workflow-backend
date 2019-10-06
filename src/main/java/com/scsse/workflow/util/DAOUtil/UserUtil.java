@@ -31,10 +31,11 @@ public class UserUtil {
         return result.getUserId();
     }
 
-    public Integer findLoginUserId() {
+    public Integer getLoginUserId() {
         User result = userRepository.findByOpenid(RequestUtil.getOpenId());
         // This will throw null pointer exception
         // TODO(): throw custom exception
+
         return result.getUserId();
     }
 }

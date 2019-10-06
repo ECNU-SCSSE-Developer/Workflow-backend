@@ -1,19 +1,11 @@
 package com.scsse.workflow.service.impl;
 
-import com.scsse.workflow.entity.dto.ActivityDto;
-import com.scsse.workflow.entity.dto.RecruitDto;
-import com.scsse.workflow.entity.dto.UserDetailPage;
-import com.scsse.workflow.entity.dto.UserDto;
-import com.scsse.workflow.entity.model.Activity;
-import com.scsse.workflow.entity.model.Recruit;
-import com.scsse.workflow.entity.model.Tag;
-import com.scsse.workflow.entity.model.User;
-import com.scsse.workflow.repository.ActivityRepository;
-import com.scsse.workflow.repository.RecruitRepository;
-import com.scsse.workflow.repository.TagRepository;
-import com.scsse.workflow.repository.UserRepository;
+import com.scsse.workflow.entity.dto.*;
+import com.scsse.workflow.entity.model.*;
+import com.scsse.workflow.repository.*;
 import com.scsse.workflow.service.UserService;
 import com.scsse.workflow.util.DAOUtil.DtoTransferHelper;
+import com.scsse.workflow.util.DAOUtil.UserUtil;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -44,19 +36,22 @@ public class UserServiceImpl implements UserService {
 
     private final ActivityRepository activityRepository;
 
+    private final TeamRepository teamRepository;
+
     @Autowired
-    public UserServiceImpl(ModelMapper modelMapper, DtoTransferHelper dtoTransferHelper, RecruitRepository recruitRepository, UserRepository userRepository, TagRepository tagRepository, ActivityRepository activityRepository) {
+    public UserServiceImpl(ModelMapper modelMapper, DtoTransferHelper dtoTransferHelper, RecruitRepository recruitRepository, UserRepository userRepository, TagRepository tagRepository, ActivityRepository activityRepository, TeamRepository teamRepository) {
         this.modelMapper = modelMapper;
         this.dtoTransferHelper = dtoTransferHelper;
         this.recruitRepository = recruitRepository;
         this.userRepository = userRepository;
         this.tagRepository = tagRepository;
         this.activityRepository = activityRepository;
+        this.teamRepository = teamRepository;
     }
 
     @Override
     public List<UserDto> findAllUser() {
-        return dtoTransferHelper.transferToUserDto(userRepository.findAll());
+        return dtoTransferHelper.transferToListDto(userRepository.findAll(), eachItem -> dtoTransferHelper.transferToUserDto((User) eachItem));
     }
 
     @Override
@@ -147,7 +142,10 @@ public class UserServiceImpl implements UserService {
     public List<RecruitDto> findAllFollowedRecruit(Integer userId) {
         User user = userRepository.findByUserId(userId);
         if (user != null) {
-            return dtoTransferHelper.transferToRecruitDto(user.getFollowRecruits(), user);
+            return dtoTransferHelper.transferToListDto(
+                    user.getFollowRecruits(), user,
+                    (firstParam, secondParam) -> dtoTransferHelper.transferToRecruitDto((Recruit) firstParam,(User) secondParam)
+            );
         } else {
             return null;
         }
@@ -157,7 +155,12 @@ public class UserServiceImpl implements UserService {
     public List<RecruitDto> findAllRegisteredRecruit(Integer userId) {
         User user = userRepository.findByUserId(userId);
         if (user != null) {
-            return dtoTransferHelper.transferToRecruitDto(user.getApplyRecruits(), user);
+            return dtoTransferHelper.transferToListDto(
+                    user.getApplyRecruits(), user,
+                    (firstParam, secondParam) -> dtoTransferHelper.transferToRecruitDto((Recruit) firstParam,(User) secondParam)
+            );
+
+
         } else {
             return null;
         }
@@ -167,7 +170,10 @@ public class UserServiceImpl implements UserService {
     public List<RecruitDto> findAllAssignedRecruit(Integer userId) {
         User user = userRepository.findByUserId(userId);
         if (user != null) {
-            return dtoTransferHelper.transferToRecruitDto(user.getSuccessRecruits(), user);
+            return dtoTransferHelper.transferToListDto(
+                    user.getSuccessRecruits(), user,
+                    (firstParam, secondParam) -> dtoTransferHelper.transferToRecruitDto((Recruit) firstParam,(User) secondParam)
+            );
         } else {
             return null;
         }
@@ -239,4 +245,15 @@ public class UserServiceImpl implements UserService {
             userRepository.save(originUser);
         }
     }
+
+
+    @Override
+    public List<TeamDto> findJoinedTeam(User user) {
+        return dtoTransferHelper.transferToListDto(
+                teamRepository.findAllByMembersContains(user),
+                eachItem -> dtoTransferHelper.transferToTeamDto((Team) eachItem)
+        );
+    }
+
+
 }

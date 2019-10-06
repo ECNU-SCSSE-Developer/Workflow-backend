@@ -131,19 +131,21 @@ public class RecruitServiceImpl implements RecruitService {
     @Override
     public List<UserDto> findAllMemberOfRecruit(Integer recruitId) {
         Recruit recruit = recruitRepository.findByRecruitId(recruitId);
-        return dtoTransferHelper.transferToUserDto(recruit.getMembers());
+        return dtoTransferHelper.transferToListDto(recruit.getMembers(),eachItem -> dtoTransferHelper.transferToUserDto((User) eachItem));
     }
 
     @Override
     public List<UserDto> findAllFollowerOfRecruit(Integer recruitId) {
         Recruit recruit = recruitRepository.findByRecruitId(recruitId);
-        return dtoTransferHelper.transferToUserDto(recruit.getFollowers());
+        return dtoTransferHelper.transferToListDto(recruit.getFollowers(),eachItem -> dtoTransferHelper.transferToUserDto((User) eachItem));
     }
 
     @Override
     public List<UserDto> findAllApplicantOfRecruit(Integer recruitId) {
         Recruit recruit = recruitRepository.findByRecruitId(recruitId);
-        return dtoTransferHelper.transferToUserDto(recruit.getApplicants());
+        return dtoTransferHelper.transferToListDto(recruit.getApplicants(),eachItem -> dtoTransferHelper.transferToUserDto((User) eachItem));
+
+
     }
 
     @Override

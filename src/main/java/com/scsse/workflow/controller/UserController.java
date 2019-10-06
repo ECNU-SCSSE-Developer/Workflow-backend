@@ -52,7 +52,7 @@ public class UserController {
      */
     @PutMapping("/user/self")
     public Result updateUserInformation(@RequestBody User user) {
-        user.setUserId(userUtil.findLoginUserId());
+        user.setUserId(userUtil.getLoginUserId());
         return ResultUtil.success(
                 userService.updateUser(user)
         );
@@ -142,7 +142,7 @@ public class UserController {
      */
     @PutMapping("/user/follower/{followedUserId}")
     public Result followUser(@PathVariable Integer followedUserId) {
-        Integer originUserId = userUtil.findLoginUserId();
+        Integer originUserId = userUtil.getLoginUserId();
         userService.followUser(originUserId, followedUserId);
         return ResultUtil.success();
     }
@@ -157,7 +157,7 @@ public class UserController {
      */
     @DeleteMapping("/user/follower/{followedUserId}")
     public Result unfollowUser(@PathVariable Integer followedUserId) {
-        Integer originUserId = userUtil.findLoginUserId();
+        Integer originUserId = userUtil.getLoginUserId();
         userService.unfollowRecruit(originUserId, followedUserId);
         return ResultUtil.success();
     }
@@ -172,7 +172,7 @@ public class UserController {
      */
     @PutMapping("/user/recruit/{recruitId}")
     public Result followRecruit(@PathVariable() Integer recruitId) {
-        userService.followRecruit(userUtil.findLoginUserId(), recruitId);
+        userService.followRecruit(userUtil.getLoginUserId(), recruitId);
         return ResultUtil.success();
     }
 
@@ -186,7 +186,7 @@ public class UserController {
      */
     @DeleteMapping("/user/recruit/{recruitId}")
     public Result unfollowRecruit(@PathVariable() Integer recruitId) {
-        userService.unfollowRecruit(userUtil.findLoginUserId(), recruitId);
+        userService.unfollowRecruit(userUtil.getLoginUserId(), recruitId);
         return ResultUtil.success();
     }
 
@@ -200,7 +200,7 @@ public class UserController {
      */
     @PutMapping("/user/activity/{activityId}")
     public Result followActivity(@PathVariable() Integer activityId) {
-        userService.followActivity(userUtil.findLoginUserId(), activityId);
+        userService.followActivity(userUtil.getLoginUserId(), activityId);
         return ResultUtil.success();
     }
 
@@ -214,7 +214,7 @@ public class UserController {
      */
     @DeleteMapping("/user/activity/{activityId}")
     public Result unfollowActivity(@PathVariable() Integer activityId) {
-        userService.unfollowActivity(userUtil.findLoginUserId(), activityId);
+        userService.unfollowActivity(userUtil.getLoginUserId(), activityId);
         return ResultUtil.success();
     }
 }

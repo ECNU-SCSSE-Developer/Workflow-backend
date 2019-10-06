@@ -1,17 +1,13 @@
 package com.scsse.workflow.util.DAOUtil;
 
-import com.scsse.workflow.entity.dto.ActivityDto;
-import com.scsse.workflow.entity.dto.RecruitDto;
-import com.scsse.workflow.entity.dto.UserDetailPage;
-import com.scsse.workflow.entity.dto.UserDto;
+import com.scsse.workflow.entity.dto.*;
 import com.scsse.workflow.entity.model.Activity;
 import com.scsse.workflow.entity.model.Recruit;
+import com.scsse.workflow.entity.model.Team;
 import com.scsse.workflow.entity.model.User;
 import com.scsse.workflow.repository.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
@@ -49,12 +45,6 @@ public class DtoTransferHelper {
         return result;
     }
 
-    public List<RecruitDto> transferToRecruitDto(Collection<Recruit> recruitSet, User user) {
-        List<RecruitDto> result = new ArrayList<>();
-        recruitSet.stream().map(recruit -> transferToRecruitDto(recruit, user)).forEach(result::add);
-        return result;
-    }
-
     public UserDto transferToUserDto(User user) {
         UserDto result = modelMapper.map(user, UserDto.class);
         return result;
@@ -71,26 +61,28 @@ public class DtoTransferHelper {
         return result;
     }
 
-    public List<UserDetailPage> transferToUserDetailPage(Collection<User> userSet) {
-        List<UserDetailPage> result = new ArrayList<>();
-        userSet.stream().map(this::transferToUserDetailPage).forEach(result::add);
-        return result;
-    }
-
-    public List<UserDto> transferToUserDto(Collection<User> userSet) {
-        List<UserDto> result = new ArrayList<>();
-        userSet.stream().map(this::transferToUserDto).forEach(result::add);
-        return result;
-    }
 
     public ActivityDto transferToActivityDto(Activity activity) {
         ActivityDto result = modelMapper.map(activity, ActivityDto.class);
         return result;
     }
 
-    public List<ActivityDto> transferToActivityDto(Collection<Activity> activitySet) {
-        List<ActivityDto> result = new ArrayList<>();
-        activitySet.stream().map(this::transferToActivityDto).forEach(result::add);
+
+    public TeamDto transferToTeamDto(Team team) {
+        TeamDto result = new TeamDto();
+        modelMapper.map(team, result);
+        return result;
+    }
+
+    public <T> List<T> transferToListDto(Collection<?> collection, TransferToListDtoOneParam<T> method) {
+        List<T> result = new ArrayList<>();
+        collection.stream().map(method::transferToDto).forEach(result::add);
+        return result;
+    }
+
+    public <T> List<T> transferToListDto(Collection<?> collection, Object secondParam, TransferToListDtoTwoParam<T> method) {
+        List<T> result = new ArrayList<>();
+        collection.stream().map(each -> method.transferToDto(each, secondParam)).forEach(result::add);
         return result;
     }
 

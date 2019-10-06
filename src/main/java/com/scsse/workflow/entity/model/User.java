@@ -5,6 +5,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -42,13 +43,6 @@ public class User {
     @Column
     private String openid;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JsonBackReference(value = "user.userTags")
-    @JoinTable(name = "user_tag",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "tag_id"))
-    private Set<Tag> userTags = new HashSet<>();
-
     @OneToMany
     @JsonBackReference(value = "user.followUsers")
     @JoinTable(name = "user_follower",
@@ -62,6 +56,13 @@ public class User {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "activity_id"))
     private Set<Activity> followActivities = new HashSet<>();
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JsonBackReference(value = "user.userTags")
+    @JoinTable(name = "user_tag",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "tag_id"))
+    private Set<Tag> userTags = new HashSet<>();
 
     @ManyToMany
     @JsonBackReference(value = "user.followRecruits")
@@ -77,10 +78,13 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "recruit_id"))
     private Set<Recruit> applyRecruits = new HashSet<>();
 
-
     @ManyToMany(mappedBy = "members")
     @JsonBackReference(value = "user.successRecruits")
     private Set<Recruit> successRecruits = new HashSet<>();
+
+    @ManyToMany(mappedBy = "members")
+    @JsonBackReference(value = "user.joinedTeam")
+    private Set<Team> joinedTeam = new HashSet<>();
 
     public User(String username, String openid) {
         this.username = username;
@@ -89,5 +93,26 @@ public class User {
 
     public User(String openid) {
         this.openid = openid;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof User)) return false;
+        User user = (User) o;
+        return Objects.equals(getUserId(), user.getUserId()) &&
+                Objects.equals(getUsername(), user.getUsername()) &&
+                Objects.equals(getUserNumber(), user.getUserNumber()) &&
+                Objects.equals(getUserGrade(), user.getUserGrade()) &&
+                Objects.equals(getUserPhone(), user.getUserPhone()) &&
+                Objects.equals(getUserEmail(), user.getUserEmail()) &&
+                Objects.equals(getUserSpecialty(), user.getUserSpecialty()) &&
+                Objects.equals(getUserResume(), user.getUserResume()) &&
+                Objects.equals(getOpenid(), user.getOpenid());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getUserId(), getUsername(), getUserNumber(), getUserGrade(), getUserPhone(), getUserEmail(), getUserSpecialty(), getUserResume(), getOpenid());
     }
 }
