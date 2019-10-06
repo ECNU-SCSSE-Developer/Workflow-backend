@@ -6,8 +6,8 @@ package com.scsse.workflow.service;
  * @date 2019-09-14 19:42
  */
 public interface LoginService {
-    String APP_ID = "wx0eb8aa287ec3013e";
-    String APP_SECRET = "978a121b32983e84be1cb134b0c3659d";
+    String APP_ID = "wx0a0ebdd345e4d552";
+    String APP_SECRET = "470d2a118a04cbafe063bdf8403054cd";
 
 
     String getWxSession(String code);
