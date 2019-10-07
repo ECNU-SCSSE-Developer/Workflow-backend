@@ -1,5 +1,6 @@
 package com.scsse.workflow.controller;
 
+import com.scsse.workflow.entity.dto.UserDetailPage;
 import com.scsse.workflow.entity.model.User;
 import com.scsse.workflow.service.UserService;
 import com.scsse.workflow.util.DAOUtil.UserUtil;
@@ -25,6 +26,30 @@ public class UserController {
         this.userUtil = userUtil;
         this.userService = userService;
     }
+
+
+    /**
+     * 返回登录用户的UserId
+     * @return UserId
+     */
+    @GetMapping("/user/myself")
+    public Result getLoginUserId() throws Exception {
+        return ResultUtil.success(userUtil.getLoginUserId());
+    }
+
+    /**
+     * 返回用户的主页
+     * @param userId 查询的用户
+     * @return 用户主页
+     * @see UserDetailPage
+     */
+    @GetMapping("/user/{userId}/detailPage")
+    public Result getUserDetailPage(@PathVariable Integer userId){
+        return ResultUtil.success(userService.findUserDetail(userId));
+    }
+
+
+
 
     /**
      * 获取某个用户的具体信息

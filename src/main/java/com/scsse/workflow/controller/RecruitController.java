@@ -43,7 +43,7 @@ public class RecruitController {
      * @param recruitPosition 职位(可选, 严格匹配)
      * @param pageNum         页码，从0开始(可选,默认0)
      * @param pageSize        每页条数(可选,默认10)
-     * @param currentTime     指定时间点 @DateTimeFormat(pattern = "yyyy-MM-ddThh:mm:ss")
+     * @param currentTime     指定时间点 @DateTimeFormat(pattern = "yyyy/MM/dd hh:mm:ss")
      * @return List{RecruitListDto}
      * 例:
      * url:
