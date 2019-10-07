@@ -35,8 +35,7 @@ public class TeamController {
      */
     @GetMapping("/team/joinedTeam")
     public Result getJoinTeam(){
-
-        return ResultUtil.success();
+        return ResultUtil.success(userService.findJoinedTeam(userUtil.getLoginUser()));
     }
 
 
