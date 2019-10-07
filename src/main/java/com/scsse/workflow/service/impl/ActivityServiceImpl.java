@@ -127,7 +127,7 @@ public class ActivityServiceImpl implements ActivityService {
     public List<RecruitDto> findAllRecruitOfActivity(Integer activityId) {
         return dtoTransferHelper.transferToListDto(
                 recruitRepository.findAllByActivity_ActivityId(activityId), userUtil.getLoginUser(),
-                (firstParam, secondParam) -> dtoTransferHelper.transferToRecruitDto((Recruit) firstParam,(User) secondParam)
+                (firstParam, secondParam) -> dtoTransferHelper.transferToRecruitDto((Recruit) firstParam, (User) secondParam)
         );
     }
 

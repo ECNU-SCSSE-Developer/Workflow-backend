@@ -1,6 +1,5 @@
 package com.scsse.workflow.entity.model.relation;
 
-import com.scsse.workflow.entity.model.User;
 import lombok.*;
 
 import javax.persistence.*;

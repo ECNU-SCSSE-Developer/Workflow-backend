@@ -11,5 +11,4 @@ public class ErrorMessage {
     public final static String UPDATE_ENTITY_NOT_FOUND = "需要更新的实体不存在！";
 
 
-
 }

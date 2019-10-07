@@ -52,7 +52,7 @@ public class TeamServiceImpl implements TeamService {
         Optional<Team> result = teamRepository.findById(team.getTeamId());
         if (result.isPresent()) {
             Team oldTeam = result.get();
-            modelMapper.map(team,oldTeam);
+            modelMapper.map(team, oldTeam);
             return dtoTransferHelper.transferToTeamDto(teamRepository.save(oldTeam));
         } else {
             throw new WrongUsageException(ErrorMessage.UPDATE_ENTITY_NOT_FOUND);

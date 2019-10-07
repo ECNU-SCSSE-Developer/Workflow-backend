@@ -1,7 +1,6 @@
 package com.scsse.workflow.service;
 
 import com.scsse.workflow.entity.dto.*;
-import com.scsse.workflow.entity.model.Activity;
 import com.scsse.workflow.entity.model.Tag;
 import com.scsse.workflow.entity.model.User;
 
@@ -48,12 +47,14 @@ public interface UserService {
 
     /**
      * 获取粉丝
+     *
      * @param userId 用户ID
      */
     List<UserDto> findAllFollowedUser(Integer userId);
 
     /**
      * 获取关注的人
+     *
      * @param userId 用户ID
      */
     List<UserDto> findAllFollowingUser(Integer userId);

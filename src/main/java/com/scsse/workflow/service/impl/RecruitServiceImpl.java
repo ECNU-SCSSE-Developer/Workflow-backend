@@ -7,12 +7,10 @@ import com.scsse.workflow.entity.model.Tag;
 import com.scsse.workflow.entity.model.User;
 import com.scsse.workflow.repository.RecruitRepository;
 import com.scsse.workflow.repository.TagRepository;
-import com.scsse.workflow.repository.UserRepository;
 import com.scsse.workflow.service.RecruitService;
 import com.scsse.workflow.util.DAOUtil.DtoTransferHelper;
 import com.scsse.workflow.util.DAOUtil.UserUtil;
 import com.scsse.workflow.util.MVCUtil.PredicateUtil;
-import com.scsse.workflow.util.MVCUtil.RequestUtil;
 import javafx.util.Pair;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -88,12 +86,12 @@ public class RecruitServiceImpl implements RecruitService {
 
     @Override
     public RecruitDto findRecruitById(Integer recruitId) {
-        return dtoTransferHelper.transferToRecruitDto(recruitRepository.findByRecruitId(recruitId),userUtil.getLoginUser());
+        return dtoTransferHelper.transferToRecruitDto(recruitRepository.findByRecruitId(recruitId), userUtil.getLoginUser());
     }
 
     @Override
     public RecruitDto createRecruit(Recruit recruit) {
-        return dtoTransferHelper.transferToRecruitDto(recruitRepository.save(recruit),userUtil.getLoginUser());
+        return dtoTransferHelper.transferToRecruitDto(recruitRepository.save(recruit), userUtil.getLoginUser());
     }
 
     @Override
@@ -101,7 +99,7 @@ public class RecruitServiceImpl implements RecruitService {
         Integer recruitId = recruit.getRecruitId();
         Recruit oldRecruit = recruitRepository.findByRecruitId(recruitId);
         modelMapper.map(recruit, oldRecruit);
-        return dtoTransferHelper.transferToRecruitDto(recruitRepository.save(oldRecruit),userUtil.getLoginUser());
+        return dtoTransferHelper.transferToRecruitDto(recruitRepository.save(oldRecruit), userUtil.getLoginUser());
     }
 
     @Override
@@ -133,19 +131,19 @@ public class RecruitServiceImpl implements RecruitService {
     @Override
     public List<UserDto> findAllMemberOfRecruit(Integer recruitId) {
         Recruit recruit = recruitRepository.findByRecruitId(recruitId);
-        return dtoTransferHelper.transferToListDto(recruit.getMembers(),eachItem -> dtoTransferHelper.transferToUserDto((User) eachItem));
+        return dtoTransferHelper.transferToListDto(recruit.getMembers(), eachItem -> dtoTransferHelper.transferToUserDto((User) eachItem));
     }
 
     @Override
     public List<UserDto> findAllFollowerOfRecruit(Integer recruitId) {
         Recruit recruit = recruitRepository.findByRecruitId(recruitId);
-        return dtoTransferHelper.transferToListDto(recruit.getFollowers(),eachItem -> dtoTransferHelper.transferToUserDto((User) eachItem));
+        return dtoTransferHelper.transferToListDto(recruit.getFollowers(), eachItem -> dtoTransferHelper.transferToUserDto((User) eachItem));
     }
 
     @Override
     public List<UserDto> findAllApplicantOfRecruit(Integer recruitId) {
         Recruit recruit = recruitRepository.findByRecruitId(recruitId);
-        return dtoTransferHelper.transferToListDto(recruit.getApplicants(),eachItem -> dtoTransferHelper.transferToUserDto((User) eachItem));
+        return dtoTransferHelper.transferToListDto(recruit.getApplicants(), eachItem -> dtoTransferHelper.transferToUserDto((User) eachItem));
 
 
     }

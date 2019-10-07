@@ -31,16 +31,13 @@ public class TeamController {
 
     /**
      * 获取我加入的团队
-     * @return  List{TeamDto}
+     *
+     * @return List{TeamDto}
      */
     @GetMapping("/team/joinedTeam")
-    public Result getJoinTeam(){
+    public Result getJoinTeam() {
         return ResultUtil.success(userService.findJoinedTeam(userUtil.getLoginUser()));
     }
-
-
-
-
 
 
 }

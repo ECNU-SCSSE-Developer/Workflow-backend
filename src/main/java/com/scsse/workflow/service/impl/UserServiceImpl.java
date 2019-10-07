@@ -5,7 +5,6 @@ import com.scsse.workflow.entity.model.*;
 import com.scsse.workflow.repository.*;
 import com.scsse.workflow.service.UserService;
 import com.scsse.workflow.util.DAOUtil.DtoTransferHelper;
-import com.scsse.workflow.util.DAOUtil.UserUtil;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -144,7 +143,7 @@ public class UserServiceImpl implements UserService {
         if (user != null) {
             return dtoTransferHelper.transferToListDto(
                     user.getFollowRecruits(), user,
-                    (firstParam, secondParam) -> dtoTransferHelper.transferToRecruitDto((Recruit) firstParam,(User) secondParam)
+                    (firstParam, secondParam) -> dtoTransferHelper.transferToRecruitDto((Recruit) firstParam, (User) secondParam)
             );
         } else {
             return null;
@@ -157,7 +156,7 @@ public class UserServiceImpl implements UserService {
         if (user != null) {
             return dtoTransferHelper.transferToListDto(
                     user.getApplyRecruits(), user,
-                    (firstParam, secondParam) -> dtoTransferHelper.transferToRecruitDto((Recruit) firstParam,(User) secondParam)
+                    (firstParam, secondParam) -> dtoTransferHelper.transferToRecruitDto((Recruit) firstParam, (User) secondParam)
             );
 
 
@@ -172,7 +171,7 @@ public class UserServiceImpl implements UserService {
         if (user != null) {
             return dtoTransferHelper.transferToListDto(
                     user.getSuccessRecruits(), user,
-                    (firstParam, secondParam) -> dtoTransferHelper.transferToRecruitDto((Recruit) firstParam,(User) secondParam)
+                    (firstParam, secondParam) -> dtoTransferHelper.transferToRecruitDto((Recruit) firstParam, (User) secondParam)
             );
         } else {
             return null;
@@ -229,7 +228,7 @@ public class UserServiceImpl implements UserService {
     public void followUser(Integer originUserId, Integer followUserId) {
         User originUser = userRepository.findByUserId(originUserId);
         User followUser = userRepository.findByUserId(followUserId);
-        if (originUser!=null && followUser!=null){
+        if (originUser != null && followUser != null) {
             originUser.getFollowUser().add(followUser);
             userRepository.save(originUser);
         }
@@ -240,7 +239,7 @@ public class UserServiceImpl implements UserService {
     public void unfollowUser(Integer originUserId, Integer followUserId) {
         User originUser = userRepository.findByUserId(originUserId);
         User followUser = userRepository.findByUserId(followUserId);
-        if (originUser!=null && followUser!=null){
+        if (originUser != null && followUser != null) {
             originUser.getFollowUser().remove(followUser);
             userRepository.save(originUser);
         }

@@ -34,7 +34,7 @@ public class ActionRecord {
     private Date createTime = new Date();
 
     @OneToOne
-    @JoinColumn(name="userId")
+    @JoinColumn(name = "userId")
     private User triggerUser;
 
     @ManyToOne
@@ -44,12 +44,13 @@ public class ActionRecord {
 
     /**
      * 根据Task生成ActionRecord {完成}
+     *
      * @param user triggerUser
      * @param team 保存ActionRecord的Team
      * @param task 状态为完成的task
      * @return ActionRecord
      */
-    public static ActionRecord generateTaskFinishedRecord(User user,Team team, Vector task){
+    public static ActionRecord generateTaskFinishedRecord(User user, Team team, Vector task) {
         final String SPLITTER = " ";
         final String SUCCESS_STATUS = "成功";
 
