@@ -9,6 +9,7 @@ import lombok.ToString;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -61,5 +62,24 @@ public class Activity {
 
     public Activity(String activityName) {
         this.activityName = activityName;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Activity)) return false;
+        Activity activity = (Activity) o;
+        return getActivityId() == activity.getActivityId() &&
+                Objects.equals(getActivityName(), activity.getActivityName()) &&
+                Objects.equals(getActivityTime(), activity.getActivityTime()) &&
+                Objects.equals(getActivityPlace(), activity.getActivityPlace()) &&
+                Objects.equals(getActivityDescription(), activity.getActivityDescription()) &&
+                Objects.equals(getActivitySignUpDeadline(), activity.getActivitySignUpDeadline()) &&
+                Objects.equals(getActivityUrl(), activity.getActivityUrl());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getActivityId(), getActivityName(), getActivityTime(), getActivityPlace(), getActivityDescription(), getActivitySignUpDeadline(), getActivityUrl());
     }
 }

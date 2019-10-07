@@ -16,7 +16,8 @@ import java.util.TimeZone;
  */
 public class PredicateUtil<T> {
 
-    private static final String TIME_PATTERN = "yyyy-MM-dd'T'hh:mm:ss z";
+
+    private static final String TIME_PATTERN = "yyyy/MM/dd hh:mm:ss z";
     private static final String FORMAT_TIME_PATTERN = "yyyy-MM-dd hh:mm:ss";
 
     private CriteriaBuilder criteriaBuilder;
