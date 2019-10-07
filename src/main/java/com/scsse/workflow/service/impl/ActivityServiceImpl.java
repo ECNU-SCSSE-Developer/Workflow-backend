@@ -3,7 +3,9 @@ package com.scsse.workflow.service.impl;
 import com.scsse.workflow.entity.dto.ActivityDto;
 import com.scsse.workflow.entity.dto.RecruitDto;
 import com.scsse.workflow.entity.model.Activity;
+import com.scsse.workflow.entity.model.Recruit;
 import com.scsse.workflow.entity.model.Tag;
+import com.scsse.workflow.entity.model.User;
 import com.scsse.workflow.repository.ActivityRepository;
 import com.scsse.workflow.repository.RecruitRepository;
 import com.scsse.workflow.repository.TagRepository;
@@ -53,7 +55,7 @@ public class ActivityServiceImpl implements ActivityService {
 
     @Override
     public List<ActivityDto> findAllActivity() {
-        return dtoTransferHelper.transferToActivityDto(activityRepository.findAll());
+        return dtoTransferHelper.transferToListDto(activityRepository.findAll(), eachItem -> dtoTransferHelper.transferToActivityDto((Activity) eachItem));
     }
 
     @Override
@@ -69,7 +71,7 @@ public class ActivityServiceImpl implements ActivityService {
                         (activity.getActivityTime().toInstant().atZone(ZoneId.of("Asia/Shanghai")).
                                 toLocalDate()) < 0)
                 .forEach(activities::add);
-        return dtoTransferHelper.transferToActivityDto(activities);
+        return dtoTransferHelper.transferToListDto(activities, eachItem -> dtoTransferHelper.transferToActivityDto((Activity) eachItem));
     }
 
     @Override
@@ -81,7 +83,8 @@ public class ActivityServiceImpl implements ActivityService {
                         (activity.getActivityTime().toInstant().atZone(ZoneId.of("Asia/Shanghai")).
                                 toLocalDate()) > 0)
                 .forEach(activities::add);
-        return dtoTransferHelper.transferToActivityDto(activities);
+        return dtoTransferHelper.transferToListDto(activities, eachItem -> dtoTransferHelper.transferToActivityDto((Activity) eachItem));
+
     }
 
     @Override
@@ -93,7 +96,8 @@ public class ActivityServiceImpl implements ActivityService {
                         (activity.getActivitySignUpDeadline().toInstant().atZone(ZoneId.of("Asia/Shanghai")).
                                 toLocalDate()) < 0)
                 .forEach(activities::add);
-        return dtoTransferHelper.transferToActivityDto(activities);
+        return dtoTransferHelper.transferToListDto(activities, eachItem -> dtoTransferHelper.transferToActivityDto((Activity) eachItem));
+
     }
 
     @Override
@@ -121,7 +125,10 @@ public class ActivityServiceImpl implements ActivityService {
 
     @Override
     public List<RecruitDto> findAllRecruitOfActivity(Integer activityId) {
-        return dtoTransferHelper.transferToRecruitDto(recruitRepository.findAllByActivity_ActivityId(activityId),userUtil.getLoginUser());
+        return dtoTransferHelper.transferToListDto(
+                recruitRepository.findAllByActivity_ActivityId(activityId), userUtil.getLoginUser(),
+                (firstParam, secondParam) -> dtoTransferHelper.transferToRecruitDto((Recruit) firstParam,(User) secondParam)
+        );
     }
 
     @Override

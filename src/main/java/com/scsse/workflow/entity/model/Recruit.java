@@ -43,12 +43,17 @@ public class Recruit {
     private Date createTime = new Date();
 
     @OneToOne
-    @JoinColumn(name = "user_id", unique = true)
+    @JoinColumn(name = "user_id")
     private User manager;
 
     @ManyToOne
     @JoinColumn(name = "activity_id")
     private Activity activity;
+
+    @ManyToOne
+    @JsonBackReference(value = "recruit.team")
+    @JoinColumn(name = "team_id")
+    private Team team;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JsonBackReference(value = "recruit.recruitTags")

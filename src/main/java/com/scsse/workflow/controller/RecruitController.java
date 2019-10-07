@@ -92,7 +92,7 @@ public class RecruitController {
     public Result getAppliedRecruit() {
         return ResultUtil.success(
                 userService.findAllRegisteredRecruit(
-                        userUtil.findLoginUserId()
+                        userUtil.getLoginUserId()
                 )
         );
     }
@@ -107,7 +107,7 @@ public class RecruitController {
     public Result getAssignedRecruit() {
         return ResultUtil.success(
                 userService.findAllAssignedRecruit(
-                        userUtil.findLoginUserId()
+                        userUtil.getLoginUserId()
                 )
         );
     }

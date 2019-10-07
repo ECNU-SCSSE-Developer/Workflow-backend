@@ -48,8 +48,8 @@ public class Activity {
     private Set<Tag> activityTags = new HashSet<>();
 
     @OneToMany(mappedBy = "activity")
-    @JsonBackReference(value = "activity.recruitSet")
-    private Set<Recruit> recruitSet = new HashSet<>();
+    @JsonBackReference(value = "activity.recruits")
+    private Set<Recruit> recruits = new HashSet<>();
 
     public Activity(String activityName, Date activityTime, String activityPlace, String activityDescription, Date activitySignUpDeadline) {
         this.activityName = activityName;
