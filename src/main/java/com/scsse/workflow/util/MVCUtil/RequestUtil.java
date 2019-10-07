@@ -15,7 +15,7 @@ public class RequestUtil {
     private static final String OPENID_ATTRIBUTE_KEY = "openid";
 
 
-    public static boolean setAttribute(String key, String value, int scope) {
+    private static boolean setAttribute(String key, String value, int scope) {
         Optional attribute = Optional.ofNullable(RequestContextHolder.getRequestAttributes());
         if (attribute.isPresent()) {
             ((RequestAttributes) attribute.get()).setAttribute(key, value, scope);
@@ -25,7 +25,7 @@ public class RequestUtil {
         }
     }
 
-    public static String getAttribute(String key, int scope) {
+    private static String getAttribute(String key, int scope) {
         Optional attribute = Optional.ofNullable(RequestContextHolder.getRequestAttributes());
         if (attribute.isPresent()) {
             return (String) ((RequestAttributes) attribute.get()).getAttribute(key, scope);

@@ -1,6 +1,8 @@
 package com.scsse.workflow.util.DAOUtil;
 
+import com.scsse.workflow.constant.ErrorMessage;
 import com.scsse.workflow.entity.model.User;
+import com.scsse.workflow.handler.WrongUsageException;
 import com.scsse.workflow.repository.UserRepository;
 import com.scsse.workflow.util.MVCUtil.RequestUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,23 +21,34 @@ public class UserUtil {
         this.userRepository = userRepository;
     }
 
-    public User getLoginUser(){
+    public User getLoginUser() {
         // This will throw null pointer exception
         return userRepository.findByOpenid(RequestUtil.getOpenId());
     }
 
-    public Integer findUserIdByOpenid(String openId) {
+    public Integer findUserIdByOpenid(String openId) throws Exception {
         User result = userRepository.findByOpenid(openId);
-        // This will throw null pointer exception
-        // TODO(): throw custom exception
+        if (result == null) {
+            throw new WrongUsageException(ErrorMessage.USER_NOT_FOUND);
+        }
         return result.getUserId();
     }
 
-    public Integer getLoginUserId() {
+    public User getUserByUserId(Integer userId) throws Exception {
+        User result = userRepository.findByUserId(userId);
+        if (result == null) {
+            throw new WrongUsageException(ErrorMessage.USER_NOT_FOUND);
+        }
+        return result;
+    }
+
+
+    public Integer getLoginUserId() throws Exception {
         User result = userRepository.findByOpenid(RequestUtil.getOpenId());
         // This will throw null pointer exception
         // TODO(): throw custom exception
-
+        if (result == null)
+            throw new WrongUsageException(ErrorMessage.USER_NOT_FOUND);
         return result.getUserId();
     }
 }

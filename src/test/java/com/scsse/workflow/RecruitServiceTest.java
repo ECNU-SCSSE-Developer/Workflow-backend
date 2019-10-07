@@ -1,5 +1,6 @@
 package com.scsse.workflow;
 
+import com.scsse.workflow.entity.dto.RecruitDto;
 import com.scsse.workflow.entity.model.Activity;
 import com.scsse.workflow.entity.model.Recruit;
 import com.scsse.workflow.entity.model.Tag;
@@ -48,33 +49,5 @@ public class RecruitServiceTest {
             );
         }
     }
-
-
-    @Test
-    public void bindTagToRecruitTest() {
-        // pre-condition
-        Activity activity = activityService.createActivity(new Activity("testActivity"));
-        Recruit recruit = recruitService.createRecruit(new Recruit("testRecruit", activity));
-        Tag tag = tagService.createTag(new Tag("testTag", "testTagDes"));
-        assertNotNull(activity);
-        assertNotNull(recruit);
-        assertNotNull(tag);
-        // test binding
-        recruit.getRecruitTags().add(tag);
-        recruit = recruitService.updateRecruit(recruit);
-
-        assertTrue(
-                recruitService.findRecruitById(recruit.getRecruitId())
-                        .getRecruitTags()
-                        .contains(tag)
-        );
-        // test unbinding
-        recruit.getRecruitTags().remove(tag);
-        recruit = recruitService.updateRecruit(recruit);
-        assertFalse(
-                recruitService.findRecruitById(recruit.getRecruitId())
-                        .getRecruitTags()
-                        .contains(tag)
-        );
-    }
 }
+

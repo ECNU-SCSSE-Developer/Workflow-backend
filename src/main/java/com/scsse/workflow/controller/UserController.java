@@ -51,7 +51,7 @@ public class UserController {
      * }
      */
     @PutMapping("/user/self")
-    public Result updateUserInformation(@RequestBody User user) {
+    public Result updateUserInformation(@RequestBody User user) throws Exception {
         user.setUserId(userUtil.getLoginUserId());
         return ResultUtil.success(
                 userService.updateUser(user)
@@ -141,7 +141,7 @@ public class UserController {
      * PUT /user/follower/2
      */
     @PutMapping("/user/follower/{followedUserId}")
-    public Result followUser(@PathVariable Integer followedUserId) {
+    public Result followUser(@PathVariable Integer followedUserId) throws Exception {
         Integer originUserId = userUtil.getLoginUserId();
         userService.followUser(originUserId, followedUserId);
         return ResultUtil.success();
@@ -156,7 +156,7 @@ public class UserController {
      * DELETE /user/follower/2
      */
     @DeleteMapping("/user/follower/{followedUserId}")
-    public Result unfollowUser(@PathVariable Integer followedUserId) {
+    public Result unfollowUser(@PathVariable Integer followedUserId) throws Exception {
         Integer originUserId = userUtil.getLoginUserId();
         userService.unfollowRecruit(originUserId, followedUserId);
         return ResultUtil.success();
@@ -171,7 +171,7 @@ public class UserController {
      * PUT /user/recruit/1
      */
     @PutMapping("/user/recruit/{recruitId}")
-    public Result followRecruit(@PathVariable() Integer recruitId) {
+    public Result followRecruit(@PathVariable() Integer recruitId) throws Exception {
         userService.followRecruit(userUtil.getLoginUserId(), recruitId);
         return ResultUtil.success();
     }
@@ -185,7 +185,7 @@ public class UserController {
      * DELETE /user/recruit/1
      */
     @DeleteMapping("/user/recruit/{recruitId}")
-    public Result unfollowRecruit(@PathVariable() Integer recruitId) {
+    public Result unfollowRecruit(@PathVariable() Integer recruitId) throws Exception {
         userService.unfollowRecruit(userUtil.getLoginUserId(), recruitId);
         return ResultUtil.success();
     }
@@ -199,7 +199,7 @@ public class UserController {
      * PUT /user/recruit/1
      */
     @PutMapping("/user/activity/{activityId}")
-    public Result followActivity(@PathVariable() Integer activityId) {
+    public Result followActivity(@PathVariable() Integer activityId) throws Exception {
         userService.followActivity(userUtil.getLoginUserId(), activityId);
         return ResultUtil.success();
     }
@@ -213,7 +213,7 @@ public class UserController {
      * DELETE /user/recruit/1
      */
     @DeleteMapping("/user/activity/{activityId}")
-    public Result unfollowActivity(@PathVariable() Integer activityId) {
+    public Result unfollowActivity(@PathVariable() Integer activityId) throws Exception {
         userService.unfollowActivity(userUtil.getLoginUserId(), activityId);
         return ResultUtil.success();
     }

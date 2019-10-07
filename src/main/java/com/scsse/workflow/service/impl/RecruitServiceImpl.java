@@ -10,6 +10,7 @@ import com.scsse.workflow.repository.TagRepository;
 import com.scsse.workflow.repository.UserRepository;
 import com.scsse.workflow.service.RecruitService;
 import com.scsse.workflow.util.DAOUtil.DtoTransferHelper;
+import com.scsse.workflow.util.DAOUtil.UserUtil;
 import com.scsse.workflow.util.MVCUtil.PredicateUtil;
 import com.scsse.workflow.util.MVCUtil.RequestUtil;
 import javafx.util.Pair;
@@ -44,22 +45,23 @@ public class RecruitServiceImpl implements RecruitService {
 
     private final TagRepository tagRepository;
 
-    private final UserRepository userRepository;
+    private final UserUtil userUtil;
+
 
     @Autowired
-    public RecruitServiceImpl(ModelMapper modelMapper, DtoTransferHelper dtoTransferHelper, RecruitRepository recruitRepository, TagRepository tagRepository, UserRepository userRepository) {
+    public RecruitServiceImpl(ModelMapper modelMapper, DtoTransferHelper dtoTransferHelper, RecruitRepository recruitRepository, TagRepository tagRepository, UserUtil userUtil) {
         this.modelMapper = modelMapper;
         this.dtoTransferHelper = dtoTransferHelper;
         this.recruitRepository = recruitRepository;
         this.tagRepository = tagRepository;
-        this.userRepository = userRepository;
+        this.userUtil = userUtil;
     }
 
     @Override
     public List<RecruitDto> findPaginationRecruit(Integer pageNum, Integer pageSize) {
         Pageable pageable = PageRequest.of(pageNum, pageSize, Sort.Direction.DESC, "creatTime");
         List<RecruitDto> result = new ArrayList<>();
-        User currentUser = userRepository.findByOpenid(RequestUtil.getOpenId());
+        User currentUser = userUtil.getLoginUser();
         recruitRepository.findAll(pageable).get().map(
                 o -> dtoTransferHelper.transferToRecruitDto(o, currentUser)
         ).forEach(result::add);
@@ -70,7 +72,7 @@ public class RecruitServiceImpl implements RecruitService {
     public List<RecruitDto> findPaginationRecruitWithCriteria(Integer pageNum, Integer pageSize, HashMap<Integer, Pair<String, String>> queryParam) {
         Pageable pageable = PageRequest.of(pageNum, pageSize, Sort.Direction.DESC, "createTime");
         List<RecruitDto> result = new ArrayList<>();
-        User currentUser = userRepository.findByOpenid(RequestUtil.getOpenId());
+        User currentUser = userUtil.getLoginUser();
         recruitRepository.findAll((Specification<Recruit>) (root, query, criteriaBuilder) -> {
             List<Predicate> predicateList = new ArrayList<>();
             PredicateUtil predicateHelper = new PredicateUtil<>(criteriaBuilder, root);
@@ -85,21 +87,21 @@ public class RecruitServiceImpl implements RecruitService {
     }
 
     @Override
-    public Recruit findRecruitById(Integer recruitId) {
-        return recruitRepository.findByRecruitId(recruitId);
+    public RecruitDto findRecruitById(Integer recruitId) {
+        return dtoTransferHelper.transferToRecruitDto(recruitRepository.findByRecruitId(recruitId),userUtil.getLoginUser());
     }
 
     @Override
-    public Recruit createRecruit(Recruit recruit) {
-        return recruitRepository.save(recruit);
+    public RecruitDto createRecruit(Recruit recruit) {
+        return dtoTransferHelper.transferToRecruitDto(recruitRepository.save(recruit),userUtil.getLoginUser());
     }
 
     @Override
-    public Recruit updateRecruit(Recruit recruit) {
+    public RecruitDto updateRecruit(Recruit recruit) {
         Integer recruitId = recruit.getRecruitId();
         Recruit oldRecruit = recruitRepository.findByRecruitId(recruitId);
         modelMapper.map(recruit, oldRecruit);
-        return recruitRepository.save(oldRecruit);
+        return dtoTransferHelper.transferToRecruitDto(recruitRepository.save(oldRecruit),userUtil.getLoginUser());
     }
 
     @Override
@@ -108,9 +110,9 @@ public class RecruitServiceImpl implements RecruitService {
     }
 
     @Override
-    public void addMember(Integer userId, Integer recruitId) {
+    public void addMember(Integer userId, Integer recruitId) throws Exception {
         Recruit recruit = recruitRepository.findByRecruitId(recruitId);
-        User user = userRepository.findByUserId(userId);
+        User user = userUtil.getUserByUserId(userId);
         if (recruit != null && user != null) {
             recruit.getMembers().add(user);
             recruitRepository.save(recruit);
@@ -118,9 +120,9 @@ public class RecruitServiceImpl implements RecruitService {
     }
 
     @Override
-    public void removeMember(Integer userId, Integer recruitId) {
+    public void removeMember(Integer userId, Integer recruitId) throws Exception {
         Recruit recruit = recruitRepository.findByRecruitId(recruitId);
-        User user = userRepository.findByUserId(userId);
+        User user = userUtil.getUserByUserId(userId);
         if (recruit != null && user != null) {
             recruit.getMembers().remove(user);
             recruitRepository.save(recruit);

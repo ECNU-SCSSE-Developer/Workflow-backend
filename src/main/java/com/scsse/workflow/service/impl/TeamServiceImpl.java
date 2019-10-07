@@ -3,9 +3,11 @@ package com.scsse.workflow.service.impl;
 import com.scsse.workflow.constant.ErrorMessage;
 import com.scsse.workflow.entity.dto.TeamDto;
 import com.scsse.workflow.entity.model.Team;
+import com.scsse.workflow.handler.WrongUsageException;
 import com.scsse.workflow.repository.TeamRepository;
 import com.scsse.workflow.service.TeamService;
 import com.scsse.workflow.util.DAOUtil.DtoTransferHelper;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,10 +27,13 @@ public class TeamServiceImpl implements TeamService {
 
     private final DtoTransferHelper dtoTransferHelper;
 
+    private final ModelMapper modelMapper;
+
     @Autowired
-    public TeamServiceImpl(TeamRepository teamRepository, DtoTransferHelper dtoTransferHelper) {
+    public TeamServiceImpl(TeamRepository teamRepository, DtoTransferHelper dtoTransferHelper, ModelMapper modelMapper) {
         this.teamRepository = teamRepository;
         this.dtoTransferHelper = dtoTransferHelper;
+        this.modelMapper = modelMapper;
     }
 
     @Override
@@ -44,11 +49,13 @@ public class TeamServiceImpl implements TeamService {
 
     @Override
     public TeamDto updateTeam(Team team) throws Exception {
-        Optional<Team> old = teamRepository.findById(team.getTeamId());
-        if (old.isPresent()) {
-            return dtoTransferHelper.transferToTeamDto(teamRepository.save(team));
+        Optional<Team> result = teamRepository.findById(team.getTeamId());
+        if (result.isPresent()) {
+            Team oldTeam = result.get();
+            modelMapper.map(team,oldTeam);
+            return dtoTransferHelper.transferToTeamDto(teamRepository.save(oldTeam));
         } else {
-            throw new Exception(ErrorMessage.UPDATE_ENTITY_NOT_FOUND);
+            throw new WrongUsageException(ErrorMessage.UPDATE_ENTITY_NOT_FOUND);
         }
     }
 

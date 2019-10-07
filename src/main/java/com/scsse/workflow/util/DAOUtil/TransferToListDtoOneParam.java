@@ -3,6 +3,7 @@ package com.scsse.workflow.util.DAOUtil;
 import javafx.beans.binding.ObjectExpression;
 
 /**
+ * using lambda to pass a function to another function
  * @author Alfred Fu
  * Created on 2019/10/6 11:17 下午
  */

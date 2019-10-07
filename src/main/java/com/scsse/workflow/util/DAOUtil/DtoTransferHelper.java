@@ -30,6 +30,18 @@ public class DtoTransferHelper {
         this.userRepository = userRepository;
     }
 
+    public <T> List<T> transferToListDto(Collection<?> collection, TransferToListDtoOneParam<T> method) {
+        List<T> result = new ArrayList<>();
+        collection.stream().map(method::transferToDto).forEach(result::add);
+        return result;
+    }
+
+    public <T> List<T> transferToListDto(Collection<?> collection, Object secondParam, TransferToListDtoTwoParam<T> method) {
+        List<T> result = new ArrayList<>();
+        collection.stream().map(each -> method.transferToDto(each, secondParam)).forEach(result::add);
+        return result;
+    }
+
     public RecruitDto transferToRecruitDto(Recruit recruit, User user) {
         RecruitDto result = modelMapper.map(recruit, RecruitDto.class);
         if (user.getApplyRecruits().contains(recruit)) {
@@ -74,16 +86,5 @@ public class DtoTransferHelper {
         return result;
     }
 
-    public <T> List<T> transferToListDto(Collection<?> collection, TransferToListDtoOneParam<T> method) {
-        List<T> result = new ArrayList<>();
-        collection.stream().map(method::transferToDto).forEach(result::add);
-        return result;
-    }
-
-    public <T> List<T> transferToListDto(Collection<?> collection, Object secondParam, TransferToListDtoTwoParam<T> method) {
-        List<T> result = new ArrayList<>();
-        collection.stream().map(each -> method.transferToDto(each, secondParam)).forEach(result::add);
-        return result;
-    }
 
 }

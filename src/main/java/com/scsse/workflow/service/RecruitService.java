@@ -23,11 +23,11 @@ public interface RecruitService {
 
     List<RecruitDto> findPaginationRecruitWithCriteria(Integer pageNum, Integer pageSize, final HashMap<Integer, Pair<String, String>> queryParam);
 
-    Recruit findRecruitById(Integer recruitId);
+    RecruitDto findRecruitById(Integer recruitId);
 
-    Recruit createRecruit(Recruit recruit);
+    RecruitDto createRecruit(Recruit recruit);
 
-    Recruit updateRecruit(Recruit recruit);
+    RecruitDto updateRecruit(Recruit recruit);
 
     void deleteRecruitById(Integer recruitId);
 
@@ -37,7 +37,7 @@ public interface RecruitService {
      * @param userId    用户主键
      * @param recruitId 招聘主键
      */
-    void addMember(Integer userId, Integer recruitId);
+    void addMember(Integer userId, Integer recruitId) throws Exception;
 
     /**
      * 删除某个应聘中的某个成员
@@ -45,7 +45,7 @@ public interface RecruitService {
      * @param userId    用户主键
      * @param recruitId 招聘主键
      */
-    void removeMember(Integer userId, Integer recruitId);
+    void removeMember(Integer userId, Integer recruitId) throws Exception;
 
     /**
      * 返回一个招聘信息的所有应聘成功的应聘者

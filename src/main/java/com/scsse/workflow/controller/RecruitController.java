@@ -89,7 +89,7 @@ public class RecruitController {
      * @see RecruitDto
      */
     @GetMapping("/recruit/appliedRecruit")
-    public Result getAppliedRecruit() {
+    public Result getAppliedRecruit() throws Exception {
         return ResultUtil.success(
                 userService.findAllRegisteredRecruit(
                         userUtil.getLoginUserId()
@@ -104,7 +104,7 @@ public class RecruitController {
      * @see RecruitDto
      */
     @GetMapping("/recruit/assignedRecruit")
-    public Result getAssignedRecruit() {
+    public Result getAssignedRecruit() throws Exception {
         return ResultUtil.success(
                 userService.findAllAssignedRecruit(
                         userUtil.getLoginUserId()
