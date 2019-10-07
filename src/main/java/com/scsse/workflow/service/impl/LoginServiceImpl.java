@@ -69,7 +69,7 @@ public class LoginServiceImpl implements LoginService {
         res = restTemplate.exchange(url, HttpMethod.POST, entity, String.class);//返回的结果信息,String.class是可以修改的，取决于怎么解析请求返回的参数
 
         //logger.info("res statusCode:" + res.getStatusCode());
-        if (Integer.parseInt(String.valueOf(res.getStatusCode())) == 200) {
+        if (res.getStatusCode().toString().equals("200 OK")) {
             //logger.info("res body:" + res.getBody());
             JSONObject jsonObject = JSONObject.parseObject(res.getBody());
             String sessionKey = jsonObject.getString("session_key");
