@@ -139,5 +139,31 @@ public class RecruitController {
         return ResultUtil.success();
     }
 
+    /**
+     * 通过招聘
+     * @param userId 用户Id
+     * @param recruitId 招聘Id
+     * @return 200OK
+     * @throws Exception USER_NOT_FOUND
+     */
+    @PutMapping("/recruit/{recruitId}/user/{userId}")
+    public Result applyUser(@PathVariable Integer userId, @PathVariable Integer recruitId) throws Exception {
+        recruitService.addMember(userId,recruitId);
+        return ResultUtil.success();
+    }
+
+    /**
+     * 移除通过操作
+     * @param userId 用户Id
+     * @param recruitId 招聘Id
+     * @return 200OK
+     * @throws Exception USER_NOT_FOUND
+     */
+    @DeleteMapping("/recruit/{recruitId}/user/{userId}")
+    public Result removeUser(@PathVariable Integer userId, @PathVariable Integer recruitId) throws Exception {
+        recruitService.removeMember(userId,recruitId);
+        return ResultUtil.success();
+    }
+
 
 }

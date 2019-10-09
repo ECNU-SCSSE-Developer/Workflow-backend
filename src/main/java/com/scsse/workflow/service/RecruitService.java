@@ -94,5 +94,11 @@ public interface RecruitService {
      */
     void unBindTagToRecruit(Integer recruitId, Integer tagId);
 
+    /**
+     * 完成招聘，并将招聘成功的人员转移到团队中
+     * @param recruitId 改变状态的招聘
+     */
+    void finishRecruit(Integer recruitId);
+
 
 }

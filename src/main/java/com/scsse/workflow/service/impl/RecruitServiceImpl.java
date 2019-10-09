@@ -4,9 +4,11 @@ import com.scsse.workflow.entity.dto.RecruitDto;
 import com.scsse.workflow.entity.dto.UserDto;
 import com.scsse.workflow.entity.model.Recruit;
 import com.scsse.workflow.entity.model.Tag;
+import com.scsse.workflow.entity.model.Team;
 import com.scsse.workflow.entity.model.User;
 import com.scsse.workflow.repository.RecruitRepository;
 import com.scsse.workflow.repository.TagRepository;
+import com.scsse.workflow.repository.TeamRepository;
 import com.scsse.workflow.service.RecruitService;
 import com.scsse.workflow.util.DAOUtil.DtoTransferHelper;
 import com.scsse.workflow.util.DAOUtil.UserUtil;
@@ -43,15 +45,18 @@ public class RecruitServiceImpl implements RecruitService {
 
     private final TagRepository tagRepository;
 
+    private final TeamRepository teamRepository;
+
     private final UserUtil userUtil;
 
 
     @Autowired
-    public RecruitServiceImpl(ModelMapper modelMapper, DtoTransferHelper dtoTransferHelper, RecruitRepository recruitRepository, TagRepository tagRepository, UserUtil userUtil) {
+    public RecruitServiceImpl(ModelMapper modelMapper, DtoTransferHelper dtoTransferHelper, RecruitRepository recruitRepository, TagRepository tagRepository, TeamRepository teamRepository, UserUtil userUtil) {
         this.modelMapper = modelMapper;
         this.dtoTransferHelper = dtoTransferHelper;
         this.recruitRepository = recruitRepository;
         this.tagRepository = tagRepository;
+        this.teamRepository = teamRepository;
         this.userUtil = userUtil;
     }
 
@@ -172,6 +177,16 @@ public class RecruitServiceImpl implements RecruitService {
             recruit.getRecruitTags().remove(tag);
             recruitRepository.save(recruit);
         }
+    }
+
+    @Override
+    public void finishRecruit(Integer recruitId) {
+        Recruit recruit = recruitRepository.findByRecruitId(recruitId);
+        recruit.setRecruitState("已完成");
+        //
+        Team team = recruit.getTeam();
+        team.getMembers().addAll(recruit.getMembers());
+        teamRepository.save(team);
     }
 
 }

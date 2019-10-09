@@ -4,17 +4,12 @@ import com.scsse.workflow.entity.dto.RecruitDto;
 import com.scsse.workflow.entity.model.Activity;
 import com.scsse.workflow.entity.model.Recruit;
 import com.scsse.workflow.entity.model.Tag;
-import com.scsse.workflow.entity.model.User;
 import com.scsse.workflow.service.ActivityService;
 import com.scsse.workflow.service.RecruitService;
 import com.scsse.workflow.service.TagService;
 import com.scsse.workflow.util.DAOUtil.DtoTransferHelper;
-import com.scsse.workflow.util.DAOUtil.UserUtil;
-import org.junit.Before;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,12 +17,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import javax.transaction.Transactional;
-
 import java.util.List;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.doReturn;
 
 /**
  * Those test cases are ALL HAPPY PATH
@@ -56,17 +49,6 @@ class ActivityServiceTest {
     @Autowired
     DtoTransferHelper dtoTransferHelper;
 
-    @Mock
-    UserUtil mockUserUtil;
-
-    @Before()
-    public void initMocks() {
-        MockitoAnnotations.initMocks(this);
-        doReturn(new User("username","")).when(
-                mockUserUtil.getLoginUser()
-        );
-    }
-
 
     @Test
     public void simpleCreateAndFindTest(){
@@ -84,7 +66,6 @@ class ActivityServiceTest {
     }
 
 
-    @Test
     public void findAllRecruitOfActivityTest(){
         Activity activity = new Activity("test_activity");
         activity = activityService.createActivity(activity);
@@ -93,7 +74,6 @@ class ActivityServiceTest {
         RecruitDto recruit2 = recruitService.createRecruit(new Recruit("test_recruit2",activity));
 
         List<RecruitDto> result =  activityService.findAllRecruitOfActivity(activity.getActivityId());
-
         assertTrue(result.contains(recruit));
         assertTrue(result.contains(recruit2));
     }
@@ -103,8 +83,8 @@ class ActivityServiceTest {
     public void bindTagToActivityTest() {
         Activity activity = new Activity("test_activity");
         activity = activityService.createActivity(activity);
-        Tag tag = new Tag("test_tag","test_descr");
-        Tag tag2 = new Tag("test_tag","test_descr");
+        Tag tag = new Tag("test_tag","test_desc");
+        Tag tag2 = new Tag("test_tag","test_desc");
         tag = tagService.createTag(tag);
         tag2 = tagService.createTag(tag2);
         // pre-condition

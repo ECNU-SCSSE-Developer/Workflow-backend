@@ -25,6 +25,10 @@ public class RecruitDto {
 
     private Integer recruitRegisteredNumber;
 
+    private String recruitPosition;
+
+    private String recruitDescription;
+
     private Integer activityId;
 
     private String activityName;

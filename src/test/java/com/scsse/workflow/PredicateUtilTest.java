@@ -21,7 +21,7 @@ public class PredicateUtilTest {
 
     @Test
     public void transferTimeFromPSTToGMTTest() {
-        assertEquals(PredicateUtil.transferTimeFromPSTToGMT("2019-09-20T13:20:00"),
+        assertEquals(PredicateUtil.transferTimeFromPSTToGMT("2019/09/20 13:20:00"),
                 "2019-09-20 05:20:00"
         );
     }
