@@ -42,7 +42,7 @@ public class Recruit {
     @Column
     private Date createTime = new Date();
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "user_id")
     private User manager;
 

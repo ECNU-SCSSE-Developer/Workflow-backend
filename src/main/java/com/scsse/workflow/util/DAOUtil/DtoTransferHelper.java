@@ -44,22 +44,24 @@ public class DtoTransferHelper {
 
     public RecruitDto transferToRecruitDto(Recruit recruit, User user) {
         RecruitDto result = modelMapper.map(recruit, RecruitDto.class);
-        if (user.getApplyRecruits().contains(recruit)) {
-            result.setApplied(true);
-        }
-        if (user.getFollowRecruits().contains(recruit)) {
-            result.setFollowed(true);
-        }
-        if (user.getSuccessRecruits().contains(recruit)) {
-            result.setAssigned(true);
+        // CAUTION
+        if(user != null){
+            if (user.getApplyRecruits().contains(recruit)) {
+                result.setApplied(true);
+            }
+            if (user.getFollowRecruits().contains(recruit)) {
+                result.setFollowed(true);
+            }
+            if (user.getSuccessRecruits().contains(recruit)) {
+                result.setAssigned(true);
+            }
         }
         result.setOrganizer(recruit.getManager());
         return result;
     }
 
     public UserDto transferToUserDto(User user) {
-        UserDto result = modelMapper.map(user, UserDto.class);
-        return result;
+        return modelMapper.map(user, UserDto.class);
     }
 
     @Transactional
@@ -75,8 +77,7 @@ public class DtoTransferHelper {
 
 
     public ActivityDto transferToActivityDto(Activity activity) {
-        ActivityDto result = modelMapper.map(activity, ActivityDto.class);
-        return result;
+        return modelMapper.map(activity, ActivityDto.class);
     }
 
 

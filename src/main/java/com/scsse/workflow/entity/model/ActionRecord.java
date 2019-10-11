@@ -33,7 +33,7 @@ public class ActionRecord {
     @Column
     private Date createTime = new Date();
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "userId")
     private User triggerUser;
 
