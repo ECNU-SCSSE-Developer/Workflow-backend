@@ -27,6 +27,9 @@ public class Team {
     @Column
     private Integer teamId;
 
+    @Column
+    private String teamName;
+
     @OneToOne
     @JoinColumn(name = "graph_id")
     private Graph graph;
