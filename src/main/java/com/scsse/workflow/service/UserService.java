@@ -43,8 +43,6 @@ public interface UserService {
 
     List<ActivityDto> findAllFollowedActivity(Integer userId);
 
-    List<UserDto> findAllColleague(Integer userId);
-
     /**
      * 获取粉丝
      *

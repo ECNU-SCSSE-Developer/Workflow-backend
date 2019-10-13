@@ -110,19 +110,6 @@ public class UserController {
     }
 
     /**
-     * 获取用户的同事 (同个招聘的人)
-     *
-     * @param userId 用户主键
-     * @return List{User}
-     */
-    @GetMapping("/user/{userId}/colleague")
-    public Result getColleague(@PathVariable Integer userId) {
-        return ResultUtil.success(
-                userService.findAllColleague(userId)
-        );
-    }
-
-    /**
      * 获取用户关注的所有应聘
      *
      * @return List{RecruitDto}

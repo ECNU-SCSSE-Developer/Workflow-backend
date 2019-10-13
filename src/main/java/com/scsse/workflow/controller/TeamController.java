@@ -7,6 +7,7 @@ import com.scsse.workflow.util.Result.Result;
 import com.scsse.workflow.util.Result.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -37,6 +38,19 @@ public class TeamController {
     @GetMapping("/team/joinedTeam")
     public Result getJoinTeam() {
         return ResultUtil.success(userService.findJoinedTeam(userUtil.getLoginUser()));
+    }
+
+    /**
+     * 获取团队成员
+     *
+     * @param teamId teamId
+     * @return List{User}
+     */
+    @GetMapping("/team/{teamId}/members")
+    public Result getColleague(@PathVariable Integer teamId) {
+        return ResultUtil.success(
+                teamService.getTeamMembers(teamId)
+        );
     }
 
 

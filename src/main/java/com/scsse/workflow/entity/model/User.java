@@ -31,11 +31,15 @@ public class User {
     @Column
     private String userNumber;
     @Column
+    private String college;
+    @Column
     private String userGrade;
     @Column
     private String userPhone;
     @Column
     private String userEmail;
+    @Column
+    private String wxId;
     @Column
     private String userSpecialty;
     @Column

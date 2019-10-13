@@ -2,7 +2,9 @@ package com.scsse.workflow.service.impl;
 
 import com.scsse.workflow.constant.ErrorMessage;
 import com.scsse.workflow.entity.dto.TeamDto;
+import com.scsse.workflow.entity.dto.UserDto;
 import com.scsse.workflow.entity.model.Team;
+import com.scsse.workflow.entity.model.User;
 import com.scsse.workflow.handler.WrongUsageException;
 import com.scsse.workflow.repository.TeamRepository;
 import com.scsse.workflow.service.TeamService;
@@ -12,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -62,5 +66,16 @@ public class TeamServiceImpl implements TeamService {
     @Override
     public void deleteTeam(Integer teamId) {
         teamRepository.deleteById(teamId);
+    }
+
+    @Override
+    public List<UserDto> getTeamMembers(Integer teamId) {
+        Optional<Team> result = teamRepository.findById(teamId);
+        if (result.isPresent()) {
+            return dtoTransferHelper.transferToListDto(
+                    result.get().getMembers(), user -> dtoTransferHelper.transferToUserDto((User) user)
+            );
+        } else
+            return new ArrayList<>();
     }
 }

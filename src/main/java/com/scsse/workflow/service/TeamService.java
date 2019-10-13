@@ -1,7 +1,10 @@
 package com.scsse.workflow.service;
 
 import com.scsse.workflow.entity.dto.TeamDto;
+import com.scsse.workflow.entity.dto.UserDto;
 import com.scsse.workflow.entity.model.Team;
+
+import java.util.List;
 
 /**
  * @author Alfred Fu
@@ -16,4 +19,6 @@ public interface TeamService {
     TeamDto updateTeam(Team team) throws Exception;
 
     void deleteTeam(Integer teamId);
+
+    List<UserDto> getTeamMembers(Integer teamId);
 }
