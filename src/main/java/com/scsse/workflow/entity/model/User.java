@@ -27,6 +27,8 @@ public class User {
     @Column
     private Integer userId;
     @Column
+    private Integer gender;
+    @Column
     private String username;
     @Column
     private String userNumber;
