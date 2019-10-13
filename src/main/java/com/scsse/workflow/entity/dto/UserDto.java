@@ -27,4 +27,8 @@ public class UserDto {
     private String userSpecialty;
 
     private String userResume;
+
+    private String wxId;
+
+    private String college;
 }
