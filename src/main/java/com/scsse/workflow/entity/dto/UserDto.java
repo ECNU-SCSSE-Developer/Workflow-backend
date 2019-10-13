@@ -16,6 +16,8 @@ public class UserDto {
 
     private String username;
 
+    private Integer gender;
+
     private String userNumber;
 
     private String userGrade;

@@ -47,8 +47,8 @@ public class RecruitController {
      * @return List{RecruitListDto}
      * 例:
      * url:
-     * /recruit/all?recruitPosition=java_backend&currentTime=xxx&offset=1  xxx时间点前第2页的职位为后端的应聘数据
-     * /recruit/all?recruitName=java?recruitPosition=java_backend&currentTime=xxx&offset=0 xxx时间点前第1页的职位为后端的recruitName带java的应聘数据
+     * /recruit/all?recruitPosition=java_backend&currentTime=xxx&pageNum=1  xxx时间点前第2页的职位为后端的应聘数据
+     * /recruit/all?recruitName=java?recruitPosition=java_backend&currentTime=xxx&pageNum=0 xxx时间点前第1页的职位为后端的recruitName带java的应聘数据
      * @see RecruitDto 返回详细属性见此类
      */
     @GetMapping("/recruit/all")

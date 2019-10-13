@@ -129,12 +129,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserDto> findAllFollowedUser(Integer userId) {
-        return null;
+        return dtoTransferHelper.transferToListDto(userRepository.findUserFollower(userId));
     }
 
     @Override
     public List<UserDto> findAllFollowingUser(Integer userId) {
-        return null;
+        User user =  userRepository.findByUserId(userId);
+        return dtoTransferHelper.transferToListDto(user.getFollowUser());
     }
 
     @Override
