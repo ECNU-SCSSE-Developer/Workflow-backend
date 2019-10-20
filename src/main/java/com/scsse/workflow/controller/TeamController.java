@@ -1,14 +1,13 @@
 package com.scsse.workflow.controller;
 
+import com.scsse.workflow.entity.model.Team;
 import com.scsse.workflow.service.TeamService;
 import com.scsse.workflow.service.UserService;
 import com.scsse.workflow.util.DAOUtil.UserUtil;
 import com.scsse.workflow.util.Result.Result;
 import com.scsse.workflow.util.Result.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author Alfred Fu
@@ -53,5 +52,30 @@ public class TeamController {
         );
     }
 
+    @GetMapping("/team/{teamId}")
+    public Result getTeam(@PathVariable Integer teamId) {
+        return ResultUtil.success(
+                teamService.getTeam(teamId)
+        );
+    }
 
+    @PutMapping("/team/{teamId}")
+    public Result updateTeam(@PathVariable Integer teamId, @RequestBody Team team) throws Exception {
+        return ResultUtil.success(
+                teamService.updateTeam(team)
+        );
+    }
+
+    @PostMapping("/team")
+    public Result createTeam(@PathVariable Integer teamId,@RequestBody Team team) {
+        return ResultUtil.success(
+                teamService.createTeam(team)
+        );
+    }
+
+    @DeleteMapping("/team/{teamId}")
+    public Result deleteTeam(@PathVariable Integer teamId) {
+        teamService.deleteTeam(teamId);
+        return ResultUtil.success();
+    }
 }
