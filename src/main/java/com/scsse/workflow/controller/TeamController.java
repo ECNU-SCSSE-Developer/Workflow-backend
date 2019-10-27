@@ -67,7 +67,7 @@ public class TeamController {
     }
 
     @PostMapping("/team")
-    public Result createTeam(@PathVariable Integer teamId,@RequestBody Team team) {
+    public Result createTeam(@RequestBody Team team) {
         return ResultUtil.success(
                 teamService.createTeam(team)
         );

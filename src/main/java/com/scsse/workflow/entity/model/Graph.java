@@ -33,9 +33,9 @@ public class Graph {
     @Column
     private String activityName;
 
-    @OneToOne
+    @ManyToOne
     @JsonBackReference(value = "graph.manager")
-    @JoinColumn(name = "user_id", unique = true)
+    @JoinColumn(name = "user_id")
     private User manager;
 
     @JsonBackReference(value = "graph.vectors")

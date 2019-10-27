@@ -34,12 +34,12 @@ public class Vector {
     private Date vectorCreateTime = new Date();
 
     @OneToOne
-    @JoinColumn(name = "user_id", unique = true)
+    @JoinColumn(name = "user_id")
     private User manager;
 
-    @OneToOne
+    @ManyToOne
     @JsonBackReference(value = "vector.graph")
-    @JoinColumn(name = "graph_id", unique = true)
+    @JoinColumn(name = "graph_id")
     private Graph graph;
 
     @ManyToMany(fetch = FetchType.EAGER)
