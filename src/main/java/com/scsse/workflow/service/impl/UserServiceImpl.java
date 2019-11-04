@@ -255,5 +255,11 @@ public class UserServiceImpl implements UserService {
         );
     }
 
+    @Override
+    public List<TeamDto> findCreatedTeam(User user) {
+        return dtoTransferHelper.transferToListDto(
+            teamRepository.findAllByManager_UserIdEquals(user.getUserId())
+        );
+    }
 
 }

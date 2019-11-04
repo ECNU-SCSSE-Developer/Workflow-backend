@@ -12,5 +12,7 @@ import java.util.List;
  */
 public interface TeamRepository extends JpaRepository<Team, Integer> {
 
+    List<Team> findAllByManager_UserIdEquals(Integer userId);
+
     List<Team> findAllByMembersContains(User user);
 }

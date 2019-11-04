@@ -34,6 +34,10 @@ public class Team {
     @JoinColumn(name = "graph_id")
     private Graph graph;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User manager;
+
     @ManyToMany
     @JoinTable(
             name = "team_member",

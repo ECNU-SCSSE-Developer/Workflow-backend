@@ -42,7 +42,14 @@ public class DtoTransferHelper {
 
     /**
      * Experimental!
-     * 通过反射自动查找方法来转换Dto
+     * 通过反射自动查找方法来转换Dto List
+     *
+     * Requirements:
+     *
+     * Supposed that the class name of the instance is className, then
+     *
+     * 1. the DTO class named with className+'Dto' should exists.
+     * 2. the method named with 'transferTo' + className + 'Dto' exists.
      *
      * @param collection Prototype List
      * @return Dto List

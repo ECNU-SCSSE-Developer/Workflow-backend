@@ -120,5 +120,7 @@ public interface UserService {
 
     List<TeamDto> findJoinedTeam(User user);
 
+    List<TeamDto> findCreatedTeam(User user);
+
 
 }

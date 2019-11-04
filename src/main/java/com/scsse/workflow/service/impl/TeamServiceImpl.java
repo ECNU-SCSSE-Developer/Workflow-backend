@@ -9,6 +9,7 @@ import com.scsse.workflow.handler.WrongUsageException;
 import com.scsse.workflow.repository.TeamRepository;
 import com.scsse.workflow.service.TeamService;
 import com.scsse.workflow.util.DAOUtil.DtoTransferHelper;
+import com.scsse.workflow.util.DAOUtil.UserUtil;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,12 +32,16 @@ public class TeamServiceImpl implements TeamService {
 
     private final DtoTransferHelper dtoTransferHelper;
 
+    private final UserUtil userUtil;
+
     private final ModelMapper modelMapper;
 
     @Autowired
-    public TeamServiceImpl(TeamRepository teamRepository, DtoTransferHelper dtoTransferHelper, ModelMapper modelMapper) {
+    public TeamServiceImpl(TeamRepository teamRepository, DtoTransferHelper dtoTransferHelper,
+        UserUtil userUtil, ModelMapper modelMapper) {
         this.teamRepository = teamRepository;
         this.dtoTransferHelper = dtoTransferHelper;
+        this.userUtil = userUtil;
         this.modelMapper = modelMapper;
     }
 
@@ -48,6 +53,8 @@ public class TeamServiceImpl implements TeamService {
 
     @Override
     public TeamDto createTeam(Team team) {
+        User loginUser = userUtil.getLoginUser();
+        team.setManager(loginUser);
         return dtoTransferHelper.transferToTeamDto(teamRepository.save(team));
     }
 
