@@ -55,6 +55,7 @@ public class TeamServiceImpl implements TeamService {
     public TeamDto createTeam(Team team) {
         User loginUser = userUtil.getLoginUser();
         team.setManager(loginUser);
+        team.getMembers().add(loginUser);
         return dtoTransferHelper.transferToTeamDto(teamRepository.save(team));
     }
 

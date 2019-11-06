@@ -4,6 +4,7 @@ import com.scsse.workflow.entity.dto.RecruitDto;
 import com.scsse.workflow.entity.dto.UserDto;
 import com.scsse.workflow.entity.model.Recruit;
 import com.scsse.workflow.entity.model.Tag;
+import javafx.util.Pair;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
