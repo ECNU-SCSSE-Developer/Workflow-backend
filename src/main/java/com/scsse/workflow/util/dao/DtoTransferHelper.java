@@ -59,7 +59,7 @@ public class DtoTransferHelper {
      */
     public <T> List<T> transferToListDto(Collection<?> collection) {
         final String PATTERN_PREFIX = "transferTo";
-        final String PATTERN_POSTFIX = "(Dto)?";
+        final String PATTERN_SUFFIX = "(Dto)?";
         final String LIST_ADD = "add";
 
         if (collection.toArray().length > 0) {
@@ -67,7 +67,7 @@ public class DtoTransferHelper {
             // search methods in this helper to find if there is a suitable method to transfer instance
             for (Method method : this.getClass().getMethods()) {
                 // if matches then call the method
-                if (method.getName().matches(PATTERN_PREFIX + instanceClass.getSimpleName() + PATTERN_POSTFIX)) {
+                if (method.getName().matches(PATTERN_PREFIX + instanceClass.getSimpleName() + PATTERN_SUFFIX)) {
                     List<T> result = new ArrayList<>();
                     collection.stream().map(object -> {
                         // call the method to cast the class
