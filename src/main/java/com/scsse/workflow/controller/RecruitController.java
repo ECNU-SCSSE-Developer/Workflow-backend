@@ -178,6 +178,7 @@ public class RecruitController {
     }
 
     /**
+     * 用户申请招聘
      * @param userId    用户Id
      * @param recruitId 招聘Id
      * @return 200 OK
@@ -191,7 +192,9 @@ public class RecruitController {
     }
 
     /**
-     * @param userId 用户Id* @param recruitId 招聘Id
+     * 用户取消申请招聘
+     * @param userId 用户Id
+     * @param recruitId 招聘Id
      * @return 200 OK
      * @throws WrongUsageException USER_NOT_FOUND
      */

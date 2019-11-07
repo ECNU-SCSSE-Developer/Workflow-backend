@@ -49,4 +49,8 @@ public class UserUtil {
             throw new WrongUsageException(ErrorMessage.USER_NOT_FOUND);
         return result.getUserId();
     }
+
+    public User saveUser(User user) {
+        return userRepository.save(user);
+    }
 }
