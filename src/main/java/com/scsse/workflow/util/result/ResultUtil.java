@@ -1,4 +1,4 @@
-package com.scsse.workflow.util.Result;
+package com.scsse.workflow.util.result;
 
 /**
  * Result的工具类,用于封装Result

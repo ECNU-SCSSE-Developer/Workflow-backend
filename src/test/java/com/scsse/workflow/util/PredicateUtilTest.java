@@ -1,6 +1,6 @@
-package com.scsse.workflow.UtilTest;
+package com.scsse.workflow.util;
 
-import com.scsse.workflow.util.MVCUtil.PredicateUtil;
+import com.scsse.workflow.util.mvc.PredicateUtil;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

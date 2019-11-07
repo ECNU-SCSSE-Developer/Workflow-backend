@@ -3,9 +3,9 @@ package com.scsse.workflow.controller;
 import com.scsse.workflow.entity.model.Team;
 import com.scsse.workflow.service.TeamService;
 import com.scsse.workflow.service.UserService;
-import com.scsse.workflow.util.DAOUtil.UserUtil;
-import com.scsse.workflow.util.Result.Result;
-import com.scsse.workflow.util.Result.ResultUtil;
+import com.scsse.workflow.util.dao.UserUtil;
+import com.scsse.workflow.util.result.Result;
+import com.scsse.workflow.util.result.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

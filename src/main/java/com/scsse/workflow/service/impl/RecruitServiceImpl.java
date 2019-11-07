@@ -6,14 +6,15 @@ import com.scsse.workflow.entity.model.Recruit;
 import com.scsse.workflow.entity.model.Tag;
 import com.scsse.workflow.entity.model.Team;
 import com.scsse.workflow.entity.model.User;
+import com.scsse.workflow.handler.WrongUsageException;
 import com.scsse.workflow.repository.RecruitRepository;
 import com.scsse.workflow.repository.TagRepository;
 import com.scsse.workflow.repository.TeamRepository;
 import com.scsse.workflow.service.RecruitService;
-import com.scsse.workflow.util.DAOUtil.DtoTransferHelper;
-import com.scsse.workflow.util.DAOUtil.UserUtil;
-import com.scsse.workflow.util.MVCUtil.PredicateUtil;
-import com.scsse.workflow.util.MyPair.Pair;
+import com.scsse.workflow.util.container.Pair;
+import com.scsse.workflow.util.dao.DtoTransferHelper;
+import com.scsse.workflow.util.dao.UserUtil;
+import com.scsse.workflow.util.mvc.PredicateUtil;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -113,7 +114,23 @@ public class RecruitServiceImpl implements RecruitService {
     }
 
     @Override
-    public void addMember(Integer userId, Integer recruitId) throws Exception {
+    public void applyOneRecruit(Integer userId, Integer recruitId) throws WrongUsageException {
+        Recruit recruit = recruitRepository.findByRecruitId(recruitId);
+        User user = userUtil.getUserByUserId(userId);
+        recruit.getApplicants().add(user);
+        recruitRepository.save(recruit);
+    }
+
+    @Override
+    public void cancelAppliedRecruit(Integer userId, Integer recruitId) throws WrongUsageException {
+        Recruit recruit = recruitRepository.findByRecruitId(recruitId);
+        User user = userUtil.getUserByUserId(userId);
+        recruit.getApplicants().remove(user);
+        recruitRepository.save(recruit);
+    }
+
+    @Override
+    public void addMember(Integer userId, Integer recruitId) throws WrongUsageException {
         Recruit recruit = recruitRepository.findByRecruitId(recruitId);
         User user = userUtil.getUserByUserId(userId);
         if (recruit != null && user != null) {
@@ -123,7 +140,7 @@ public class RecruitServiceImpl implements RecruitService {
     }
 
     @Override
-    public void removeMember(Integer userId, Integer recruitId) throws Exception {
+    public void removeMember(Integer userId, Integer recruitId) throws WrongUsageException {
         Recruit recruit = recruitRepository.findByRecruitId(recruitId);
         User user = userUtil.getUserByUserId(userId);
         if (recruit != null && user != null) {

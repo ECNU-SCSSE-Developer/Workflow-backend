@@ -1,8 +1,8 @@
 package com.scsse.workflow.handler;
 
-import com.scsse.workflow.util.Result.Result;
-import com.scsse.workflow.util.Result.ResultCode;
-import com.scsse.workflow.util.Result.ResultUtil;
+import com.scsse.workflow.util.result.Result;
+import com.scsse.workflow.util.result.ResultCode;
+import com.scsse.workflow.util.result.ResultUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;

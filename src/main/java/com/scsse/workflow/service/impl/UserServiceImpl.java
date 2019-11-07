@@ -4,7 +4,7 @@ import com.scsse.workflow.entity.dto.*;
 import com.scsse.workflow.entity.model.*;
 import com.scsse.workflow.repository.*;
 import com.scsse.workflow.service.UserService;
-import com.scsse.workflow.util.DAOUtil.DtoTransferHelper;
+import com.scsse.workflow.util.dao.DtoTransferHelper;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

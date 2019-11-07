@@ -1,4 +1,4 @@
-package com.scsse.workflow.util.MVCUtil;
+package com.scsse.workflow.util.mvc;
 
 import com.scsse.workflow.constant.PredicateType;
 

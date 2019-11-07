@@ -1,4 +1,4 @@
-package com.scsse.workflow.util.DAOUtil;
+package com.scsse.workflow.util.dao;
 
 /**
  * using lambda to pass a function to another function

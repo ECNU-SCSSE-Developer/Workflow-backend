@@ -1,4 +1,4 @@
-package com.scsse.workflow.util.MyPair;
+package com.scsse.workflow.util.container;
 
 import lombok.NoArgsConstructor;
 

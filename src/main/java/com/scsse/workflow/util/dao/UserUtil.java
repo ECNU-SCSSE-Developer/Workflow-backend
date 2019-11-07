@@ -1,10 +1,10 @@
-package com.scsse.workflow.util.DAOUtil;
+package com.scsse.workflow.util.dao;
 
 import com.scsse.workflow.constant.ErrorMessage;
 import com.scsse.workflow.entity.model.User;
 import com.scsse.workflow.handler.WrongUsageException;
 import com.scsse.workflow.repository.UserRepository;
-import com.scsse.workflow.util.MVCUtil.RequestUtil;
+import com.scsse.workflow.util.mvc.RequestUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -26,7 +26,7 @@ public class UserUtil {
         return userRepository.findByOpenid(RequestUtil.getOpenId());
     }
 
-    public Integer findUserIdByOpenid(String openId) throws Exception {
+    public Integer findUserIdByOpenid(String openId) throws WrongUsageException {
         User result = userRepository.findByOpenid(openId);
         if (result == null) {
             throw new WrongUsageException(ErrorMessage.USER_NOT_FOUND);
@@ -34,7 +34,7 @@ public class UserUtil {
         return result.getUserId();
     }
 
-    public User getUserByUserId(Integer userId) throws Exception {
+    public User getUserByUserId(Integer userId) throws WrongUsageException {
         User result = userRepository.findByUserId(userId);
         if (result == null) {
             throw new WrongUsageException(ErrorMessage.USER_NOT_FOUND);

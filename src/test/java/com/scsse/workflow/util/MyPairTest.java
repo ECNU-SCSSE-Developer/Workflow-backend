@@ -1,7 +1,7 @@
-package com.scsse.workflow.UtilTest;
+package com.scsse.workflow.util;
 
-import com.scsse.workflow.util.MyPair.Pair;
-import com.scsse.workflow.util.MyPair.PairImpl;
+import com.scsse.workflow.util.container.Pair;
+import com.scsse.workflow.util.container.PairImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

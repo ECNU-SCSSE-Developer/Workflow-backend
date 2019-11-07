@@ -2,10 +2,11 @@ package com.scsse.workflow.controller;
 
 import com.scsse.workflow.entity.dto.UserDetailPage;
 import com.scsse.workflow.entity.model.User;
+import com.scsse.workflow.handler.WrongUsageException;
 import com.scsse.workflow.service.UserService;
-import com.scsse.workflow.util.DAOUtil.UserUtil;
-import com.scsse.workflow.util.Result.Result;
-import com.scsse.workflow.util.Result.ResultUtil;
+import com.scsse.workflow.util.dao.UserUtil;
+import com.scsse.workflow.util.result.Result;
+import com.scsse.workflow.util.result.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,7 +34,7 @@ public class UserController {
      * @return UserId
      */
     @GetMapping("/user/myself")
-    public Result getLoginUserId() throws Exception {
+    public Result getLoginUserId() throws WrongUsageException {
         return ResultUtil.success(userUtil.getLoginUserId());
     }
 
@@ -76,7 +77,7 @@ public class UserController {
      * }
      */
     @PutMapping("/user/self")
-    public Result updateUserInformation(@RequestBody User user) throws Exception {
+    public Result updateUserInformation(@RequestBody User user) throws WrongUsageException {
         user.setUserId(userUtil.getLoginUserId());
         return ResultUtil.success(
                 userService.updateUser(user)
@@ -151,7 +152,7 @@ public class UserController {
      * PUT /user/follower/2
      */
     @PutMapping("/user/follower/{followedUserId}")
-    public Result followUser(@PathVariable Integer followedUserId) throws Exception {
+    public Result followUser(@PathVariable Integer followedUserId) throws WrongUsageException {
         Integer originUserId = userUtil.getLoginUserId();
         userService.followUser(originUserId, followedUserId);
         return ResultUtil.success();
@@ -166,7 +167,7 @@ public class UserController {
      * DELETE /user/follower/2
      */
     @DeleteMapping("/user/follower/{followedUserId}")
-    public Result unfollowUser(@PathVariable Integer followedUserId) throws Exception {
+    public Result unfollowUser(@PathVariable Integer followedUserId) throws WrongUsageException {
         Integer originUserId = userUtil.getLoginUserId();
         userService.unfollowRecruit(originUserId, followedUserId);
         return ResultUtil.success();
@@ -181,7 +182,7 @@ public class UserController {
      * PUT /user/recruit/1
      */
     @PutMapping("/user/recruit/{recruitId}")
-    public Result followRecruit(@PathVariable() Integer recruitId) throws Exception {
+    public Result followRecruit(@PathVariable() Integer recruitId) throws WrongUsageException {
         userService.followRecruit(userUtil.getLoginUserId(), recruitId);
         return ResultUtil.success();
     }
@@ -195,7 +196,7 @@ public class UserController {
      * DELETE /user/recruit/1
      */
     @DeleteMapping("/user/recruit/{recruitId}")
-    public Result unfollowRecruit(@PathVariable() Integer recruitId) throws Exception {
+    public Result unfollowRecruit(@PathVariable() Integer recruitId) throws WrongUsageException {
         userService.unfollowRecruit(userUtil.getLoginUserId(), recruitId);
         return ResultUtil.success();
     }
@@ -209,7 +210,7 @@ public class UserController {
      * PUT /user/recruit/1
      */
     @PutMapping("/user/activity/{activityId}")
-    public Result followActivity(@PathVariable() Integer activityId) throws Exception {
+    public Result followActivity(@PathVariable() Integer activityId) throws WrongUsageException {
         userService.followActivity(userUtil.getLoginUserId(), activityId);
         return ResultUtil.success();
     }
@@ -223,7 +224,7 @@ public class UserController {
      * DELETE /user/recruit/1
      */
     @DeleteMapping("/user/activity/{activityId}")
-    public Result unfollowActivity(@PathVariable() Integer activityId) throws Exception {
+    public Result unfollowActivity(@PathVariable() Integer activityId) throws WrongUsageException {
         userService.unfollowActivity(userUtil.getLoginUserId(), activityId);
         return ResultUtil.success();
     }

@@ -1,7 +1,7 @@
-package com.scsse.workflow.util.MVCUtil;
+package com.scsse.workflow.util.mvc;
 
-import com.scsse.workflow.util.MyPair.Pair;
-import com.scsse.workflow.util.MyPair.PairImpl;
+import com.scsse.workflow.util.container.Pair;
+import com.scsse.workflow.util.container.PairImpl;
 
 import java.util.HashMap;
 

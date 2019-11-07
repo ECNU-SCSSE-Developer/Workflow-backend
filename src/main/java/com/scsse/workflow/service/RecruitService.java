@@ -4,7 +4,8 @@ import com.scsse.workflow.entity.dto.RecruitDto;
 import com.scsse.workflow.entity.dto.UserDto;
 import com.scsse.workflow.entity.model.Recruit;
 import com.scsse.workflow.entity.model.Tag;
-import com.scsse.workflow.util.MyPair.Pair;
+import com.scsse.workflow.handler.WrongUsageException;
+import com.scsse.workflow.util.container.Pair;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -30,13 +31,17 @@ public interface RecruitService {
 
     void deleteRecruitById(Integer recruitId);
 
+    void applyOneRecruit(Integer userId, Integer recruitId) throws WrongUsageException;
+
+    void cancelAppliedRecruit(Integer userId, Integer recruitId) throws WrongUsageException;
+
     /**
      * 将应聘成功的应聘者加入recruit_member中
      *
      * @param userId    用户主键
      * @param recruitId 招聘主键
      */
-    void addMember(Integer userId, Integer recruitId) throws Exception;
+    void addMember(Integer userId, Integer recruitId) throws WrongUsageException;
 
     /**
      * 删除某个应聘中的某个成员
@@ -44,7 +49,7 @@ public interface RecruitService {
      * @param userId    用户主键
      * @param recruitId 招聘主键
      */
-    void removeMember(Integer userId, Integer recruitId) throws Exception;
+    void removeMember(Integer userId, Integer recruitId) throws WrongUsageException;
 
     /**
      * 返回一个招聘信息的所有应聘成功的应聘者

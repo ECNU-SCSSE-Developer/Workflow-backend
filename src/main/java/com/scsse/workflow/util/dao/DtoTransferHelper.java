@@ -1,4 +1,4 @@
-package com.scsse.workflow.util.DAOUtil;
+package com.scsse.workflow.util.dao;
 
 import com.scsse.workflow.entity.dto.*;
 import com.scsse.workflow.entity.model.Activity;
@@ -7,6 +7,8 @@ import com.scsse.workflow.entity.model.Team;
 import com.scsse.workflow.entity.model.User;
 import com.scsse.workflow.repository.UserRepository;
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -26,6 +28,7 @@ public class DtoTransferHelper {
 
     private final UserRepository userRepository;
 
+    private final static Logger logger = LoggerFactory.getLogger(DtoTransferHelper.class);
 
 
     @Autowired
@@ -55,37 +58,42 @@ public class DtoTransferHelper {
      * @return Dto List
      */
     public <T> List<T> transferToListDto(Collection<?> collection) {
+        final String PATTERN_PREFIX = "transferTo";
+        final String PATTERN_POSTFIX = "(Dto)?";
+        final String LIST_ADD = "add";
+
         if (collection.toArray().length > 0) {
-            Class modelClass = collection.toArray()[0].getClass();
+            Class instanceClass = collection.toArray()[0].getClass();
+            // search methods in this helper to find if there is a suitable method to transfer instance
             for (Method method : this.getClass().getMethods()) {
-                if (method.getName().matches("transferTo" + modelClass.getSimpleName() + "(Dto)?")) {
-                    // now call the methods
+                // if matches then call the method
+                if (method.getName().matches(PATTERN_PREFIX + instanceClass.getSimpleName() + PATTERN_POSTFIX)) {
                     List<T> result = new ArrayList<>();
                     collection.stream().map(object -> {
+                        // call the method to cast the class
                         try {
                             Class dtoClass = method.getReturnType();
                             return dtoClass.cast(method.invoke(this, object));
                         } catch (IllegalAccessException | InvocationTargetException e) {
-                            e.printStackTrace();
+                            logger.error(e.getMessage(), e);
                             return null;
                         }
                     }).forEach(
+                        // then add it to the list
                             object -> {
                                 try {
-                                    Method m = result.getClass().getMethod("add", Object.class);
-                                    m.invoke(result, object);
+                                    result.getClass().getMethod(LIST_ADD, Object.class)
+                                        .invoke(result, object);
                                 } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
-                                    e.printStackTrace();
+                                    logger.error(e.getMessage(), e);
                                 }
                             }
                     );
                     return result;
                 }
             }
-            return new ArrayList<>();
-        } else {
-            return new ArrayList<>();
         }
+        return new ArrayList<>();
     }
 
 

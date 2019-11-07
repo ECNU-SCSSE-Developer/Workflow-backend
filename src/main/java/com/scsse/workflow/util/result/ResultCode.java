@@ -1,4 +1,4 @@
-package com.scsse.workflow.util.Result;
+package com.scsse.workflow.util.result;
 
 /**
  * @author Alfred Fu
