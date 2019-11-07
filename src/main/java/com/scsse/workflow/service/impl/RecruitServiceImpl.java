@@ -136,6 +136,7 @@ public class RecruitServiceImpl implements RecruitService {
         User user = userUtil.getUserByUserId(userId);
         if (recruit != null && user != null) {
             recruit.getMembers().add(user);
+            recruit.getApplicants().remove(user);
             recruitRepository.save(recruit);
         }
     }
@@ -146,6 +147,7 @@ public class RecruitServiceImpl implements RecruitService {
         User user = userUtil.getUserByUserId(userId);
         if (recruit != null && user != null) {
             recruit.getMembers().remove(user);
+            recruit.getApplicants().add(user);
             recruitRepository.save(recruit);
         }
     }
