@@ -1,7 +1,7 @@
 package com.scsse.workflow.util.MVCUtil;
 
-import javafx.util.Builder;
-import javafx.util.Pair;
+import com.scsse.workflow.util.MyPair.Pair;
+import com.scsse.workflow.util.MyPair.PairImpl;
 
 import java.util.HashMap;
 
@@ -9,13 +9,13 @@ import java.util.HashMap;
  * @author Alfred Fu
  * Created on 2019/9/18 4:11 下午
  */
-public class QueryParameterBuilder implements Builder {
+public class QueryParameterBuilder {
 
     private HashMap<Integer, Pair<String, String>> queryParameter = new HashMap<>();
 
     public QueryParameterBuilder addParameter(int predicateType, String key, String value) {
         if (value != null && !value.isEmpty()) {
-            queryParameter.put(predicateType, new Pair<>(key, value));
+            queryParameter.put(predicateType, new PairImpl<>(key, value));
         }
         return this;
     }
@@ -24,7 +24,6 @@ public class QueryParameterBuilder implements Builder {
         queryParameter = new HashMap<>();
     }
 
-    @Override
     public HashMap<Integer, Pair<String, String>> build() {
         return queryParameter;
     }

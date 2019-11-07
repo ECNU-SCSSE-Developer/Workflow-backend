@@ -13,7 +13,7 @@ import com.scsse.workflow.service.RecruitService;
 import com.scsse.workflow.util.DAOUtil.DtoTransferHelper;
 import com.scsse.workflow.util.DAOUtil.UserUtil;
 import com.scsse.workflow.util.MVCUtil.PredicateUtil;
-import javafx.util.Pair;
+import com.scsse.workflow.util.MyPair.Pair;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;

@@ -42,11 +42,9 @@ public class UserUtil {
         return result;
     }
 
-
-    public Integer getLoginUserId() throws Exception {
+    public Integer getLoginUserId() throws WrongUsageException {
         User result = userRepository.findByOpenid(RequestUtil.getOpenId());
         // This will throw null pointer exception
-        // TODO(): throw custom exception
         if (result == null)
             throw new WrongUsageException(ErrorMessage.USER_NOT_FOUND);
         return result.getUserId();

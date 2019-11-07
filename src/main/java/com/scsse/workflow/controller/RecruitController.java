@@ -3,13 +3,14 @@ package com.scsse.workflow.controller;
 import com.scsse.workflow.constant.PredicateType;
 import com.scsse.workflow.entity.dto.RecruitDto;
 import com.scsse.workflow.entity.model.Recruit;
+import com.scsse.workflow.handler.WrongUsageException;
 import com.scsse.workflow.service.RecruitService;
 import com.scsse.workflow.service.UserService;
 import com.scsse.workflow.util.DAOUtil.UserUtil;
 import com.scsse.workflow.util.MVCUtil.QueryParameterBuilder;
+import com.scsse.workflow.util.MyPair.Pair;
 import com.scsse.workflow.util.Result.Result;
 import com.scsse.workflow.util.Result.ResultUtil;
-import javafx.util.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,7 +18,6 @@ import java.util.HashMap;
 
 /**
  * @author Andrew Dong
- * @ProjectName workflow
  * @date 2019-09-14 15:49
  */
 @RestController
@@ -89,7 +89,7 @@ public class RecruitController {
      * @see RecruitDto
      */
     @GetMapping("/recruit/appliedRecruit")
-    public Result getAppliedRecruit() throws Exception {
+    public Result getAppliedRecruit() throws WrongUsageException {
         return ResultUtil.success(
                 userService.findAllRegisteredRecruit(
                         userUtil.getLoginUserId()
@@ -104,7 +104,7 @@ public class RecruitController {
      * @see RecruitDto
      */
     @GetMapping("/recruit/assignedRecruit")
-    public Result getAssignedRecruit() throws Exception {
+    public Result getAssignedRecruit() throws WrongUsageException {
         return ResultUtil.success(
                 userService.findAllAssignedRecruit(
                         userUtil.getLoginUserId()
