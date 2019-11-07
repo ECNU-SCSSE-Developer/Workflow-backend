@@ -1,6 +1,7 @@
 package com.scsse.workflow.service.impl;
 
 import com.scsse.workflow.entity.dto.RecruitDto;
+import com.scsse.workflow.entity.dto.UserAppliedRecruit;
 import com.scsse.workflow.entity.dto.UserDto;
 import com.scsse.workflow.entity.model.Recruit;
 import com.scsse.workflow.entity.model.Tag;
@@ -204,6 +205,22 @@ public class RecruitServiceImpl implements RecruitService {
         Team team = recruit.getTeam();
         team.getMembers().addAll(recruit.getMembers());
         teamRepository.save(team);
+    }
+
+    @Override
+    public List<UserAppliedRecruit> findUsersAppliedMyRecruits() throws WrongUsageException {
+        List<UserAppliedRecruit> result = new ArrayList<>();
+        Set<Recruit> recruits = recruitRepository.findAllByManager_UserId(userUtil.getLoginUserId());
+        // select all applicant and add it to the result.
+        recruits.forEach(
+            recruit ->
+                result.addAll(dtoTransferHelper.transferToListDto(recruit.getApplicants(), recruit,
+                    (firstParam, secondParam) -> dtoTransferHelper
+                        .transferToUserAppliedRecruit((User) firstParam, (Recruit) secondParam)
+                ))
+
+        );
+        return result;
     }
 
 }

@@ -1,6 +1,7 @@
 package com.scsse.workflow.service;
 
 import com.scsse.workflow.entity.dto.RecruitDto;
+import com.scsse.workflow.entity.dto.UserAppliedRecruit;
 import com.scsse.workflow.entity.dto.UserDto;
 import com.scsse.workflow.entity.model.Recruit;
 import com.scsse.workflow.entity.model.Tag;
@@ -105,5 +106,5 @@ public interface RecruitService {
      */
     void finishRecruit(Integer recruitId);
 
-
+    List<UserAppliedRecruit> findUsersAppliedMyRecruits() throws WrongUsageException;
 }

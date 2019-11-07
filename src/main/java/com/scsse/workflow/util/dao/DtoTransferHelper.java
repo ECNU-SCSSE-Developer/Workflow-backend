@@ -125,6 +125,17 @@ public class DtoTransferHelper {
         return modelMapper.map(user, UserDto.class);
     }
 
+    public ActivityDto transferToActivityDto(Activity activity) {
+        return modelMapper.map(activity, ActivityDto.class);
+    }
+
+
+    public TeamDto transferToTeamDto(Team team) {
+        TeamDto result = new TeamDto();
+        modelMapper.map(team, result);
+        return result;
+    }
+
     @Transactional
     public UserDetailPage transferToUserDetailPage(User user) {
         UserDetailPage result = modelMapper.map(user, UserDetailPage.class);
@@ -136,17 +147,16 @@ public class DtoTransferHelper {
         return result;
     }
 
-
-    public ActivityDto transferToActivityDto(Activity activity) {
-        return modelMapper.map(activity, ActivityDto.class);
-    }
-
-
-    public TeamDto transferToTeamDto(Team team) {
-        TeamDto result = new TeamDto();
-        modelMapper.map(team, result);
+    @Transactional
+    public UserAppliedRecruit transferToUserAppliedRecruit(User user, Recruit recruit) {
+        UserAppliedRecruit result = new UserAppliedRecruit();
+        modelMapper.map(recruit, result);
+        modelMapper.map(user, result);
+        result.setActivityName(recruit.getActivity().getActivityName());
         return result;
     }
+
+
 
 
 }

@@ -16,4 +16,6 @@ public interface RecruitRepository extends JpaRepository<Recruit, Integer>, JpaS
     void deleteByRecruitId(Integer recruitId);
 
     Set<Recruit> findAllByActivity_ActivityId(Integer activityId);
+
+    Set<Recruit> findAllByManager_UserId(Integer userId);
 }

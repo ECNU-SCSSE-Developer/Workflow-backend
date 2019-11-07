@@ -81,6 +81,18 @@ public class RecruitController {
         return ResultUtil.success(recruitService.findRecruitById(recruitId));
     }
 
+    /**
+     * 获取申请loginUser管理招聘的所有用户
+     *
+     * @return UserAppliedRecruit
+     * @throws WrongUsageException USER_NOT_FOUND loginUser not exists
+     * @see com.scsse.workflow.entity.dto.UserAppliedRecruit  返回详细属性见此类
+     */
+    @GetMapping("/recruit/myAppliedUsers")
+    public Result getUsersAppliedMyRecruits() throws WrongUsageException {
+        return ResultUtil.success(recruitService.findUsersAppliedMyRecruits());
+    }
+
 
     /**
      * 获取<b>调用者</b>申请应聘的所有应聘
