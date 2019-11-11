@@ -49,14 +49,14 @@ public class User {
     @Column
     private String openid;
 
-    @OneToMany
+    @ManyToMany
     @JsonBackReference(value = "user.followUsers")
     @JoinTable(name = "user_follower",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "follower_id"))
     private Set<User> followUser = new HashSet<>();
 
-    @OneToMany
+    @ManyToMany
     @JsonBackReference(value = "user.followActivities")
     @JoinTable(name = "user_activity",
             joinColumns = @JoinColumn(name = "user_id"),

@@ -55,7 +55,7 @@ public class ActivityServiceImpl implements ActivityService {
 
     @Override
     public List<ActivityDto> findAllActivity() {
-        return dtoTransferHelper.transferToListDto(activityRepository.findAll(), eachItem -> dtoTransferHelper.transferToActivityDto((Activity) eachItem));
+        return dtoTransferHelper.transferToListDto(activityRepository.findAll(), eachItem -> dtoTransferHelper.transferToActivityDto((Activity) eachItem,userUtil.getLoginUser()));
     }
 
     @Override
@@ -71,7 +71,7 @@ public class ActivityServiceImpl implements ActivityService {
                         (activity.getActivityTime().toInstant().atZone(ZoneId.of("Asia/Shanghai")).
                                 toLocalDate()) < 0)
                 .forEach(activities::add);
-        return dtoTransferHelper.transferToListDto(activities, eachItem -> dtoTransferHelper.transferToActivityDto((Activity) eachItem));
+        return dtoTransferHelper.transferToListDto(activities, eachItem -> dtoTransferHelper.transferToActivityDto((Activity) eachItem,userUtil.getLoginUser()));
     }
 
     @Override
@@ -83,7 +83,7 @@ public class ActivityServiceImpl implements ActivityService {
                         (activity.getActivityTime().toInstant().atZone(ZoneId.of("Asia/Shanghai")).
                                 toLocalDate()) > 0)
                 .forEach(activities::add);
-        return dtoTransferHelper.transferToListDto(activities, eachItem -> dtoTransferHelper.transferToActivityDto((Activity) eachItem));
+        return dtoTransferHelper.transferToListDto(activities, eachItem -> dtoTransferHelper.transferToActivityDto((Activity) eachItem,userUtil.getLoginUser()));
 
     }
 
@@ -96,13 +96,13 @@ public class ActivityServiceImpl implements ActivityService {
                         (activity.getActivitySignUpDeadline().toInstant().atZone(ZoneId.of("Asia/Shanghai")).
                                 toLocalDate()) < 0)
                 .forEach(activities::add);
-        return dtoTransferHelper.transferToListDto(activities, eachItem -> dtoTransferHelper.transferToActivityDto((Activity) eachItem));
+        return dtoTransferHelper.transferToListDto(activities, eachItem -> dtoTransferHelper.transferToActivityDto((Activity) eachItem,userUtil.getLoginUser()));
 
     }
 
     @Override
-    public Activity findActivityById(Integer activityId) {
-        return activityRepository.findByActivityId(activityId);
+    public ActivityDto findActivityById(Integer activityId) {
+        return dtoTransferHelper.transferToActivityDto(activityRepository.findByActivityId(activityId),userUtil.getLoginUser());
     }
 
     @Override

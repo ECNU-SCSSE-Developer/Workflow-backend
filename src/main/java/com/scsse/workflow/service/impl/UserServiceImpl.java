@@ -123,7 +123,7 @@ public class UserServiceImpl implements UserService {
         Set<Activity> activities = user.getFollowActivities();
         return dtoTransferHelper.transferToListDto(
                 activities,
-                activity -> dtoTransferHelper.transferToActivityDto((Activity) activity)
+                activity -> dtoTransferHelper.transferToActivityDto((Activity) activity,user)
         );
     }
 

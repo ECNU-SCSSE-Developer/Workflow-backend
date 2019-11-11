@@ -23,7 +23,7 @@ public interface ActivityService {
     List<ActivityDto> findAllFreshActivity();
 
 
-    Activity findActivityById(Integer activityId);
+    ActivityDto findActivityById(Integer activityId);
 
     Activity createActivity(Activity activity);
 

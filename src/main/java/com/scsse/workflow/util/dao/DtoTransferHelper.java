@@ -125,8 +125,19 @@ public class DtoTransferHelper {
         return modelMapper.map(user, UserDto.class);
     }
 
-    public ActivityDto transferToActivityDto(Activity activity) {
-        return modelMapper.map(activity, ActivityDto.class);
+    @Transactional
+    public ActivityDto transferToActivityDto(Activity activity,User user) {
+        ActivityDto result = null;
+        if (activity != null){
+            result = modelMapper.map(activity,ActivityDto.class);
+            if (user!=null && user.getFollowActivities().contains(activity)){
+                result.setFollowed(true);
+            } else {
+                result.setFollowed(false);
+            }
+        }
+        return result;
+
     }
 
 

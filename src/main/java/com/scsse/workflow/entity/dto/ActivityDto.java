@@ -13,4 +13,5 @@ import lombok.ToString;
 @Setter
 @ToString
 public class ActivityDto extends Activity {
+    private boolean isFollowed;
 }
